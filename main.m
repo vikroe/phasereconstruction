@@ -1,5 +1,5 @@
 dx = 1.55e-6;
-lambda = 530e-9;
+lambda = 520e-9;
 n = 1.45;
 distances = linspace(2.2e-3, 5e-3, 7);
 ndistances = -distances;
@@ -13,8 +13,7 @@ for i = 1:numel(distances)
     Hq = cat(3,Hq,our_fresnel_kernel(distances(i),width,height,dx,n,lambda));
 end
 
-%% Creating a simulated hologram with two circles on the same plane
-% TODO : Doesn't work
+%% Creating a simulated hologram with a single rectangle
 
 r = 15;
 original_image = ones(width,height);
@@ -42,7 +41,7 @@ imshow(original_image)
 
 %% Loading image 
 
-image = imread("2.png");
+image = imread("Pics/Hologram_large.png");
 %hologram8 = rgb2gray(image);
 hologram = im2double(image);
 figure(1)
@@ -58,7 +57,7 @@ for i = 1:numel(distances)
     kernelized = Hnq(:,:,i).*fourier2;
     reconstruction = abs(ifft2(kernelized));
 
-    temp = (mask(reconstruction, 0.1, 4, 21));
+    temp = (mask(reconstruction, 0.18, 4, 21));
     M = cat(3,M,temp);
 end
 
@@ -89,17 +88,17 @@ IH = hologram;
 
 a = fft2(hologram);
 for i = 1:iterations
-    %for j = 1:numel(distances)
-        backpropagation = a.*Hq(:,:,mask_index);
-        masking = (M(:,:,mask_index)) .* ifft2(backpropagation);
-        propagation = (fft2(masking).*Hnq(:,:,mask_index));
-        anew = a - propagation;
-        a = anew;
-    %end
     for j = 1:numel(distances)
-        kernelized = Hnq(:,:,mask_index).*a;
+        backpropagation = a.*Hq(:,:,j);
+        masking = (M(:,:,j)) .* ifft2(backpropagation);
+        propagation = (fft2(masking).*Hnq(:,:,j));
+        anew = a - propagation/numel(distances);
+        a = anew;
+    end
+    for j = 1:numel(distances)
+        kernelized = Hnq(:,:,j).*a;
         tmp_propagation = abs(ifft2(kernelized));
-        %M(:,:,mask_index) = (mask(reconstruction, 0.2/sqrt(i), 3, 11));
+        M(:,:,j) = (mask(reconstruction, 0.18/sqrt(1+i), 3, 11));
     end
 end
 
@@ -121,9 +120,6 @@ end
     subplot(2,4,5);
     imshow(abs(a));
     title("New hologram");
-    subplot(2,4,6);
-    imshow(real(actual_hologram));
-    title("Optimal hologram - sim only");
     subplot(2,4,7);
     imshow(abs(reconstruction)/max(abs(reconstruction), [],'all'));
     title("Original reconstruction");
@@ -196,6 +192,10 @@ function M = mask(image, threshold, dilation, lpfilter)
     end
     M = imdilate(M,strel('disk',dilation,0));
     M = imgaussfilt(M,2,'FilterSize',lpfilter);
+    M = ones(size(image)) - M;
+    M = imdilate(M,strel('disk',dilation+2,0));
+    M = imgaussfilt(M,2,'FilterSize',lpfilter);
+    M = ones(size(image)) - M;
 end
 
 function kernel = lowpass(side)
