@@ -6,6 +6,8 @@ ndistances = -distances;
 width = 511; % image size
 height = 511;
 
+simulation = 1;
+
 Hnq = [];
 Hq = [];
 for i = 1:numel(distances)
@@ -15,40 +17,42 @@ end
 
 %% Creating a simulated hologram with a single rectangle
 
-r = 15;
-original_image = ones(width,height);
-temp_image = zeros(width,height);
-for i=1:numel(temp_image(1,:))
-    for j =1:numel(temp_image(:,1))
-        if i > width/2-5 && i < width/2+5  && j < height/2+100 && j > height/2-100
-            temp_image(i,j) = 1;
+if simulation == 1
+    r = 15;
+    original_image = ones(width,height);
+    temp_image = zeros(width,height);
+    for i=1:numel(temp_image(1,:))
+        for j =1:numel(temp_image(:,1))
+            if i > width/2-5 && i < width/2+5  && j < height/2+100 && j > height/2-100
+                temp_image(i,j) = 1;
+            end
         end
     end
+
+    original_image = original_image - temp_image;
+    fourier = fft2(original_image);
+    kernelized = Hq(:,:,1).*fourier;
+    hologram = ifft2(kernelized);
+
+    actual_hologram = hologram;
+    [~,~,hologram] = normalize(abs(hologram));
+    figure(5)
+    subplot(1,2,1)
+    imshow(hologram)
+    subplot(1,2,2)
+    imshow(original_image)
 end
 
-original_image = ones(width,height) - (original_image - temp_image);
-fourier = fft2(original_image);
-kernelized = Hnq(:,:,1).*fourier;
-hologram = ifft2(kernelized);
-
-actual_hologram = hologram;
-hologram = real(hologram);
-figure(5)
-subplot(1,2,1)
-imshow(hologram)
-subplot(1,2,2)
-imshow(original_image)
-
 %% Loading image 
-
-image = imread("Pics/Hologram_large.png");
-%hologram8 = rgb2gray(image);
-hologram = im2double(image);
-figure(1)
-hologram = hologram(end-510:end,end-510:end);
-[minimum, maximum, hologram] = normalize(hologram);
-imshow(hologram)
-
+if simulation == 0
+    image = imread("Pics/Hologram_large.png");
+    %hologram8 = rgb2gray(image);
+    hologram = im2double(image);
+    figure(1)
+    hologram = hologram(end-510:end,end-510:end);
+    [minimum, maximum, hologram] = normalize(hologram);
+    imshow(hologram)
+end
 %% Hologram reconstruction affected by twin-image and Construction of mask M
 M = [];
 fourier2 = fft2(hologram);
@@ -61,10 +65,13 @@ for i = 1:numel(distances)
     M = cat(3,M,temp);
 end
 
+
 mask_index = 1;
-%M(:,:,mask_index) = temp_image;
-%M(:,:,mask_index) = imdilate(M(:,:,mask_index),strel('disk',2,0));
-%M(:,:,mask_index) = imgaussfilt(M(:,:,mask_index),2,'FilterSize',11);
+if simulation == 1
+    M(:,:,mask_index) = temp_image;
+    %M(:,:,mask_index) = imdilate(M(:,:,mask_index),strel('disk',2,0));
+    M(:,:,mask_index) = imgaussfilt(M(:,:,mask_index),2,'FilterSize',11);
+end
 figure(2)
 subplot(1,3,1);
 imshow(M(:,:,mask_index));
@@ -82,27 +89,34 @@ reconstruction = abs(ifft2(kernelized));
 imshow(reconstruction+M(:,:,mask_index)*0.5);
 %% Implementation of the iterative cleaning algorithm 
 
-iterations = 25;
+iterations = 30;
 
 IH = hologram;
 
 a = fft2(hologram);
 for i = 1:iterations
-    for j = 1:numel(distances)
-        backpropagation = a.*Hq(:,:,j);
-        masking = (M(:,:,j)) .* ifft2(backpropagation);
-        propagation = (fft2(masking).*Hnq(:,:,j));
-        anew = a - propagation/numel(distances);
-        a = anew;
-    end
-    for j = 1:numel(distances)
-        kernelized = Hnq(:,:,j).*a;
-        tmp_propagation = abs(ifft2(kernelized));
-        M(:,:,j) = (mask(reconstruction, 0.18/sqrt(1+i), 3, 11));
+    if simulation ~= 1
+        for j = 1:numel(distances)
+            backpropagation = a.*Hq(:,:,j);
+            masking = (M(:,:,j)) .* ifft2(backpropagation);
+            propagation = (fft2(masking).*Hnq(:,:,j));
+            anew = a - propagation/numel(distances);
+            a = anew;
+        end
+        for j = 1:numel(distances)
+            kernelized = Hnq(:,:,j).*a;
+            tmp_propagation = abs(ifft2(kernelized));
+            M(:,:,j) = (mask(reconstruction, 0.18/sqrt(1+i), 3, 11));
+        end
+    else
+        backpropagation = a.*Hq(:,:,mask_index);
+        masking = (M(:,:,mask_index)) .* ifft2(backpropagation);
+        propagation = (fft2(masking).*Hnq(:,:,mask_index));
+        a = a - propagation;
     end
 end
 
-    [~,~,finished] = normalize(abs(ifft2((a.*Hnq(:,:,mask_index)))));
+    [~,~,finished] = normalize(abs(ifft2(a.*Hnq(:,:,mask_index))));
 
     figure(3);
     subplot(2,4,1);
