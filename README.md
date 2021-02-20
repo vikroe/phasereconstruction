@@ -10,7 +10,7 @@ Comparison of different Phase reconstruction algorithms for a digital holographi
 
 
 
-The different algorithms are implemented in Matlab.
+The different compared algorithms are first implemented in Matlab.
 
 
 Real-time implementation will be done in C++ CUDA for an Nvidia Jetson computing device.
@@ -21,7 +21,7 @@ Real-time implementation will be done in C++ CUDA for an Nvidia Jetson computing
 
 
 
-Currently implemented algorithms are taken from (more are yet to be included :
+Currently implemented algorithms are taken from (more are yet to be included) :
 
 
 
