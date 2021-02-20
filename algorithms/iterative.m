@@ -1,15 +1,13 @@
-function h_finished = iterative(hologram, Hq, x, y, z, iter, u_thresh, l_thresh, dilation, lpf, verbose)
+function h_finished = iterative(hologram, Hq, x, y, z, iter, thresh, dilation, lpf, verbose)
 %% Initialization of variables
     M = zeros(y,x,numel(z));
     Hnq = conj(Hq);
 
 %% Hologram reconstruction affected by twin-image and Construction of mask M
     disp("Calculating masks...");
-    f_hologram = fft2(hologram);
     for i = 1:numel(z)
-        f_real = Hq(:,:,i).*f_hologram;
-        a_real = r_norm(abs(ifft2(f_real)));
-        M(:,:,i) = mask(a_real, u_thresh, l_thresh, dilation, lpf);
+        a_real = r_norm(abs(propagation(hologram, Hq(:,:,i))));
+        M(:,:,i) = mask(a_real, thresh, dilation, lpf);
     end
     disp("Masks calculated...");
 
@@ -20,10 +18,9 @@ function h_finished = iterative(hologram, Hq, x, y, z, iter, u_thresh, l_thresh,
         disp(strcat("Iteration ", int2str(i)));
         a = c_norm(a);
         for idx = 1:numel(z)
-            backpropagation = fft2(a).*Hnq(:,:,idx);
-            masking = M(:,:,idx) .* ifft2(backpropagation);
-            propagation = (ifft2(fft2(masking).*Hq(:,:,idx)))/numel(z);
-            a = a - propagation;
+            masking = M(:,:,idx) .* propagation(a,Hnq(:,:,idx));
+            prop_mask = propagation(masking, Hq(:,:,idx));
+            a = a - prop_mask / numel(z);
         end
     end
 

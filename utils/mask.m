@@ -1,8 +1,8 @@
-function M = mask(image, u_thresh, l_thresh, dilation, lpfilter)
+function M = mask(image, thresh, dilation, lpfilter)
     M = ones(size(image,1),size(image,2));
     for id = 1:size(image,1)
         for j = 1:size(image,2)
-            if image(id,j) < u_thresh && image(id,j) > l_thresh
+            if image(id,j) > thresh
                 M(id,j) = 0;
             end
         end

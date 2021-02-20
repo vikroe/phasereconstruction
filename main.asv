@@ -13,7 +13,14 @@ background = zeros(2048,2048);
 background(9:end,:) = tmp_background(1:end-8,:);
 
 %Subtracting background from the foreground
-hologram = r_norm(image - background);
+hologram = image - background;
+hologram = hologram - min(hologram(";
+hologram = hologram / max(hologram(:));
+
+figure()
+Hq_m = RS_propagator(z_m,y,x,dx,n,lambda);
+imshow(imgaussfilt(hologram, 2,'FilterSize',1));
+%imshow(imgaussfilt(abs(propagation(hologram, Hq_m)), 2,'FilterSize',5));
 
 %% Finding the appropriate offset 
 %  (with the used images it was determined to be equal to 8)
