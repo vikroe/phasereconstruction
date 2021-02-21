@@ -9,18 +9,19 @@ image = im2double(imread(data));
 tmp_background = im2double(imread(bgd_data));
 
 %Sliding the background to fit the hologram with particles
-background = zeros(2048,2048);
+background = zeros(size(tmp_background));
 background(9:end,:) = tmp_background(1:end-8,:);
 
 %Subtracting background from the foreground
-hologram = image - background;
-hologram = hologram - min(hologram(";
-hologram = hologram / max(hologram(:));
-
-figure()
-Hq_m = RS_propagator(z_m,y,x,dx,n,lambda);
-imshow(imgaussfilt(hologram, 2,'FilterSize',1));
-%imshow(imgaussfilt(abs(propagation(hologram, Hq_m)), 2,'FilterSize',5));
+hologram = r_norm(image - background);
+if (size(hologram,1) >= (y + y_o) && size(hologram, 2) >= (x + x_o))
+    hologram = hologram(1+y_o:y+y_o, 1+x_o:x+x_o);
+else
+    disp("The set hologram dimensions are larger than the actual hologram!");
+end
+hologram = imgaussfilt(hologram,2,'FilterSize',5);
+figure();
+imshow(hologram);
 
 %% Finding the appropriate offset 
 %  (with the used images it was determined to be equal to 8)
@@ -42,6 +43,10 @@ if used_algorithm == "iterative"
     i_reconstruction = c_norm(propagation(h_reconstruction, Hq_m));
 elseif used_algorithm == "fienup"
     i_reconstruction = fienup(hologram, Hq_m, iter, r_constr, i_constr);
+elseif used_algorithm == "inverse"
+    phase = f
+else
+    disp("Chosen algorithm not recognized");
 end
 
 %% Printing the results

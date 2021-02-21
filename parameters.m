@@ -15,17 +15,17 @@ lambda = 525e-9; %Light wavelength
 z_m = 2.75e-3; %The main image plane used for reconstruction
 
 x = 2048; %Width of the reconstructed image
-y = x; %Height of the reconstructed image
+y = 2040; %Height of the reconstructed image
 
-x_o = 0; % Offset on the x-axis (2nd dimension) TODO
-y_o = 8; % Offset of the y-axis (1st dimension) TODO
+x_o = 0; % Offset on the x-axis (2nd dimension)
+y_o = 8; % Offset of the y-axis (1st dimension)
 
 % Used algorithm for phase reconstruction
 % "iterative" - Algorithm from [1], is not currently in a working order and
 % will possibly be abandoned in the future
 % "inverse" - Algorithm from [2], not yet implemented
 % "fienup" - The famous Fienup's algorithm [3]
-used_algorithm = "fienup";
+used_algorithm = "inverse";
 
 %Additional parameters used for the iterative algorithm
 if used_algorithm == "iterative"
@@ -41,4 +41,11 @@ if used_algorithm == "fienup"
     i_constr = [-1,0];
 end
 
-iter = 10; %Maximum number of iterations
+% Additional parameters used for the basic Momey's inverse algorithm
+if used_algorithm == "inverse"
+    mu = 0.1;
+    t = 0.5;
+    flag = true;
+end
+
+iter = 100; %Maximum number of iterations
