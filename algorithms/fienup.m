@@ -29,6 +29,10 @@ function reconstruction = fienup(image, H, iter, i_constr, r_constr)
                     max(min([imag(guess(qy,qx)),i_constr(2)]),i_constr(1)));
             end
         end
+        %c = sum(abs(a(:)).*sqrt(image(:)))/sum(abs(a(:)).^2);
+        %cost_pixel = c*abs(a)-sqrt(image);
+        %cost = sum(cost_pixel(:).^2);
+        %disp(strcat("Current cost is " ,num2str(cost) ));
     end
     reconstruction = guess;
 end

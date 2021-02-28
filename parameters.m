@@ -20,12 +20,16 @@ y = 2040; %Height of the reconstructed image
 x_o = 0; % Offset on the x-axis (2nd dimension)
 y_o = 8; % Offset of the y-axis (1st dimension)
 
+reduce_background = false;
+simulation = false;
+
 % Used algorithm for phase reconstruction
 % "iterative" - Algorithm from [1], is not currently in a working order and
 % will possibly be abandoned in the future
 % "inverse" - Algorithm from [2], not yet implemented
 % "fienup" - The famous Fienup's algorithm [3]
-used_algorithm = "inverse";
+% "multi" - Multilayer version of the inverse algorithm
+used_algorithm = "multi";
 
 %Additional parameters used for the iterative algorithm
 if used_algorithm == "iterative"
@@ -33,19 +37,19 @@ if used_algorithm == "iterative"
     threshold = 0.02; % threshold for masking
     dilation = 5; % the amount of pixels by which to dilate the calculated mask
     lpfilter = 11; % parameter for gaussian filter by which the mask is 
-end
-
-%Additional parameters used for the Fienup's algorithm
-if used_algorithm == "fienup"
-    r_constr = [-1,1];
-    i_constr = [-1,0];
+elseif used_algorithm == "multi"
+    r_constr = [-1 0;0 0];
+    i_constr = [0 -1; 0 1];
+    z = [1e-3; 2.75e-3];
+else
+    r_constr = [0,0];
+    i_constr = [-1,1];
 end
 
 % Additional parameters used for the basic Momey's inverse algorithm
-if used_algorithm == "inverse"
-    mu = 0.1;
+if used_algorithm == "inverse" || used_algorithm == "multi"
+    mu = 0.01;
     t = 0.5;
-    flag = true;
 end
 
-iter = 100; %Maximum number of iterations
+iter = 5; %Maximum number of iterations
