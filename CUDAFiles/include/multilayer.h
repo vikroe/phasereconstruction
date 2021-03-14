@@ -30,6 +30,8 @@ class MultiLayer
         cufftComplex *image; // device memory complex image
         float *imagef; // device memory real image
         float *cost;
+        float* ImodelSum; // device memory sum of Imodel
+        float* imageSum; // device memory sum of image
 
     public:
         float *h_cost;

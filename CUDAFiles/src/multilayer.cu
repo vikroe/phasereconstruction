@@ -20,6 +20,8 @@ MultiLayer::MultiLayer(int width, int height, std::vector<float> z, float dx, fl
 
     cudaMalloc(&image, width*height*sizeof(cufftComplex));
     cudaMalloc(&imagef, width*height*sizeof(float));
+    cudaMalloc(&ImodelSum, N_BLOCKS*sizeof(float));
+    cudaMalloc(&imageSum, N_BLOCKS*sizeof(float));
     
     cudaMalloc(&model, width*height*sizeof(cufftComplex));
     cudaMalloc(&Imodel, width*height*sizeof(float));
@@ -33,13 +35,13 @@ void MultiLayer::multilayerPropagator(std::vector<float> z, float dx, float lamb
     cufftComplex *placeHolder;
     for(int i = 0; i < numLayers; i++){
         placeHolder = &Hq[i*width*height];
-        propagator<<<N_BLOCKS,numBlocks>>>(width, height, z[i], dx, n, lambda, placeHolder);
+        propagator<<<N_BLOCKS,N_THREADS>>>(width, height, z[i], dx, n, lambda, placeHolder);
     }
 }
 
 void MultiLayer::propagate(cufftComplex* kernel, cufftComplex* input, cufftComplex* out){
     cufftExecC2C(fftPlan, input, out, CUFFT_FORWARD);
-    multiply<<<N_BLOCKS, numBlocks>>>(width,height,kernel,out);
+    multiply<<<N_BLOCKS, N_THREADS>>>(width,height,kernel,out);
     cufftExecC2C(fftPlan, out, out, CUFFT_INVERSE);
 }
 
@@ -49,19 +51,19 @@ void MultiLayer::iterate(float *input, int iters){
     cufftComplex *placeHolder;
     cufftComplex *HplaceHolder;
 
-    conjugate<<<N_BLOCKS,numBlocks>>>(width*numLayers, height, Hq, Hn);
+    conjugate<<<N_BLOCKS,N_THREADS>>>(width*numLayers, height, Hq, Hn);
 
     //Allocating the device memory array for cost at each iteration
     cudaMalloc(&cost, (1+iters)*sizeof(float));
 
     //Copying the input image from host to device memory - computationally complex
     cudaMemcpy(imagef, input, width*height*sizeof(float), cudaMemcpyHostToDevice);
-    F2C<<<N_BLOCKS, numBlocks>>>(width, height, imagef, image);
+    F2C<<<N_BLOCKS, N_THREADS>>>(width, height, imagef, image);
 
     //Copying the device memory image to device memory guesses
     for(int i = 0; i < numLayers; i++){
-        cudaMemcpy(&guess[i*width*height], image, cudaMemcpyDeviceToDevice);
-        cudaMemcpy(&u[i*width*height], image, cudaMemcpyDeviceToDevice);
+        cudaMemcpy(&guess[i*width*height], image, width*height*sizeof(cufftComplex), cudaMemcpyDeviceToDevice);
+        cudaMemcpy(&u[i*width*height], image, width*height*sizeof(cufftComplex), cudaMemcpyDeviceToDevice);
     }
 
     for(int iter = 0; iter < iters; iter++){
@@ -72,9 +74,23 @@ void MultiLayer::iterate(float *input, int iters){
             HplaceHolder = &Hq[i*width*height];
             propagate(HplaceHolder, image, placeHolder);
         }
-        modelFunc<<<N_BLOCKS,numBlocks>>>(width, height, numLayers, 1.0f, 0, temporary, model);
-        ImodelFunc<<<N_BLOCKS,numBlocks>>>(width,height,model,Imodel);
+        modelFunc<<<N_BLOCKS,N_THREADS>>>(width, height, numLayers, 1.0f, 0, temporary, model);
+        ImodelFunc<<<N_BLOCKS,N_THREADS>>>(width,height,model,Imodel);
 
+        placeHolder = &temporary[0];
+        multiplyf<<<N_BLOCKS, N_THREADS>>>(width, height, Imodel, imagef, placeHolder);
+        sum<<<N_BLOCKS, N_THREADS>>>(width, height, placeHolder, imageSum);
+        sum<<<1, N_THREADS>>>(width, height, imageSum, imageSum);
+        placeHolder = &temporary[width*height];
+        multiplyf<<<N_BLOCKS, N_THREADS>>>(width, height, Imodel, Imodel, placeHolder);
+        sum<<<N_BLOCKS, N_THREADS>>>(width, height, placeHolder, ImodelSum);
+        sum<<<1, N_THREADS>>>(width, height, ImodelSum, ImodelSum);
+
+        simpleDivision<<<1,1>>>(imageSum, ImodelSum);
+
+        
+
+        
         
     
     }
@@ -95,5 +111,7 @@ MultiLayer::~MultiLayer(){
     cudaFree(newGuess);
     cudaFree(u);
     cudaFree(Imodel);
+    cudaFree(ImodelSum);
+    cudaFree(imageSum);
     cufftDestroy(fftPlan);
 }
