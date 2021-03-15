@@ -26,21 +26,29 @@ __global__ void propagator(int N, int M, float z, float dx, float n, float lambd
     }
 }
 
-__global__ void multiply(int N, int M, cufftComplex*  in, cufftComplex*  out){
+__global__ void multiply(int N, int M, cufftComplex*  in1, cufftComplex* in2, cufftComplex*  out){
     cufftComplex temp;
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
     for(int i = index; i < N*M; i += stride){
-        temp = make_cuFloatComplex(out[i].x/(float)(N*M), out[i].y/(float)(N*M));
-        out[i] = cuCmulf(in[i], temp);
+        temp = make_cuFloatComplex(in2[i].x/(float)(N*M), in2[i].y/(float)(N*M));
+        out[i] = cuCmulf(in1[i], temp);
     }
 }
 
-__global__ void multiply(int N, int M, float*  in1, float*  in2, float*  out){
+__global__ void multiplyf(int N, int M, float*  in1, float*  in2, float*  out){
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
     for(int i = index; i < N*M; i += stride){
         out[i] = in1[i]*in2[i];
+    }
+}
+
+__global__ void abs(int N, int M, cufftComplex* in, float* out){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < N*M; i += stride){
+        out[i] = cuCabsf(in[i]);
     }
 }
 
@@ -125,6 +133,23 @@ __global__ void conjugate(int N, int M, cufftComplex *in, cufftComplex* out){
     }
 }
 
-__global__ void simpleDivision(float* in, float* out){
-        out[0] = in[0] / out[0];
+__global__ void simpleDivision(float* num, float* div, float* res){
+        int i = threadIdx.x;
+        res[i] = num[i] / div[i];
+}
+
+__global__ void linear(int N, int M, float* coef, float* constant, float* in, float* out){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < N*M; i += stride){
+        out[i] = coef[0]*in[i] + constant[i];
+    }
+}
+
+__global__ void square(int count, float* in, float* out){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        out[i] = SQUARE(in[i]);
+    }
 }

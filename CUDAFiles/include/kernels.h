@@ -11,12 +11,15 @@
 __global__ void propagator(int N, int M, float z, float dx, float n, float lambda, cufftComplex* Hq);
 __global__ void multiply(int N, int M, cufftComplex* in, cufftComplex* out);
 __global__ void multiplyf(int N, int M, float* in1, float* in2, float* out);
+__global__ void abs(int N, int M, cufftComplex* in, float* out);
 __device__ void warpReduce(volatile float *sdata, int thIdx);
 __global__ void sum(int N, int M, float* in, float* result);
 __global__ void F2C(int N, int M, float* in, cufftComplex* out);
 __global__ void modelFunc(int N, int M, int count, float rOffset, float iOffset, cufftComplex* in, cufftComplex* out);
 __global__ void ImodelFunc(int N, int M, cufftComplex* in, float* out);
 __global__ void conjugate(int N, int M, cufftComplex *in, cufftComplex* out);
-__global__ void simpleDivision(float* in, float* out);
+__global__ void simpleDivision(float* num, float* div, float* res);
+__global__ void linear(int N, int M, float* coef, float* constant, float* in, float* out);
+__global__ void square(int count, float* in, float* out);
 
 #endif

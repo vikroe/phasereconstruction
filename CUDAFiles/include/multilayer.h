@@ -15,6 +15,7 @@ class MultiLayer
         cufftComplex *u; 
         cufftComplex *model; // device memory model for transformation between transmittance planes to 
         cufftComplex *temporary; // device memory placeholder for intermediate results
+        float *temporaryf;
 
         int width;
         int height;
@@ -30,14 +31,15 @@ class MultiLayer
         cufftComplex *image; // device memory complex image
         float *imagef; // device memory real image
         float *cost;
-        float* ImodelSum; // device memory sum of Imodel
-        float* imageSum; // device memory sum of image
+        float* sumArr; // device memory for sum storing
+        cufftComplex* c;
 
     public:
         float *h_cost;
         MultiLayer(int width, int height, std::vector<float> z, float dx, float lambda, float n);
-        void iterate(float *input, int iters);
+        void iterate(float *input, int iters, float mu, float* rconstr, float* iconstr);
         void propagate(cufftComplex* kernel, cufftComplex* input, cufftComplex* out);
+        void propagatef(cufftComplex* kernel, float* input, cufftComplex* out);
 
         void multilayerPropagator(std::vector<float> z, float dx, float lambda, float n);
 

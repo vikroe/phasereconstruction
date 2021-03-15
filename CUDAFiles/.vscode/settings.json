@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.cu": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "algorithm": "cpp"
     }
 }
