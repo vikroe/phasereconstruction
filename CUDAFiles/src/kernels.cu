@@ -26,13 +26,13 @@ __global__ void propagator(int N, int M, float z, float dx, float n, float lambd
     }
 }
 
-__global__ void multiply(int N, int M, cufftComplex*  in1, cufftComplex* in2, cufftComplex*  out){
+__global__ void multiply(int N, int M, cufftComplex*  in, cufftComplex* out){
     cufftComplex temp;
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
     for(int i = index; i < N*M; i += stride){
-        temp = make_cuFloatComplex(in2[i].x/(float)(N*M), in2[i].y/(float)(N*M));
-        out[i] = cuCmulf(in1[i], temp);
+        temp = make_cuFloatComplex(in[i].x/(float)(N*M), in[i].y/(float)(N*M));
+        out[i] = cuCmulf(out[i], temp);
     }
 }
 
@@ -44,11 +44,29 @@ __global__ void multiplyf(int N, int M, float*  in1, float*  in2, float*  out){
     }
 }
 
-__global__ void abs(int N, int M, cufftComplex* in, float* out){
+__global__ void multiplyfc(int count, float* in, cufftComplex* out){
+    cufftComplex temp;
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        temp = make_cuFloatComplex(in[i], 0);
+        out[i] = cuCmulf(temp,out[i]);
+    }
+}
+
+__global__ void absolute(int N, int M, cufftComplex* in, float* out){
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
     for(int i = index; i < N*M; i += stride){
         out[i] = cuCabsf(in[i]);
+    }
+}
+
+__global__ void angle(int count, cufftComplex* in, float* out){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        out[i] = atan2f(in[i].y,in[i].x);
     }
 }
 
@@ -63,14 +81,14 @@ __device__ void warpReduce(volatile float *sdata, int thIdx){
 }
 
 //Fast parallel sum 
-__global__ void sum(int N, int M, float* in, float* result){
+__global__ void sum(int count, float* in, float* result){
     extern __shared__ float sharedIn[];
     int thIdx = threadIdx.x;
     int index = blockIdx.x*(N_THREADS*2) + thIdx;
     int stride = N_THREADS*2*gridDim.x;
     sharedIn[thIdx] = 0;
     
-    while(index < N*M){
+    while(index < count){
         sharedIn[thIdx] += in[index] + in[index+N_THREADS];
         index += stride;
     }
@@ -138,11 +156,14 @@ __global__ void simpleDivision(float* num, float* div, float* res){
         res[i] = num[i] / div[i];
 }
 
-__global__ void linear(int N, int M, float* coef, float* constant, float* in, float* out){
+__global__ void linear(int N, int M, float* coef, float* constant, float* in, float* out, bool sign){
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
     for(int i = index; i < N*M; i += stride){
-        out[i] = coef[0]*in[i] + constant[i];
+        if(sign)
+            out[i] = coef[0]*in[i] + constant[i];
+        else
+            out[i] = coef[0]*in[i] - constant[i];
     }
 }
 
@@ -151,5 +172,83 @@ __global__ void square(int count, float* in, float* out){
     int stride = blockDim.x * gridDim.x;
     for(int i = index; i < count; i += stride){
         out[i] = SQUARE(in[i]);
+    }
+}
+
+__global__ void simpleSum(float* in1, float* in2, float* out){
+    int i = threadIdx.x;
+    out[i] = in1[i] + in2[i];
+}
+
+__global__ void cMultiplyf(int count, float constant, float* in, float* out){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        out[i] = constant*in[i];
+    }
+}
+
+__global__ void cMultiply(int count, cufftComplex* constant, cufftComplex* in, cufftComplex* out){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        out[i] = cuCmulf(constant[0],in[i]);
+    }
+}
+
+__global__ void cMultiplyfc(int count, float constant, cufftComplex* in, cufftComplex* out){
+    cufftComplex temp = make_cuFloatComplex(constant, 0);
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        out[i] = cuCmulf(temp,in[i]);
+    }
+}
+
+__global__ void cMultiplyfcp(int count, float *constant, cufftComplex* in, cufftComplex* out){
+    cufftComplex temp = make_cuFloatComplex(constant[0], 0);
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        out[i] = cuCmulf(temp,in[i]);
+    }
+}
+
+__global__ void add(int count, cufftComplex* in1, cufftComplex* in2, cufftComplex* out, bool sign){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        if (sign)
+            out[i] = cuCaddf(in1[i], in2[i]);
+        else
+            out[i] = cuCsubf(in1[i], in2[i]); 
+    }
+}
+
+__global__ void strictBounds(int count, cufftComplex* arr, float r_min, float r_max, float i_min, float i_max){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        if (arr[i].x < r_min)
+            arr[i].x = r_min;
+        else if (arr[i].x > r_max)
+            arr[i].x = r_max;
+        if (arr[i].y < i_min)
+            arr[i].y = i_min;
+        else if (arr[i].y > i_max)
+            arr[i].y = i_max; 
+    }
+}
+
+__global__ void softBounds(int count, cufftComplex* arr, float mu, float t){
+    cufftComplex zero = make_cuFloatComplex(0,0);
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        cufftComplex temp = make_cuFloatComplex(arr[i].x-mu*t,arr[i].y);
+        if(cuCabsf(temp) < 0)
+            arr[i] = zero;
+        else
+            arr[i] = temp;
     }
 }

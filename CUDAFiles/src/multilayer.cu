@@ -4,6 +4,7 @@
 #include "kernels.h"
 #include <vector>
 #include <iostream>
+#include <math.h>
 
 MultiLayer::MultiLayer(int width, int height, std::vector<float> z, float dx, float lambda, float n) :width{width}, height{height}
 {
@@ -22,7 +23,7 @@ MultiLayer::MultiLayer(int width, int height, std::vector<float> z, float dx, fl
     cudaMalloc(&image, width*height*sizeof(cufftComplex));
     cudaMalloc(&imagef, width*height*sizeof(float));
     cudaMalloc(&sumArr, 2*N_BLOCKS*sizeof(float));
-    cudaMalloc(&c, sizeof(cufftComplex));
+    cudaMalloc(&c, sizeof(float));
     
     cudaMalloc(&model, width*height*sizeof(cufftComplex));
     cudaMalloc(&Imodel, width*height*sizeof(float));
@@ -30,6 +31,7 @@ MultiLayer::MultiLayer(int width, int height, std::vector<float> z, float dx, fl
     cufftPlan2d(&fftPlan, width, height, CUFFT_C2C);
 
     multilayerPropagator(z, dx, lambda, n);
+
 }
 
 void MultiLayer::multilayerPropagator(std::vector<float> z, float dx, float lambda, float n){
@@ -46,10 +48,12 @@ void MultiLayer::propagate(cufftComplex* kernel, cufftComplex* input, cufftCompl
     cufftExecC2C(fftPlan, out, out, CUFFT_INVERSE);
 }
 
-void MultiLayer::iterate(float *input, int iters, float mu, float* rconstr, float* iconstr){
+void MultiLayer::iterate(float *input, int iters, float mu, float* rconstr, float* iconstr, float* modulus, float* phase){
     // Initialization of variables
     s = 1;
+    float t = 0.5;
     int count = width*height;
+    float *fplaceHolder;
     cufftComplex *placeHolder;
     cufftComplex *HplaceHolder;
 
@@ -79,35 +83,103 @@ void MultiLayer::iterate(float *input, int iters, float mu, float* rconstr, floa
         modelFunc<<<N_BLOCKS,N_THREADS>>>(width, height, numLayers, 1.0f, 0, temporary, model);
         ImodelFunc<<<N_BLOCKS,N_THREADS>>>(width,height,model,Imodel);
 
-        placeHolder = &temporary[0];
-        multiplyf<<<N_BLOCKS, N_THREADS>>>(width, height, Imodel, imagef, placeHolder);
-        sum<<<N_BLOCKS, N_THREADS, N_THREADS*sizeof(float)>>>(width, height, placeHolder, sumArr);
-        sum<<<1, N_BLOCKS, N_BLOCKS*sizeof(float)>>>(N_BLOCKS, 1, sumArr, sumArr);
-        placeHolder = &temporary[count];
-        multiplyf<<<N_BLOCKS, N_THREADS>>>(width, height, Imodel, Imodel, placeHolder);
-        sum<<<N_BLOCKS, N_THREADS, N_THREADS*sizeof(float)>>>(width, height, placeHolder, &sumArr[N_BLOCKS]);
-        sum<<<1, N_BLOCKS, N_BLOCKS*sizeof(float)>>>(N_BLOCKS, height, &sumArr[N_BLOCKS], &sumArr[N_BLOCKS]);
+        fplaceHolder = temporaryf;
+        multiplyf<<<N_BLOCKS, N_THREADS>>>(width, height, Imodel, imagef, fplaceHolder);
+        sum<<<N_BLOCKS, N_THREADS, N_THREADS*sizeof(float)>>>(count, fplaceHolder, sumArr);
+        sum<<<1, N_BLOCKS, N_BLOCKS*sizeof(float)>>>(N_BLOCKS, sumArr, sumArr);
+        fplaceHolder = &temporaryf[count];
+        multiplyf<<<N_BLOCKS, N_THREADS>>>(width, height, Imodel, Imodel, fplaceHolder);
+        sum<<<N_BLOCKS, N_THREADS, N_THREADS*sizeof(float)>>>(count, fplaceHolder, &sumArr[N_BLOCKS]);
+        sum<<<1, N_BLOCKS, N_BLOCKS*sizeof(float)>>>(N_BLOCKS, &sumArr[N_BLOCKS], &sumArr[N_BLOCKS]);
 
-        simpleDivision<<<1,1>>>(imageSum, ImodelSum, c);
+        simpleDivision<<<1,1>>>(sumArr, &sumArr[N_BLOCKS], c);
 
-        linear<<<N_BLOCKS,N_THREADS>>>(width,height,c,imagef,Imodel, temporaryf);
+        linear<<<N_BLOCKS,N_THREADS>>>(width,height,c,imagef,Imodel, temporaryf, false);
 
-        abs<<<N_BLOCKS,N_THREADS>>>(2*width,height,guess,&temporaryf[2*count]);
-        sum<<<N_BLOCKS,N_THREADS, N_THREADS*sizeof(float)>>>(2*width,height,&temporaryf[2*count],sumArr);
+        absolute<<<N_BLOCKS,N_THREADS>>>(numLayers*width,height,guess,&temporaryf[2*count]);
+        sum<<<N_BLOCKS,N_THREADS, N_THREADS*sizeof(float)>>>(numLayers*count,&temporaryf[2*count],sumArr);
         sum<<<1,N_BLOCKS, N_BLOCKS*sizeof(float)>>>(N_BLOCKS,sumArr,sumArr);
 
         square<<<N_BLOCKS,N_THREADS>>>(count, temporaryf, &temporaryf[count]);
-        sum<<<N_BLOCKS,N_THREADS, N_THREADS*sizeof(float)>>>(2*width,height,&temporaryf[count],&sumArr[N_BLOCKS]);
-        sum<<<1,N_BLOCKS, N_BLOCKS*sizeof(float)>>>(N_BLOCKS,&temporaryf[2*count],&sumArr[N_BLOCKS]);
+        sum<<<N_BLOCKS,N_THREADS, N_THREADS*sizeof(float)>>>(numLayers*count,&temporaryf[count],&sumArr[N_BLOCKS]);
+        sum<<<1,N_BLOCKS, N_BLOCKS*sizeof(float)>>>(N_BLOCKS,&sumArr[N_BLOCKS],&sumArr[N_BLOCKS]);
 
         //Cost calculation with sparsity constraint
-        cost<<<N_BLOCKS,N_THREADS>>>(width,height,numLayers,)
+        cMultiplyf<<<1,1>>>(1,mu,sumArr,sumArr);
+        simpleSum<<<1,1>>>(&sumArr[N_BLOCKS],sumArr,&cost[iter]);
         
-        
+        multiplyfc<<<N_BLOCKS,N_THREADS>>>(count*numLayers, temporaryf, temporary);
+        for(int i = 0; i < numLayers; i++){
+            placeHolder = &res[i*count];
+            HplaceHolder = &Hn[i*count];
+            propagate(HplaceHolder, temporary, placeHolder);
+        }
+
+        cMultiplyf<<<1,1>>>(1,(2*t),c,c);
+        cMultiplyfcp<<<N_BLOCKS,N_THREADS>>>(numLayers*count, c, res, temporary);
+        add<<<N_BLOCKS,N_THREADS>>>(count*numLayers, u, temporary, newGuess, false);
+
+        //Applying strict bounds
+        for(int i = 0 ; i < numLayers ; i++){
+            placeHolder = &newGuess[count*i];
+            strictBounds<<<N_BLOCKS,N_THREADS>>>(count, placeHolder, rconstr[i*2], rconstr[i*2+1], iconstr[i*2], iconstr[i*2+1]);
+        }
+
+        //Applying soft thresholding bounds
+        softBounds<<<N_BLOCKS,N_THREADS>>>(count*numLayers,newGuess,mu,t);
+
+        float s_new = 0.5*(1+std::sqrt(1+4*s*s));
+        float temp = (s-1)/s_new;
+        add<<<N_BLOCKS,N_THREADS>>>(count*numLayers,newGuess,guess, temporary,false);
+        cMultiplyfc<<<N_BLOCKS,N_THREADS>>>(count,temp,temporary,temporary);
+        add<<<N_BLOCKS,N_THREADS>>>(count*numLayers, newGuess, temporary, u, false);
+
+        s = s_new;
+        cudaMemcpy(guess, newGuess, numLayers*width*height*sizeof(cufftComplex), cudaMemcpyDeviceToDevice);
     
     }
 
     // Final cost calculation
+    //Calculating the current iteration model
+    for(int i = 0; i < numLayers; i++){
+        placeHolder = &temporary[i*width*height];
+        HplaceHolder = &Hq[i*width*height];
+        propagate(HplaceHolder, image, placeHolder);
+    }
+    modelFunc<<<N_BLOCKS,N_THREADS>>>(width, height, numLayers, 1.0f, 0, temporary, model);
+    ImodelFunc<<<N_BLOCKS,N_THREADS>>>(width,height,model,Imodel);
+
+    fplaceHolder = temporaryf;
+    multiplyf<<<N_BLOCKS, N_THREADS>>>(width, height, Imodel, imagef, fplaceHolder);
+    sum<<<N_BLOCKS, N_THREADS, N_THREADS*sizeof(float)>>>(count, fplaceHolder, sumArr);
+    sum<<<1, N_BLOCKS, N_BLOCKS*sizeof(float)>>>(N_BLOCKS, sumArr, sumArr);
+    fplaceHolder = &temporaryf[count];
+    multiplyf<<<N_BLOCKS, N_THREADS>>>(width, height, Imodel, Imodel, fplaceHolder);
+    sum<<<N_BLOCKS, N_THREADS, N_THREADS*sizeof(float)>>>(count, fplaceHolder, &sumArr[N_BLOCKS]);
+    sum<<<1, N_BLOCKS, N_BLOCKS*sizeof(float)>>>(N_BLOCKS, &sumArr[N_BLOCKS], &sumArr[N_BLOCKS]);
+
+    simpleDivision<<<1,1>>>(sumArr, &sumArr[N_BLOCKS], c);
+
+    linear<<<N_BLOCKS,N_THREADS>>>(width,height,c,imagef,Imodel, temporaryf, false);
+
+    absolute<<<N_BLOCKS,N_THREADS>>>(numLayers*width,height,guess,&temporaryf[2*count]);
+    sum<<<N_BLOCKS,N_THREADS, N_THREADS*sizeof(float)>>>(numLayers*count,&temporaryf[2*count],sumArr);
+    sum<<<1,N_BLOCKS, N_BLOCKS*sizeof(float)>>>(N_BLOCKS,sumArr,sumArr);
+
+    square<<<N_BLOCKS,N_THREADS>>>(count, temporaryf, &temporaryf[count]);
+    sum<<<N_BLOCKS,N_THREADS, N_THREADS*sizeof(float)>>>(numLayers*count,&temporaryf[count],&sumArr[N_BLOCKS]);
+    sum<<<1,N_BLOCKS, N_BLOCKS*sizeof(float)>>>(N_BLOCKS,&sumArr[N_BLOCKS],&sumArr[N_BLOCKS]);
+
+    //Cost calculation with sparsity constraint
+    cMultiplyf<<<1,1>>>(1,mu,sumArr,sumArr);
+    simpleSum<<<1,1>>>(&sumArr[N_BLOCKS],sumArr,&cost[iters]);
+
+    // Moving results to host memory
+
+    absolute<<<N_BLOCKS,N_THREADS>>>(width*numLayers,height,guess,temporaryf);
+    cudaMemcpy(modulus,temporaryf,width*numLayers*height,cudaMemcpyDeviceToHost);
+    angle<<<N_BLOCKS,N_THREADS>>>(count*numLayers,guess,temporaryf);
+    cudaMemcpy(phase,temporaryf,width*numLayers*height,cudaMemcpyDeviceToHost);
 
     // Deallocation of variables
     cudaFree(cost);
@@ -124,9 +196,8 @@ MultiLayer::~MultiLayer(){
     cudaFree(guess);
     cudaFree(newGuess);
     cudaFree(u);
-    cudaFree(Imodel);
-    cudaFree(sumArr);
     cudaFree(temporaryf);
     cudaFree(c);
     cufftDestroy(fftPlan);
+    free(h_cost);
 }
