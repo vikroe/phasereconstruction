@@ -19,11 +19,12 @@ class MultiLayer
 
         int width;
         int height;
+        int count;
+        int m_count;
 
         float *Imodel; // device memory norm of the model
         float s; // FISTA coefficient
         int numLayers;
-        int numBlocks;
         cufftHandle fftPlan;
 
         cufftComplex *Hq; // device memory backpropagation kernel
@@ -34,14 +35,18 @@ class MultiLayer
         float* sumArr; // device memory for sum storing
         float* c;
 
+        void multilayerPropagator(std::vector<float> z, float dx, float lambda, float n);
+
     public:
         float *h_cost;
-        MultiLayer(int width, int height, std::vector<float> z, float dx, float lambda, float n);
-        void iterate(float *input, int iters, float mu, float* rconstr, float* iconstr, float* modulus, float* phase);
-        void propagate(cufftComplex* kernel, cufftComplex* input, cufftComplex* out);
-        void propagatef(cufftComplex* kernel, float* input, cufftComplex* out);
 
-        void multilayerPropagator(std::vector<float> z, float dx, float lambda, float n);
+        float* modulus;
+        float* phase;
+        
+        MultiLayer(int width, int height, std::vector<float> z, float dx, float lambda, float n);
+        
+        void iterate(float *input, int iters, float mu, float* rconstr, float* iconstr);
+        void propagate(cufftComplex* kernel, cufftComplex* input, cufftComplex* out);
 
         ~MultiLayer();
 

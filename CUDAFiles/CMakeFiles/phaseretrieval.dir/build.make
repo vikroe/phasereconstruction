@@ -76,9 +76,9 @@ include CMakeFiles/phaseretrieval.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/phaseretrieval.dir/flags.make
 
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: include/kernels.h
 CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: include/lodepng.h
 CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: include/matplotlibcpp.h
+CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: include/multilayer.h
 CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: main.cu
 CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/alloca.h
 CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/asm-generic/bitsperlong.h

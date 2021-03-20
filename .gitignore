@@ -4,5 +4,10 @@ IFT2Dc.m
 Propagator.m
 old_main.m
 
+MatlabFiles/FT2Dc.m
+MatlabFiles/IFT2Dc.m
+MatlabFiles/Propagator.m
+MatlabFiles/old_main.m
+
 #Ignore autosave files
 *.asv
