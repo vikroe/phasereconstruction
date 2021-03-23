@@ -2,6 +2,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o"
   "CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o"
   "CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o"
+  "CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o"
+  "CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o"
   "CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o"
   "CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o"
   "phaseretrieval"

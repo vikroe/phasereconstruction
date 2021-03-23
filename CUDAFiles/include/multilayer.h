@@ -1,52 +1,53 @@
-#ifndef MULTILAYER
-#define MULTILAYER
+#ifndef MULTILAYER_H
+#define MULTILAYER_H
 
 #include "cuda.h"
 #include "cufft.h"
+#include "blur.h"
 #include <vector>
 #include <iostream>
 
 class MultiLayer
 {
     private:
-        cufftComplex *res; // device memory residues
-        cufftComplex *guess; // device memory planar guesses
-        cufftComplex *newGuess; // device memory updated guesses for each plane
-        cufftComplex *u; 
-        cufftComplex *model; // device memory model for transformation between transmittance planes to 
-        cufftComplex *temporary; // device memory placeholder for intermediate results
-        float *temporaryf;
+        cufftDoubleComplex *res; // device memory residues
+        cufftDoubleComplex *guess; // device memory planar guesses
+        cufftDoubleComplex *newGuess; // device memory updated guesses for each plane
+        cufftDoubleComplex *u; 
+        cufftDoubleComplex *model; // device memory model for transformation between transmittance planes to 
+        cufftDoubleComplex *temporary; // device memory placeholder for intermediate results
+        double *temporaryf;
 
         int width;
         int height;
         int count;
         int m_count;
+        Blur *blur;
 
-        float *Imodel; // device memory norm of the model
-        float s; // FISTA coefficient
+        double *Imodel; // device memory norm of the model
+        double s; // FISTA coefficient
         int numLayers;
         cufftHandle fftPlan;
 
-        cufftComplex *Hq; // device memory backpropagation kernel
-        cufftComplex *Hn; // device memory propagation kernel
-        cufftComplex *image; // device memory complex image
-        float *imagef; // device memory real image
-        float *cost;
-        float* sumArr; // device memory for sum storing
-        float* c;
+        cufftDoubleComplex *Hq; // device memory backpropagation kernel
+        cufftDoubleComplex *Hn; // device memory propagation kernel
+        double *image; // device memory real image
+        double *cost;
+        double* sumArr; // device memory for sum storing
+        double* c;
 
-        void multilayerPropagator(std::vector<float> z, float dx, float lambda, float n);
+        void multilayerPropagator(std::vector<double> z, double dx, double lambda, double n);
 
     public:
-        float *h_cost;
+        double *h_cost;
 
-        float* modulus;
-        float* phase;
+        double* modulus;
+        double* phase;
         
-        MultiLayer(int width, int height, std::vector<float> z, float dx, float lambda, float n);
+        MultiLayer(int width, int height, std::vector<double> z, double dx, double lambda, double n);
         
-        void iterate(float *input, int iters, float mu, float* rconstr, float* iconstr);
-        void propagate(cufftComplex* kernel, cufftComplex* input, cufftComplex* out);
+        void iterate(double *input, int iters, double mu, double* rconstr, double* iconstr);
+        void propagate(cufftDoubleComplex* kernel, cufftDoubleComplex* input, cufftDoubleComplex* out);
 
         ~MultiLayer();
 

@@ -93,12 +93,12 @@ clean: CMakeFiles/phaseretrieval.dir/clean
 CMakeFiles/phaseretrieval.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target phaseretrieval"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target phaseretrieval"
 .PHONY : CMakeFiles/phaseretrieval.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/phaseretrieval.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/phaseretrieval.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles 0
 .PHONY : CMakeFiles/phaseretrieval.dir/rule

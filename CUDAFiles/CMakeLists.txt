@@ -9,6 +9,8 @@ set(SOURCES
         "${SRC_DIR}/lodepng.cpp"
         "${SRC_DIR}/multilayer.cu"
         "${SRC_DIR}/kernels.cu"
+        "${SRC_DIR}/blur.cu"
+        "${SRC_DIR}/cudaDebug.cu"
         )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")

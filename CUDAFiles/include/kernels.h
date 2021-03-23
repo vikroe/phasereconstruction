@@ -8,30 +8,34 @@
 #define N_BLOCKS 16
 #define N_THREADS 128
 
-__global__ void propagator(int N, int M, float z, float dx, float n, float lambda, cufftComplex* Hq);
-__global__ void multiply(int count, cufftComplex* in, cufftComplex* out);
-__global__ void multiplyfc(int count, float* in, cufftComplex* out);
-__global__ void multiplyf(int count, float* in1, float* in2, float* out);
-__global__ void absolute(int count, cufftComplex* in, float* out);
-__global__ void angle(int count, cufftComplex* in, float* out);
-__device__ void warpReduce(volatile float *sdata, int thIdx);
-__global__ void sum(int count, float* in, float* result);
-__global__ void maximum(int count, float* in, float* result);
-__global__ void F2C(int count, float* in, cufftComplex* out);
-__global__ void modelFunc(int count, int numLayers, float rOffset, float iOffset, cufftComplex* in, cufftComplex* out);
-__global__ void ImodelFunc(int count, cufftComplex* in, float* out);
-__global__ void conjugate(int count, cufftComplex *in, cufftComplex* out);
-__global__ void simpleDivision(float* num, float* div, float* res);
-__global__ void linear(int count, float* coef, float* constant, float* in, float* out, bool sign);
-__global__ void square(int count, float* in, float* out);
-__global__ void simpleSum(float* in1, float* in2, float* out);
-__global__ void cMultiplyf(int count, float constant, float* in, float* out);
-__global__ void cMultiply(int count, cufftComplex* constant, cufftComplex* in, cufftComplex* out);
-__global__ void cMultiplyfc(int count, float constant, cufftComplex* in, cufftComplex* out);
-__global__ void cMultiplyfcp(int count, float *constant, cufftComplex* in, cufftComplex* out);
-__global__ void cDividefp(int count, float *constant, float* in, float* out);
-__global__ void add(int count, cufftComplex* in1, cufftComplex* in2, cufftComplex* out, bool sign);
-__global__ void strictBounds(int count, cufftComplex* arr, float r_min, float r_max, float i_min, float i_max);
-__global__ void softBounds(int count, cufftComplex* arr, float mu, float t);
+__global__ void propagator(int N, int M, double z, double dx, double n, double lambda, cufftDoubleComplex* Hq);
+__global__ void multiply(int count, cufftDoubleComplex* in, cufftDoubleComplex* out);
+__global__ void multiplyfc(int count, double* in, cufftDoubleComplex* out);
+__global__ void multiplyf(int count, double* in1, double* in2, double* out);
+__global__ void absolute(int count, cufftDoubleComplex* in, double* out);
+__global__ void real(int count, cufftDoubleComplex* in, double* out);
+__global__ void imag(int count, cufftDoubleComplex* in, double* out);
+__global__ void angle(int count, cufftDoubleComplex* in, double* out);
+__device__ void warpReduce(volatile double *sdata, int thIdx);
+__global__ void sum(int count, double* in, double* result);
+__global__ void maximum(int count, double* in, double* result);
+__global__ void F2C(int count, double* in, cufftDoubleComplex* out);
+__global__ void modelFunc(int count, int numLayers, double rOffset, double iOffset, cufftDoubleComplex* in, cufftDoubleComplex* model, double* Imodel);
+__global__ void conjugate(int count, cufftDoubleComplex *in, cufftDoubleComplex* out);
+__global__ void simpleDivision(double* num, double* div, double* res);
+__global__ void linear(int count, double* coef, double* constant, double* in, double* out, bool sign);
+__global__ void square(int count, double* in, double* out);
+__global__ void simpleSum(double* in1, double* in2, double* out);
+__global__ void cMultiplyf(int count, double constant, double* in, double* out);
+__global__ void cMultiply(int count, cufftDoubleComplex* constant, cufftDoubleComplex* in, cufftDoubleComplex* out);
+__global__ void cMultiplyfc(int count, double constant, cufftDoubleComplex* in, cufftDoubleComplex* out);
+__global__ void cMultiplyfcp(int count, double *constant, cufftDoubleComplex* in, cufftDoubleComplex* out);
+__global__ void cDividefp(int count, double *constant, double* in, double* out);
+__global__ void add(int count, cufftDoubleComplex* in1, cufftDoubleComplex* in2, cufftDoubleComplex* out, bool sign);
+__global__ void strictBounds(int count, cufftDoubleComplex* arr, double r_min, double r_max, double i_min, double i_max);
+__global__ void softBounds(int count, cufftDoubleComplex* arr, double mu, double t);
+__global__ void rowConvolution(int N, int M, double diameter, double* kernel, double* image, double* output, bool horizontal);
+__global__ void offset(int count, double roff, double ioff, cufftDoubleComplex* in, cufftDoubleComplex* out);
+__global__ void offsetf(int count, double roff, double* in, double* out, bool sign);
 
 #endif

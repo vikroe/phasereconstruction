@@ -26,16 +26,12 @@ if simulation == false
     else
         disp("The set hologram dimensions are larger than the actual hologram!");
     end
-    
     hologram = imgaussfilt(hologram,2,'FilterSize',5);
     
 else
     
     H = RS_propagator(-z_m,y,x,dx,n,lambda);
     [hologram, ground_truth] = simulated_hologram(y,x,H,0.01);
-    
-    figure()
-    imshow(hologram);
     
 end
 
@@ -91,7 +87,7 @@ elseif used_algorithm == "multi"
     imshow((modulus1)/max((modulus1),[],'all'), [0,1]);
     title("Reconstructed amplitude 1");
     subplot(2,3,4);
-    imshow((1-modulus2)/max((1-modulus2),[],'all'), [0,1]);
+    imshow((modulus2)/max((1-modulus2),[],'all'), [0,1]);
     title("Reconstructed amplitude 2");
     subplot(2,3,2);
     imshow(angle(i_reconstruction(:,:,1)), [-pi,pi]);

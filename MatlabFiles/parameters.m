@@ -52,4 +52,4 @@ if used_algorithm == "inverse" || used_algorithm == "multi"
     t = 0.5;
 end
 
-iter = 5; %Maximum number of iterations
+iter = 3; %Maximum number of iterations
