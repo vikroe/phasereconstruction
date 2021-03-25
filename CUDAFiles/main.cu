@@ -59,8 +59,12 @@ int main(void)
     static double image[2048*2048];
     copy(temp_image.begin(), temp_image.end(), image);
 
+    auto start = chrono::steady_clock::now();
     MultiLayer *multilayer = new MultiLayer((int)width, (int)height, z, dx, lambda, n);
     multilayer->iterate(image, iters, 0.01, rconstr, iconstr);
+    auto end = chrono::steady_clock::now();
+    double elapsed = chrono::duration_cast<chrono::duration<double>>(end-start).count();
+    printf("Time for the iterative FISTA algorithm: %f\n", elapsed);
     for(int i = 0 ; i < iters+1 ; i++)
         cout << multilayer->h_cost[i] << "\n";
     
@@ -72,23 +76,22 @@ int main(void)
     static float pf2[2048*2048];
     D2F(width*height, m, mf1);
     D2F(width*height, p, pf1);
-    //D2F(width*height, &m[width*height], mf2);
+    D2F(width*height, &m[width*height], mf2);
     D2F(width*height, &p[width*height], pf2);
     
+    plt::subplot(2,2,1);
     plt::imshow(mf1, height, width, 1, keywords);
-    plt::title("Modulus for the 1st plane");
-    plt::show();
-    /*
-    plt::title("Modulus for the 2nd plane");
+    plt::title("Plane 1 - modulus");
+    plt::subplot(2,2,2);
+    plt::title("Plane 2 - modulus");
     plt::imshow(mf2, height, width, 1, keywords);
-    plt::show();
-    plt::title("Phase for 1st plane");
+    plt::subplot(2,2,3);
+    plt::title("Plane 1 - phase");
     plt::imshow(pf1, height, width, 1, keywords);
-    plt::show();
-    plt::title("Phase for 2nd plane");
+    plt::subplot(2,2,4);
+    plt::title("Plane 2 - phase");
     plt::imshow(pf2, height, width, 1, keywords);
     plt::show();
-    */
     delete multilayer;
 
 

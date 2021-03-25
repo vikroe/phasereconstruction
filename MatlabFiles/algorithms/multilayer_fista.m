@@ -25,7 +25,6 @@ function reconstruction = multilayer_fista(image, H, iter, mu, t, r_constr, i_co
         r(:,:,1) = propagation(model(:,:,1).*(c*Imodel - image), Hn(:,:,1));
         r(:,:,2) = propagation(model(:,:,1).*(c*Imodel - image), Hn(:,:,2));
         new_guess = u - 2*t*c*r;
-        2*t*c
         
         %strict bounds
         for k = 1:size(H,3)
@@ -33,7 +32,7 @@ function reconstruction = multilayer_fista(image, H, iter, mu, t, r_constr, i_co
                 for l = 1:width
                     new_guess(j,l,k) = complex(max(min([real(new_guess(j,l,k)),r_constr(2,k)]),r_constr(1,k)),...
                         max(min([imag(new_guess(j,l,k)),i_constr(2,k)]),i_constr(1,k)));
-                    new_guess(j,l,k) = max(0, new_guess(j,l,k) - mu*t);
+                     %new_guess(j,l,k) = max(0, new_guess(j,l,k) - mu*t);
                 end
             end
         end

@@ -18,30 +18,31 @@ MultiLayer::MultiLayer(int width, int height, std::vector<double> z, double dx, 
     m_count = width*height*numLayers;
     blur = new Blur();
 
+    allocate();
+    multilayerPropagator(z, dx, lambda, n);
+    conjugate<<<N_BLOCKS,N_THREADS>>>(m_count, Hq, Hn);
+}
+
+void MultiLayer::allocate(){
+    cudaMalloc(&model, count*sizeof(cufftDoubleComplex));
     cudaMalloc(&Hq, m_count*sizeof(cufftDoubleComplex));
     cudaMalloc(&Hn, m_count*sizeof(cufftDoubleComplex));
-    cudaMalloc(&res, m_count*sizeof(cufftDoubleComplex));
     cudaMalloc(&guess, m_count*sizeof(cufftDoubleComplex));
     cudaMalloc(&newGuess, m_count*sizeof(cufftDoubleComplex));
     cudaMalloc(&u, m_count*sizeof(cufftDoubleComplex));
     cudaMalloc(&temporary, m_count*sizeof(cufftDoubleComplex));
-    cudaMalloc(&temporaryf, 2*m_count*sizeof(double));
 
-    cudaMalloc(&image, count*sizeof(double));
     cudaMalloc(&sumArr, 2*sizeof(double));
     cudaMalloc(&c, sizeof(double));
     
-    cudaMalloc(&model, count*sizeof(cufftDoubleComplex));
+    cudaMalloc(&image, count*sizeof(double));
     cudaMalloc(&Imodel, count*sizeof(double));
+    cudaMalloc(&temporaryf, 2*m_count*sizeof(double));
 
     modulus = (double*)malloc(m_count*sizeof(double));
     phase = (double*)malloc(m_count*sizeof(double));
 
     cufftPlan2d(&fftPlan, width, height, CUFFT_Z2Z);
-
-    multilayerPropagator(z, dx, lambda, n);
-    conjugate<<<N_BLOCKS,N_THREADS>>>(m_count, Hq, Hn);
-
 }
 
 void MultiLayer::multilayerPropagator(std::vector<double> z, double dx, double lambda, double n){
@@ -61,7 +62,6 @@ void MultiLayer::propagate(cufftDoubleComplex* kernel, cufftDoubleComplex* input
 void MultiLayer::iterate(double *input, int iters, double mu, double* rconstr, double* iconstr){
     // Initialization of variables
     s = 1;
-    double t = 0.5;
     h_cost = (double*)malloc((iters+1)*sizeof(double));
 
     //Allocating the device memory array for cost at each iteration
@@ -108,13 +108,12 @@ void MultiLayer::iterate(double *input, int iters, double mu, double* rconstr, d
         simpleSum<<<1,1>>>(&sumArr[1],sumArr,&cost[iter]);
         
         //Calculating residues
-        multiplyfc<<<N_BLOCKS,N_THREADS>>>(m_count, temporaryf, temporary);
+        multiplyfc<<<N_BLOCKS,N_THREADS>>>(count, temporaryf, model);
         for(int i = 0; i < numLayers; i++){
-            propagate(&Hn[i*count], temporary, &res[i*count]);
+            propagate(&Hn[i*count], model, &temporary[i*count]);
         }
 
-        cMultiplyf<<<1,1>>>(1,(2*t),c,c);
-        cMultiplyfcp<<<N_BLOCKS,N_THREADS>>>(m_count, c, res, temporary);
+        cMultiplyfcp<<<N_BLOCKS,N_THREADS>>>(m_count, c, temporary, temporary);
         add<<<N_BLOCKS,N_THREADS>>>(m_count, u, temporary, newGuess, false);
 
         //Applying strict bounds
@@ -123,13 +122,13 @@ void MultiLayer::iterate(double *input, int iters, double mu, double* rconstr, d
         }
 
         //Applying soft thresholding bounds
-        //softBounds<<<N_BLOCKS,N_THREADS>>>(m_count, newGuess, mu, t);
+        softBounds<<<N_BLOCKS,N_THREADS>>>(m_count, newGuess, mu, 0.5f);
 
         double s_new = 0.5*(1+std::sqrt(1+4*s*s));
         double temp = (s-1)/s_new;
         add<<<N_BLOCKS,N_THREADS>>>(m_count, newGuess, guess, temporary, false);
-        cMultiplyfc<<<N_BLOCKS,N_THREADS>>>(m_count, temp, temporary, res);
-        add<<<N_BLOCKS,N_THREADS>>>(m_count, newGuess, res, u, true);
+        cMultiplyfc<<<N_BLOCKS,N_THREADS>>>(m_count, temp, temporary, temporary);
+        add<<<N_BLOCKS,N_THREADS>>>(m_count, newGuess, temporary, u, true);
 
         s = s_new;
         cudaMemcpy(guess, newGuess, m_count*sizeof(cufftDoubleComplex), cudaMemcpyDeviceToDevice);
@@ -177,7 +176,7 @@ void MultiLayer::iterate(double *input, int iters, double mu, double* rconstr, d
         maximum<<<1,N_THREADS,N_THREADS*sizeof(double)>>>(count, &temporaryf[i*count], sumArr);
         cDividefp<<<N_BLOCKS,N_THREADS>>>(count, sumArr, &temporaryf[i*count], &temporaryf[i*count]);
     }
-    gpuErrchk(cudaMemcpy(modulus,image,count*sizeof(double),cudaMemcpyDeviceToHost));
+    gpuErrchk(cudaMemcpy(modulus,temporaryf,m_count*sizeof(double),cudaMemcpyDeviceToHost));
     angle<<<N_BLOCKS,N_THREADS>>>(m_count,temporary,temporaryf);
     gpuErrchk(cudaMemcpy(phase,temporaryf,m_count*sizeof(double),cudaMemcpyDeviceToHost));
     gpuErrchk(cudaMemcpy(h_cost, cost, (iters+1)*sizeof(double), cudaMemcpyDeviceToHost));
@@ -192,7 +191,6 @@ MultiLayer::~MultiLayer(){
     cudaFree(Hn);
     cudaFree(temporary);
     cudaFree(image);
-    cudaFree(res);
     cudaFree(model);
     cudaFree(guess);
     cudaFree(newGuess);

@@ -57,12 +57,12 @@ if(NOT generated_file)
 endif()
 
 # Set these up as variables to make reading the generated file easier
-set(CMAKE_COMMAND "/snap/cmake/805/bin/cmake") # path
+set(CMAKE_COMMAND "/snap/cmake/846/bin/cmake") # path
 set(source_file "/home/vikroe/Documents/phasereconstruction/CUDAFiles/src/kernels.cu") # path
 set(NVCC_generated_dependency_file "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o.NVCC-depend") # path
 set(cmake_dependency_file "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o.depend") # path
-set(CUDA_make2cmake "/snap/cmake/805/share/cmake-3.19/Modules/FindCUDA/make2cmake.cmake") # path
-set(CUDA_parse_cubin "/snap/cmake/805/share/cmake-3.19/Modules/FindCUDA/parse_cubin.cmake") # path
+set(CUDA_make2cmake "/snap/cmake/846/share/cmake-3.20/Modules/FindCUDA/make2cmake.cmake") # path
+set(CUDA_parse_cubin "/snap/cmake/846/share/cmake-3.20/Modules/FindCUDA/parse_cubin.cmake") # path
 set(build_cubin OFF) # bool
 set(CUDA_HOST_COMPILER "/usr/bin/gcc-8") # path
 # We won't actually use these variables for now, but we need to set this, in

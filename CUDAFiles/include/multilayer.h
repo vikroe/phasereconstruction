@@ -10,7 +10,6 @@
 class MultiLayer
 {
     private:
-        cufftDoubleComplex *res; // device memory residues
         cufftDoubleComplex *guess; // device memory planar guesses
         cufftDoubleComplex *newGuess; // device memory updated guesses for each plane
         cufftDoubleComplex *u; 
@@ -37,6 +36,7 @@ class MultiLayer
         double* c;
 
         void multilayerPropagator(std::vector<double> z, double dx, double lambda, double n);
+        void allocate();
 
     public:
         double *h_cost;
