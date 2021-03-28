@@ -69,449 +69,6 @@ include CMakeFiles/phaseretrieval.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/phaseretrieval.dir/flags.make
 
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: include/blur.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: include/kernels.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: include/lodepng.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: include/matplotlibcpp.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: include/multilayer.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: main.cu
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/alloca.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/asm-generic/bitsperlong.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/asm-generic/errno-base.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/asm-generic/errno.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/asm-generic/int-ll64.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/asm-generic/posix_types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/asm-generic/types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/assert.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/builtin_types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/algorithm
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/array
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/backward/binders.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/algorithmfwd.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/alloc_traits.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/allocator.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/basic_ios.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/basic_ios.tcc
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/basic_string.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/basic_string.tcc
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/char_traits.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/concept_check.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/cpp_type_traits.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/cxxabi_forced.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/cxxabi_init_exception.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/exception.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/exception_defines.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/exception_ptr.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/functexcept.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/functional_hash.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/hash_bytes.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/invoke.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/ios_base.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/istream.tcc
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/locale_classes.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/locale_classes.tcc
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/locale_facets.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/locale_facets.tcc
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/localefwd.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/memoryfwd.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/move.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/nested_exception.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/ostream.tcc
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/ostream_insert.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/parse_numbers.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/postypes.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/predefined_ops.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/ptr_traits.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/range_access.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/refwrap.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/std_abs.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/std_function.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_algo.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_algobase.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_bvector.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_construct.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_function.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_heap.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_iterator.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_iterator_base_funcs.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_iterator_base_types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_map.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_multimap.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_numeric.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_pair.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_relops.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_tempbuf.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_tree.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_uninitialized.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stl_vector.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/streambuf.tcc
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/streambuf_iterator.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/stringfwd.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/uniform_int_dist.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/uses_allocator.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/bits/vector.tcc
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/cctype
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/cerrno
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/chrono
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/clocale
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/cmath
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/cstdint
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/cstdio
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/cstdlib
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/ctime
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/cwchar
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/cwctype
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/debug/assertions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/debug/debug.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/exception
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/ext/aligned_buffer.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/ext/alloc_traits.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/ext/atomicity.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/ext/new_allocator.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/ext/numeric_traits.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/ext/string_conversions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/ext/type_traits.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/functional
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/initializer_list
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/ios
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/iosfwd
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/iostream
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/istream
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/limits
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/map
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/math.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/new
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/numeric
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/ostream
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/ratio
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/stdexcept
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/stdlib.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/streambuf
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/string
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/system_error
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/tuple
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/type_traits
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/typeinfo
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/utility
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/c++/8/vector
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/channel_descriptor.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/crt/common_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/crt/device_double_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/crt/device_double_functions.hpp
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/crt/device_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/crt/device_functions.hpp
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/crt/host_config.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/crt/host_defines.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/crt/math_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/crt/math_functions.hpp
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/crt/sm_70_rt.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/crt/sm_70_rt.hpp
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/crypt.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/ctype.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/cuComplex.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/cuda.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/cuda_device_runtime_api.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/cuda_runtime.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/cuda_runtime_api.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/cuda_surface_types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/cuda_texture_types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/cufft.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/device_atomic_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/device_atomic_functions.hpp
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/device_launch_parameters.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/device_types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/driver_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/driver_types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/endian.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/errno.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/features.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/inttypes.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/library_types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/limits.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/linux/errno.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/linux/limits.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/linux/posix_types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/linux/stat.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/linux/stddef.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/linux/types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/locale.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/math.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/pthread.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/Python.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/abstract.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/bltinmodule.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/boolobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/bytearrayobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/bytesobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cellobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/ceval.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/classobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/code.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/codecs.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/compile.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/complexobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/context.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cpython/abstract.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cpython/dictobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cpython/fileobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cpython/initconfig.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cpython/object.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cpython/objimpl.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cpython/pyerrors.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cpython/pylifecycle.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cpython/pymem.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cpython/pystate.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cpython/sysmodule.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cpython/traceback.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cpython/tupleobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/cpython/unicodeobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/descrobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/dictobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/dtoa.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/enumobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/eval.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/fileobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/fileutils.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/floatobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/funcobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/genobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/import.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/intrcheck.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/iterobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/listobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/longintrepr.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/longobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/memoryobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/methodobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/modsupport.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/moduleobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/namespaceobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/numpy/__multiarray_api.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/numpy/_neighborhood_iterator_imp.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/numpy/_numpyconfig.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/numpy/arrayobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/numpy/ndarrayobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/numpy/ndarraytypes.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/numpy/npy_common.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/numpy/npy_cpu.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/numpy/npy_endian.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/numpy/npy_interrupt.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/numpy/numpyconfig.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/numpy/utils.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/object.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/objimpl.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/odictobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/osmodule.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/patchlevel.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/picklebufobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pyarena.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pycapsule.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pyconfig.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pyctype.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pydebug.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pyerrors.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pyfpe.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pyhash.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pylifecycle.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pymacconfig.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pymacro.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pymath.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pymem.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pyport.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pystate.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pystrcmp.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pystrtod.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pythonrun.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pythread.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/pytime.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/rangeobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/setobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/sliceobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/structseq.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/sysmodule.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/traceback.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/tracemalloc.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/tupleobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/typeslots.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/unicodeobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/warnings.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/python3.8/weakrefobject.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sched.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/setjmp.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/signal.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_20_atomic_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_20_atomic_functions.hpp
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_20_intrinsics.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_20_intrinsics.hpp
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_30_intrinsics.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_30_intrinsics.hpp
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_32_atomic_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_32_atomic_functions.hpp
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_32_intrinsics.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_32_intrinsics.hpp
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_35_atomic_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_35_intrinsics.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_60_atomic_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_60_atomic_functions.hpp
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_61_intrinsics.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/sm_61_intrinsics.hpp
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/stdc-predef.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/stdint.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/stdio.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/stdlib.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/string.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/strings.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/surface_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/surface_indirect_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/surface_types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/texture_fetch_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/texture_indirect_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/texture_types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/time.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/unistd.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/vector_functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/vector_functions.hpp
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/vector_types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/wchar.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/wctype.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/asm/bitsperlong.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/asm/errno.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/asm/posix_types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/asm/posix_types_64.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/asm/types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/byteswap.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/confname.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/cpu-set.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/endian.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/endianness.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/environments.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/errno.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/floatn-common.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/floatn.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/fp-fast.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/fp-logb.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/getopt_core.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/getopt_posix.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/iscanonical.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/libc-header-start.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/local_lim.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/locale.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/long-double.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/math-vector.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/mathcalls.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/posix1_lim.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/posix2_lim.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/posix_opt.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/sched.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/select.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/setjmp.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/sigaction.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/sigcontext.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/sigevent-consts.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/siginfo-arch.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/siginfo-consts-arch.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/siginfo-consts.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/signal_ext.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/signum-generic.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/signum.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/sigstack.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/sigthread.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/ss_flags.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/stat.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/statx-generic.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/statx.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/stdint-intn.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/struct_mutex.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/sys_errlist.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/time.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/time64.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/timesize.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/timex.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/FILE.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/__FILE.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/clock_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/error_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/locale_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/sigval_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/stack_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/time_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/timer_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/types/wint_t.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/typesizes.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/uintn-identity.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/uio_lim.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/unistd_ext.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/waitflags.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/waitstatus.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/wchar.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/wordsize.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/bits/xopen_lim.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/c++/8/bits/atomic_word.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/c++/8/bits/c++allocator.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/c++/8/bits/c++config.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/c++/8/bits/c++locale.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/c++/8/bits/cpu_defines.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/c++/8/bits/ctype_base.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/c++/8/bits/ctype_inline.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/c++/8/bits/error_constants.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/c++/8/bits/gthr-default.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/c++/8/bits/gthr.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/c++/8/bits/os_defines.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/gnu/stubs.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/python3.8/pyconfig.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/sys/cdefs.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/sys/select.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/sys/stat.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/sys/time.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/sys/types.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/include/x86_64-linux-gnu/sys/ucontext.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/lib/gcc/x86_64-linux-gnu/8/include/limits.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/lib/gcc/x86_64-linux-gnu/8/include/stdarg.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/lib/gcc/x86_64-linux-gnu/8/include/stddef.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/lib/gcc/x86_64-linux-gnu/8/include/stdint.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: /usr/lib/gcc/x86_64-linux-gnu/8/include/syslimits.h
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o.cmake
-CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o: main.cu
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building NVCC (Device) object CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o"
-	cd /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir && /snap/cmake/846/bin/cmake -E make_directory /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir//.
-	cd /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir && /snap/cmake/846/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING= -D generated_file:STRING=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir//./phaseretrieval_generated_main.cu.o -D generated_cubin_file:STRING=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir//./phaseretrieval_generated_main.cu.o.cubin.txt -P /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir//phaseretrieval_generated_main.cu.o.cmake
-
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o: include/blur.h
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o: include/cudaDebug.h
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o: include/kernels.h
@@ -773,7 +330,7 @@ CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o: /usr
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o: /usr/lib/gcc/x86_64-linux-gnu/8/include/syslimits.h
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o.cmake
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o: src/multilayer.cu
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building NVCC (Device) object CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building NVCC (Device) object CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o"
 	cd /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src && /snap/cmake/846/bin/cmake -E make_directory /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/.
 	cd /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src && /snap/cmake/846/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING= -D generated_file:STRING=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_multilayer.cu.o -D generated_cubin_file:STRING=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_multilayer.cu.o.cubin.txt -P /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o.cmake
 
@@ -942,7 +499,7 @@ CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o: /usr/li
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o: /usr/lib/gcc/x86_64-linux-gnu/8/include/syslimits.h
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o.cmake
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o: src/kernels.cu
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building NVCC (Device) object CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building NVCC (Device) object CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o"
 	cd /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src && /snap/cmake/846/bin/cmake -E make_directory /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/.
 	cd /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src && /snap/cmake/846/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING= -D generated_file:STRING=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_kernels.cu.o -D generated_cubin_file:STRING=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_kernels.cu.o.cubin.txt -P /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o.cmake
 
@@ -1112,7 +669,7 @@ CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o: /usr/lib/g
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o: /usr/lib/gcc/x86_64-linux-gnu/8/include/syslimits.h
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o.cmake
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o: src/blur.cu
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building NVCC (Device) object CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building NVCC (Device) object CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o"
 	cd /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src && /snap/cmake/846/bin/cmake -E make_directory /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/.
 	cd /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src && /snap/cmake/846/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING= -D generated_file:STRING=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_blur.cu.o -D generated_cubin_file:STRING=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_blur.cu.o.cubin.txt -P /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o.cmake
 
@@ -1279,17 +836,30 @@ CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o: /usr/
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o: /usr/lib/gcc/x86_64-linux-gnu/8/include/syslimits.h
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o.cmake
 CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o: src/cudaDebug.cu
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building NVCC (Device) object CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building NVCC (Device) object CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o"
 	cd /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src && /snap/cmake/846/bin/cmake -E make_directory /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/.
 	cd /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src && /snap/cmake/846/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING= -D generated_file:STRING=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_cudaDebug.cu.o -D generated_cubin_file:STRING=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_cudaDebug.cu.o.cubin.txt -P /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o.cmake
 
-CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o: CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o
 CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o
 CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o
 CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o
 CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building NVCC intermediate link file CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o"
-	/usr/bin/nvcc -m64 -ccbin /usr/bin/gcc-8 -dlink /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir//./phaseretrieval_generated_main.cu.o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_multilayer.cu.o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_kernels.cu.o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_blur.cu.o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_cudaDebug.cu.o -o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/./phaseretrieval_intermediate_link.o
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building NVCC intermediate link file CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o"
+	/usr/bin/nvcc -m64 -ccbin /usr/bin/gcc-8 -dlink /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_multilayer.cu.o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_kernels.cu.o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_blur.cu.o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_cudaDebug.cu.o -o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/./phaseretrieval_intermediate_link.o
+
+CMakeFiles/phaseretrieval.dir/main.cpp.o: CMakeFiles/phaseretrieval.dir/flags.make
+CMakeFiles/phaseretrieval.dir/main.cpp.o: main.cpp
+CMakeFiles/phaseretrieval.dir/main.cpp.o: CMakeFiles/phaseretrieval.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/phaseretrieval.dir/main.cpp.o"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/phaseretrieval.dir/main.cpp.o -MF CMakeFiles/phaseretrieval.dir/main.cpp.o.d -o CMakeFiles/phaseretrieval.dir/main.cpp.o -c /home/vikroe/Documents/phasereconstruction/CUDAFiles/main.cpp
+
+CMakeFiles/phaseretrieval.dir/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/phaseretrieval.dir/main.cpp.i"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/vikroe/Documents/phasereconstruction/CUDAFiles/main.cpp > CMakeFiles/phaseretrieval.dir/main.cpp.i
+
+CMakeFiles/phaseretrieval.dir/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/phaseretrieval.dir/main.cpp.s"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vikroe/Documents/phasereconstruction/CUDAFiles/main.cpp -o CMakeFiles/phaseretrieval.dir/main.cpp.s
 
 CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o: CMakeFiles/phaseretrieval.dir/flags.make
 CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o: src/lodepng.cpp
@@ -1307,19 +877,19 @@ CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.s: cmake_force
 
 # Object files for target phaseretrieval
 phaseretrieval_OBJECTS = \
+"CMakeFiles/phaseretrieval.dir/main.cpp.o" \
 "CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o"
 
 # External object files for target phaseretrieval
 phaseretrieval_EXTERNAL_OBJECTS = \
-"/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o" \
 "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o" \
 "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o" \
 "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o" \
 "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o" \
 "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o"
 
+phaseretrieval: CMakeFiles/phaseretrieval.dir/main.cpp.o
 phaseretrieval: CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o
-phaseretrieval: CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o
 phaseretrieval: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o
 phaseretrieval: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o
 phaseretrieval: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o
@@ -1344,7 +914,6 @@ CMakeFiles/phaseretrieval.dir/clean:
 	$(CMAKE_COMMAND) -P CMakeFiles/phaseretrieval.dir/cmake_clean.cmake
 .PHONY : CMakeFiles/phaseretrieval.dir/clean
 
-CMakeFiles/phaseretrieval.dir/depend: CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o
 CMakeFiles/phaseretrieval.dir/depend: CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o
 CMakeFiles/phaseretrieval.dir/depend: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o
 CMakeFiles/phaseretrieval.dir/depend: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o

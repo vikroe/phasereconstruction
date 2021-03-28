@@ -3,7 +3,10 @@
         "*.cu": "cpp",
         "random": "cpp",
         "algorithm": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "*.tcc": "cpp",
+        "array": "cpp",
+        "string_view": "cpp"
     },
     "cmake.configureOnOpen": false
 }

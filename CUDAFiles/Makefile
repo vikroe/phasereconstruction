@@ -129,6 +129,30 @@ phaseretrieval/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/build
 .PHONY : phaseretrieval/fast
 
+main.o: main.cpp.o
+.PHONY : main.o
+
+# target to build an object file
+main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/main.cpp.o
+.PHONY : main.cpp.o
+
+main.i: main.cpp.i
+.PHONY : main.i
+
+# target to preprocess a source file
+main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/main.cpp.i
+.PHONY : main.cpp.i
+
+main.s: main.cpp.s
+.PHONY : main.s
+
+# target to generate assembly for a file
+main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/main.cpp.s
+.PHONY : main.cpp.s
+
 src/lodepng.o: src/lodepng.cpp.o
 .PHONY : src/lodepng.o
 
@@ -162,6 +186,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... phaseretrieval"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 	@echo "... src/lodepng.o"
 	@echo "... src/lodepng.i"
 	@echo "... src/lodepng.s"

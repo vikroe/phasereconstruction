@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string.h>
 #include <cuda_runtime_api.h>
@@ -10,9 +11,18 @@
 #include "kernels.h"
 #include "matplotlibcpp.h"
 #include <chrono>
+#include "json.hpp"
 
 using namespace std;
+using json = nlohmann::json;
 namespace plt = matplotlibcpp;
+
+json loadJson(const char* filename){
+    ifstream in(filename);
+    json j;
+    in >> j;
+    return(j);
+}
 
 vector<double> loadImage(const char* filename, unsigned int width, unsigned int height){
     vector<unsigned char> image;
@@ -39,29 +49,29 @@ void D2F(unsigned int count, double* input, float* output){
 
 int main(void)
 {
-    unsigned int width = 2048;
-    unsigned int height = 2048;
-    int iters = 6;
+    json j = loadJson("params.json");
+    unsigned int width = j.at("width").get<unsigned int>();
+    unsigned int height = j.at("height").get<unsigned int>();
+    int iters = j.at("iters0").get<int>();
+    int warmIters = j.at("iters").get<int>();
+    vector<double> z = j.at("z").get<vector<double>>();
+    vector<double> rconstr = j.at("rconstr").get<vector<double>>();
+    vector<double> iconstr = j.at("iconstr").get<vector<double>>();
+    double dx = j.at("dx").get<double>();
+    double n = j.at("n").get<double>();
+    double lambda = j.at("lambda").get<double>();
+    double mu = j.at("mu").get<double>();
+    bool b_cost = j.at("cost").get<bool>();
 
-    vector<double> z{2.25e-3,2.5e-3};
-
-    double dx = 1.55e-6;
-    double n = 1.45;
-    double lambda = 525e-9;
-
-    double rconstr[4] = {0,0,0,0};
-    double iconstr[4] = {-1,1,-1,1};
-
-    const map<string, string> keywords{{"cmap","gray"}};
 
     vector<double> temp_image = loadImage("Pics/hologram.png", width,height);
 
     static double image[2048*2048];
     copy(temp_image.begin(), temp_image.end(), image);
 
-    MultiLayer *multilayer = new MultiLayer((int)width, (int)height, z, dx, lambda, n);
+    MultiLayer *multilayer = new MultiLayer((int)width, (int)height, z, rconstr, iconstr, mu, dx, lambda, n);
     auto start = chrono::steady_clock::now();
-    multilayer->iterate(image, iters, 0.01, rconstr, iconstr, false);
+    multilayer->iterate(image, iters, b_cost);
     auto end = chrono::steady_clock::now();
     double elapsed = chrono::duration_cast<chrono::duration<double>>(end-start).count();
     printf("Time for the iterative FISTA algorithm: %f\n", elapsed);
@@ -78,7 +88,8 @@ int main(void)
     D2F(width*height, p, pf1);
     D2F(width*height, &m[width*height], mf2);
     D2F(width*height, &p[width*height], pf2);
-    
+
+    const map<string, string> keywords{{"cmap","gray"}};
     plt::subplot(2,2,1);
     plt::imshow(mf1, height, width, 1, keywords);
     plt::title("Plane 1 - modulus");

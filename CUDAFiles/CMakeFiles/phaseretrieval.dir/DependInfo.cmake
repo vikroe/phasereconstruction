@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/main.cpp" "CMakeFiles/phaseretrieval.dir/main.cpp.o" "gcc" "CMakeFiles/phaseretrieval.dir/main.cpp.o.d"
   "/home/vikroe/Documents/phasereconstruction/CUDAFiles/src/lodepng.cpp" "CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o" "gcc" "CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o.d"
   )
 

@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/phaseretrieval.dir/phaseretrieval_generated_main.cu.o"
+  "CMakeFiles/phaseretrieval.dir/main.cpp.o"
+  "CMakeFiles/phaseretrieval.dir/main.cpp.o.d"
   "CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o"
   "CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o"
   "CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o.d"

@@ -5,7 +5,7 @@ project(phaseretrieval)
 set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/include")
 set(SOURCES 
-        main.cu
+        main.cpp
         "${SRC_DIR}/lodepng.cpp"
         "${SRC_DIR}/multilayer.cu"
         "${SRC_DIR}/kernels.cu"

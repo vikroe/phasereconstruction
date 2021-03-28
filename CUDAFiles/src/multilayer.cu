@@ -11,7 +11,15 @@
 #include "cudaDebug.h"
 #include "blur.h"
 
-MultiLayer::MultiLayer(int width, int height, std::vector<double> z, double dx, double lambda, double n) :width(width), height(height)
+MultiLayer::MultiLayer(int width, 
+                        int height, 
+                        std::vector<double> z,
+                        std::vector<double> rconstr, 
+                        std::vector<double> iconstr, 
+                        double mu, 
+                        double dx, 
+                        double lambda, 
+                        double n) :width(width), height(height), z(z), rconstr(rconstr), iconstr(iconstr), mu(mu)
 {
     numLayers = (int)z.size();
     count = width*height;
@@ -19,7 +27,7 @@ MultiLayer::MultiLayer(int width, int height, std::vector<double> z, double dx, 
     blur = new Blur();
 
     allocate();
-    multilayerPropagator(z, dx, lambda, n);
+    multilayerPropagator(dx, lambda, n);
     conjugate<<<N_BLOCKS,N_THREADS>>>(m_count, Hq, Hn);
 }
 
@@ -45,7 +53,7 @@ void MultiLayer::allocate(){
     cufftPlanMany(&fftPlan, 2, n, NULL, 1, count, NULL, 1, count, CUFFT_C2C, 2);
 }
 
-void MultiLayer::multilayerPropagator(std::vector<double> z, double dx, double lambda, double n){
+void MultiLayer::multilayerPropagator(double dx, double lambda, double n){
     cufftComplex *placeHolder;
     for(int i = 0; i < numLayers; i++){
         placeHolder = &Hq[i*count];
@@ -74,7 +82,7 @@ void MultiLayer::calculateCost(double mu, double* model, cufftDoubleComplex* gue
     simpleSum<<<1,1>>>(&sumArr[N_BLOCKS],sumArr,&out[0]);
 }
 
-void MultiLayer::iterate(double *input, int iters, double mu, double* rconstr, double* iconstr, bool b_cost){
+void MultiLayer::iterate(double *input, int iters, bool b_cost){
     // Initialization of variables
     s = 1;
     cudaMalloc(&cost, (1+iters)*sizeof(double));
