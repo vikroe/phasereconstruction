@@ -28,8 +28,9 @@ class MultiLayer
         int numLayers;
         cufftHandle fftPlan;
 
-        cufftDoubleComplex *Hq; // device memory backpropagation kernel
-        cufftDoubleComplex *Hn; // device memory propagation kernel
+        cufftComplex *Hq; // device memory backpropagation kernel
+        cufftComplex *Hn; // device memory propagation kernel
+        cufftComplex *propagation;
         double *image; // device memory real image
         double *cost;
         double* sumArr; // device memory for sum storing
@@ -37,6 +38,7 @@ class MultiLayer
 
         void multilayerPropagator(std::vector<double> z, double dx, double lambda, double n);
         void allocate();
+        void calculateCost(double mu, double* model, cufftDoubleComplex* guess, double* temp, double* out);
 
     public:
         double *h_cost;
@@ -46,8 +48,8 @@ class MultiLayer
         
         MultiLayer(int width, int height, std::vector<double> z, double dx, double lambda, double n);
         
-        void iterate(double *input, int iters, double mu, double* rconstr, double* iconstr);
-        void propagate(cufftDoubleComplex* kernel, cufftDoubleComplex* input, cufftDoubleComplex* out);
+        void iterate(double *input, int iters, double mu, double* rconstr, double* iconstr, bool b_cost);
+        void propagate(cufftComplex* kernel, cufftDoubleComplex* input, cufftDoubleComplex* out);
 
         ~MultiLayer();
 

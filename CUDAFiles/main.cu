@@ -43,14 +43,14 @@ int main(void)
     unsigned int height = 2048;
     int iters = 6;
 
-    vector<double> z{1e-3,2.75e-3};
+    vector<double> z{2.25e-3,2.5e-3};
 
     double dx = 1.55e-6;
     double n = 1.45;
     double lambda = 525e-9;
 
-    double rconstr[4] = {-1,0,0,0};
-    double iconstr[4] = {0,0,-1,1};
+    double rconstr[4] = {0,0,0,0};
+    double iconstr[4] = {-1,1,-1,1};
 
     const map<string, string> keywords{{"cmap","gray"}};
 
@@ -59,14 +59,14 @@ int main(void)
     static double image[2048*2048];
     copy(temp_image.begin(), temp_image.end(), image);
 
-    auto start = chrono::steady_clock::now();
     MultiLayer *multilayer = new MultiLayer((int)width, (int)height, z, dx, lambda, n);
-    multilayer->iterate(image, iters, 0.01, rconstr, iconstr);
+    auto start = chrono::steady_clock::now();
+    multilayer->iterate(image, iters, 0.01, rconstr, iconstr, false);
     auto end = chrono::steady_clock::now();
     double elapsed = chrono::duration_cast<chrono::duration<double>>(end-start).count();
     printf("Time for the iterative FISTA algorithm: %f\n", elapsed);
-    for(int i = 0 ; i < iters+1 ; i++)
-        cout << multilayer->h_cost[i] << "\n";
+    //for(int i = 0 ; i < iters+1 ; i++)
+    //    cout << multilayer->h_cost[i] << "\n";
     
     double* m = multilayer->modulus;
     double* p = multilayer->phase;

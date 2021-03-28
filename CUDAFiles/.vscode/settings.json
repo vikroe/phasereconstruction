@@ -2,7 +2,8 @@
     "files.associations": {
         "*.cu": "cpp",
         "random": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "cmath": "cpp"
     },
     "cmake.configureOnOpen": false
 }

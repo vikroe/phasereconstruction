@@ -25,16 +25,15 @@ MultiLayer::MultiLayer(int width, int height, std::vector<double> z, double dx, 
 
 void MultiLayer::allocate(){
     cudaMalloc(&model, count*sizeof(cufftDoubleComplex));
-    cudaMalloc(&Hq, m_count*sizeof(cufftDoubleComplex));
-    cudaMalloc(&Hn, m_count*sizeof(cufftDoubleComplex));
+    cudaMalloc(&Hq, m_count*sizeof(cufftComplex));
+    cudaMalloc(&Hn, m_count*sizeof(cufftComplex));
+    cudaMalloc(&propagation, m_count*sizeof(cufftComplex));
     cudaMalloc(&guess, m_count*sizeof(cufftDoubleComplex));
     cudaMalloc(&newGuess, m_count*sizeof(cufftDoubleComplex));
     cudaMalloc(&u, m_count*sizeof(cufftDoubleComplex));
     cudaMalloc(&temporary, m_count*sizeof(cufftDoubleComplex));
-
-    cudaMalloc(&sumArr, 2*sizeof(double));
+    cudaMalloc(&sumArr, 2*N_BLOCKS*sizeof(double));
     cudaMalloc(&c, sizeof(double));
-    
     cudaMalloc(&image, count*sizeof(double));
     cudaMalloc(&Imodel, count*sizeof(double));
     cudaMalloc(&temporaryf, 2*m_count*sizeof(double));
@@ -42,34 +41,50 @@ void MultiLayer::allocate(){
     modulus = (double*)malloc(m_count*sizeof(double));
     phase = (double*)malloc(m_count*sizeof(double));
 
-    cufftPlan2d(&fftPlan, width, height, CUFFT_Z2Z);
+    int n[2] = {height, width};
+    cufftPlanMany(&fftPlan, 2, n, NULL, 1, count, NULL, 1, count, CUFFT_C2C, 2);
 }
 
 void MultiLayer::multilayerPropagator(std::vector<double> z, double dx, double lambda, double n){
-    cufftDoubleComplex *placeHolder;
+    cufftComplex *placeHolder;
     for(int i = 0; i < numLayers; i++){
         placeHolder = &Hq[i*count];
         propagator<<<N_BLOCKS,N_THREADS>>>(width, height, z[i], dx, n, lambda, placeHolder);
     }
 }
 
-void MultiLayer::propagate(cufftDoubleComplex* kernel, cufftDoubleComplex* input, cufftDoubleComplex* out){
-    cufftExecZ2Z(fftPlan, input, out, CUFFT_FORWARD);
-    multiply<<<N_BLOCKS, N_THREADS>>>(count,kernel,out);
-    cufftExecZ2Z(fftPlan, out, out, CUFFT_INVERSE);
+void MultiLayer::propagate(cufftComplex* kernel, cufftDoubleComplex* input, cufftDoubleComplex* out){
+    Z2C<<<N_BLOCKS,N_THREADS>>>(m_count, input, propagation);
+    cufftExecC2C(fftPlan, propagation, propagation, CUFFT_FORWARD);
+    multiply<<<N_BLOCKS, N_THREADS>>>(m_count, kernel, propagation);
+    cufftExecC2C(fftPlan, propagation, propagation, CUFFT_INVERSE);
+    C2Z<<<N_BLOCKS,N_THREADS>>>(m_count, propagation, out);
 }
 
-void MultiLayer::iterate(double *input, int iters, double mu, double* rconstr, double* iconstr){
+void MultiLayer::calculateCost(double mu, double* model, cufftDoubleComplex* guess, double* temp, double* out){
+    absolute<<<N_BLOCKS,N_THREADS>>>(m_count, guess, &temp[m_count]);
+    square<<<N_BLOCKS,N_THREADS>>>(count, model, &temp[count]);
+
+    sum<<<N_BLOCKS,N_THREADS, N_THREADS*sizeof(double)>>>(m_count, &temp[m_count], sumArr);
+    sum<<<1,N_BLOCKS,N_BLOCKS*sizeof(double)>>>(N_BLOCKS, sumArr, sumArr);
+    sum<<<N_BLOCKS,N_THREADS, N_THREADS*sizeof(double)>>>(count, &temp[count], &sumArr[N_BLOCKS]);
+    sum<<<1,N_BLOCKS,N_BLOCKS*sizeof(double)>>>(N_BLOCKS, &sumArr[N_BLOCKS], &sumArr[N_BLOCKS]);
+    
+    cMultiplyf<<<1,1>>>(1,mu,sumArr,sumArr);
+    simpleSum<<<1,1>>>(&sumArr[N_BLOCKS],sumArr,&out[0]);
+}
+
+void MultiLayer::iterate(double *input, int iters, double mu, double* rconstr, double* iconstr, bool b_cost){
     // Initialization of variables
     s = 1;
-    h_cost = (double*)malloc((iters+1)*sizeof(double));
-
-    //Allocating the device memory array for cost at each iteration
     cudaMalloc(&cost, (1+iters)*sizeof(double));
+    if(b_cost){
+        h_cost = (double*)malloc((iters+1)*sizeof(double));
+    }
 
     //Copying the input image from host to device memory - computationally complex
     cudaMemcpy(image, input, count*sizeof(double), cudaMemcpyHostToDevice);
-    blur->gaussianBlur(width,height, 5, 2, image, temporaryf, image);
+    blur->gaussianBlur(width,height, 5, 3, image, temporaryf, image);
 
     //Copying the device memory image to device memory guesses
     for(int i = 0; i < numLayers; i++){
@@ -78,40 +93,30 @@ void MultiLayer::iterate(double *input, int iters, double mu, double* rconstr, d
     }
 
     for(int iter = 0; iter < iters; iter++){
-        //Calculating the current iteration model
-        for(int i = 0; i < numLayers; i++){
-            propagate(&Hq[i*count], &u[i*count], &temporary[i*count]);
-        }
+        //Calculating the current iteration model 
+        propagate(Hq, u, temporary);
 
         //Calculation of Imodel and model arrays
         modelFunc<<<N_BLOCKS,N_THREADS>>>(count, numLayers, 1.0f, 0, temporary, model, Imodel);
 
         //Calculation of the optimal scaling parameter c
-        multiplyf<<<N_BLOCKS, N_THREADS>>>(count, Imodel, image, temporaryf);
-        multiplyf<<<N_BLOCKS, N_THREADS>>>(count, Imodel, Imodel, &temporaryf[count]);
+        sumOfProducts<<<N_BLOCKS,N_THREADS, N_THREADS*sizeof(double)>>>(count, image, Imodel, sumArr);
+        sum<<<1,N_BLOCKS,N_BLOCKS*sizeof(double)>>>(N_BLOCKS, sumArr, sumArr);
+        sumOfProducts<<<N_BLOCKS,N_THREADS, N_THREADS*sizeof(double)>>>(count, Imodel, Imodel, &sumArr[N_BLOCKS]);
+        sum<<<1,N_BLOCKS,N_BLOCKS*sizeof(double)>>>(N_BLOCKS, &sumArr[N_BLOCKS], &sumArr[N_BLOCKS]);
 
-        sum<<<1, N_THREADS, N_THREADS*sizeof(double)>>>(count, temporaryf, sumArr);
-        sum<<<1, N_THREADS, N_THREADS*sizeof(double)>>>(count, &temporaryf[count], &sumArr[1]);
-
-        simpleDivision<<<1,1>>>(sumArr, &sumArr[1], c);
+        simpleDivision<<<1,1>>>(sumArr, &sumArr[N_BLOCKS], c);
 
         //Cost calculation with sparsity constraint
         linear<<<N_BLOCKS,N_THREADS>>>(count, c, image, Imodel, temporaryf, false);
 
-        absolute<<<N_BLOCKS,N_THREADS>>>(m_count,guess,&temporaryf[m_count]);
-        square<<<N_BLOCKS,N_THREADS>>>(count, temporaryf, &temporaryf[count]);
-
-        sum<<<1,N_THREADS, N_THREADS*sizeof(double)>>>(m_count,&temporaryf[m_count],sumArr);
-        sum<<<1,N_THREADS, N_THREADS*sizeof(double)>>>(count, &temporaryf[count], &sumArr[1]);
-        
-        cMultiplyf<<<1,1>>>(1,mu,sumArr,sumArr);
-        simpleSum<<<1,1>>>(&sumArr[1],sumArr,&cost[iter]);
+        if(b_cost)
+            calculateCost(mu, temporaryf, guess, temporaryf, &cost[iter]);
         
         //Calculating residues
         multiplyfc<<<N_BLOCKS,N_THREADS>>>(count, temporaryf, model);
-        for(int i = 0; i < numLayers; i++){
-            propagate(&Hn[i*count], model, &temporary[i*count]);
-        }
+        extend<<<N_BLOCKS,N_THREADS>>>(count, numLayers, model, temporary);
+        propagate(Hn, temporary, temporary);
 
         cMultiplyfcp<<<N_BLOCKS,N_THREADS>>>(m_count, c, temporary, temporary);
         add<<<N_BLOCKS,N_THREADS>>>(m_count, u, temporary, newGuess, false);
@@ -179,9 +184,10 @@ void MultiLayer::iterate(double *input, int iters, double mu, double* rconstr, d
     gpuErrchk(cudaMemcpy(modulus,temporaryf,m_count*sizeof(double),cudaMemcpyDeviceToHost));
     angle<<<N_BLOCKS,N_THREADS>>>(m_count,temporary,temporaryf);
     gpuErrchk(cudaMemcpy(phase,temporaryf,m_count*sizeof(double),cudaMemcpyDeviceToHost));
-    gpuErrchk(cudaMemcpy(h_cost, cost, (iters+1)*sizeof(double), cudaMemcpyDeviceToHost));
-    // Deallocation of variables
-    cudaFree(cost);
+    if(b_cost){
+        gpuErrchk(cudaMemcpy(h_cost, cost, (iters+1)*sizeof(double), cudaMemcpyDeviceToHost));
+        cudaFree(cost);
+    }
     gpuErrchk(cudaPeekAtLastError());
 
 }
@@ -197,8 +203,8 @@ MultiLayer::~MultiLayer(){
     cudaFree(u);
     cudaFree(temporaryf);
     cudaFree(c);
+    cudaFree(propagation);
     cufftDestroy(fftPlan);
-    free(h_cost);
     free(modulus);
     free(phase);
 }
