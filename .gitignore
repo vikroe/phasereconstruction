@@ -12,6 +12,7 @@ MatlabFiles/old_main.m
 CUDAFiles/build/
 CUDAFiles/.vscode/
 CUDAFiles/Videos/
+CUDAFiles/CMakeFiles/
 CUDAFiles/Makefile
 CUDAFiles/phaseretrieval
 CUDAFiles/CmakeCache.txt
