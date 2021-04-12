@@ -41,14 +41,12 @@ class MultiLayer
         cufftHandle fftPlan;
 
         void multilayerPropagator(double dx, double lambda, double n);
+        void normalize(int c, double* arr);
         void allocate();
         void calculateCost(double mu, double* model, cufftDoubleComplex* guess, double* temp, double* out);
 
     public:
         double *h_cost;
-
-        double* modulus;
-        double* phase;
         
         MultiLayer(
             int width,
@@ -61,8 +59,10 @@ class MultiLayer
             double lambda, 
             double n);
         
-        void iterate(double *input, int iters, bool b_cost);
+        void iterate(double *input, int iters, bool b_cost, bool warm);
         void propagate(cufftComplex* kernel, cufftDoubleComplex* input, cufftDoubleComplex* out);
+        //Used for parallelization
+        void update(uint8_t* modulus, uint8_t* phase);
 
         ~MultiLayer();
 

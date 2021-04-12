@@ -137,31 +137,18 @@ CMakeFiles/phaseretrieval.dir/main.cpp.o: \
  /usr/include/c++/8/bits/locale_facets.tcc \
  /usr/include/c++/8/bits/basic_ios.tcc \
  /usr/include/c++/8/bits/ostream.tcc /usr/include/c++/8/istream \
- /usr/include/c++/8/bits/istream.tcc /usr/include/c++/8/fstream \
- /usr/include/c++/8/bits/codecvt.h \
- /usr/include/x86_64-linux-gnu/c++/8/bits/basic_file.h \
- /usr/include/x86_64-linux-gnu/c++/8/bits/c++io.h \
- /usr/include/c++/8/bits/fstream.tcc /usr/include/c++/8/vector \
+ /usr/include/c++/8/bits/istream.tcc /usr/include/c++/8/vector \
  /usr/include/c++/8/bits/stl_construct.h \
  /usr/include/c++/8/bits/stl_uninitialized.h /usr/include/c++/8/utility \
  /usr/include/c++/8/bits/stl_relops.h \
  /usr/include/c++/8/bits/stl_vector.h \
  /usr/include/c++/8/bits/stl_bvector.h /usr/include/c++/8/bits/vector.tcc \
  /usr/include/string.h /usr/include/strings.h \
- /usr/include/cuda_runtime_api.h /usr/include/crt/host_defines.h \
- /usr/include/builtin_types.h /usr/include/device_types.h \
- /usr/include/driver_types.h /usr/include/vector_types.h \
- /usr/lib/gcc/x86_64-linux-gnu/8/include/limits.h \
- /usr/lib/gcc/x86_64-linux-gnu/8/include/syslimits.h \
- /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
- /usr/include/x86_64-linux-gnu/bits/local_lim.h \
- /usr/include/linux/limits.h \
- /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
- /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
- /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
- /usr/include/surface_types.h /usr/include/texture_types.h \
- /usr/include/cuda_device_runtime_api.h /usr/include/cuda.h \
- /usr/include/c++/8/stdlib.h /usr/include/cufft.h \
+ /home/vikroe/Documents/phasereconstruction/CUDAFiles/include/ticker.h \
+ /usr/include/c++/8/chrono /usr/include/c++/8/ratio \
+ /usr/include/c++/8/ctime /usr/include/c++/8/bits/parse_numbers.h \
+ /home/vikroe/Documents/phasereconstruction/CUDAFiles/include/multilayer.h \
+ /usr/include/cuda.h /usr/include/c++/8/stdlib.h /usr/include/cufft.h \
  /usr/include/cuComplex.h /usr/include/c++/8/math.h \
  /usr/include/c++/8/cmath /usr/include/math.h \
  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
@@ -185,158 +172,193 @@ CMakeFiles/phaseretrieval.dir/main.cpp.o: \
  /usr/include/c++/8/tr1/modified_bessel_func.tcc \
  /usr/include/c++/8/tr1/poly_hermite.tcc \
  /usr/include/c++/8/tr1/poly_laguerre.tcc \
- /usr/include/c++/8/tr1/riemann_zeta.tcc /usr/include/library_types.h \
- /home/vikroe/Documents/phasereconstruction/CUDAFiles/include/lodepng.h \
- /home/vikroe/Documents/phasereconstruction/CUDAFiles/include/multilayer.h \
+ /usr/include/c++/8/tr1/riemann_zeta.tcc /usr/include/vector_types.h \
+ /usr/include/crt/host_defines.h /usr/include/driver_types.h \
+ /usr/lib/gcc/x86_64-linux-gnu/8/include/limits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/8/include/syslimits.h \
+ /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/local_lim.h \
+ /usr/include/linux/limits.h \
+ /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
+ /usr/include/library_types.h \
  /home/vikroe/Documents/phasereconstruction/CUDAFiles/include/blur.h \
  /home/vikroe/Documents/phasereconstruction/CUDAFiles/include/kernels.h \
- /home/vikroe/Documents/phasereconstruction/CUDAFiles/include/matplotlibcpp.h \
- /usr/include/python3.8/Python.h /usr/include/python3.8/patchlevel.h \
- /usr/include/python3.8/pyconfig.h \
- /usr/include/x86_64-linux-gnu/python3.8/pyconfig.h \
- /usr/include/python3.8/pymacconfig.h /usr/include/unistd.h \
- /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
- /usr/include/x86_64-linux-gnu/bits/environments.h \
- /usr/include/x86_64-linux-gnu/bits/confname.h \
- /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
- /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
- /usr/include/x86_64-linux-gnu/bits/unistd_ext.h /usr/include/crypt.h \
- /usr/include/assert.h /usr/include/python3.8/pyport.h \
- /usr/include/inttypes.h /usr/include/x86_64-linux-gnu/sys/time.h \
- /usr/include/x86_64-linux-gnu/sys/stat.h \
- /usr/include/x86_64-linux-gnu/bits/stat.h \
- /usr/include/x86_64-linux-gnu/bits/statx.h /usr/include/linux/stat.h \
- /usr/include/linux/types.h /usr/include/x86_64-linux-gnu/asm/types.h \
- /usr/include/asm-generic/types.h /usr/include/asm-generic/int-ll64.h \
- /usr/include/x86_64-linux-gnu/asm/bitsperlong.h \
- /usr/include/asm-generic/bitsperlong.h /usr/include/linux/posix_types.h \
- /usr/include/linux/stddef.h \
- /usr/include/x86_64-linux-gnu/asm/posix_types.h \
- /usr/include/x86_64-linux-gnu/asm/posix_types_64.h \
- /usr/include/asm-generic/posix_types.h \
- /usr/include/x86_64-linux-gnu/bits/statx-generic.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h \
- /usr/include/python3.8/pymacro.h /usr/include/python3.8/pymath.h \
- /usr/include/python3.8/pytime.h /usr/include/python3.8/object.h \
- /usr/include/python3.8/pymem.h /usr/include/python3.8/cpython/pymem.h \
- /usr/include/python3.8/cpython/object.h /usr/include/python3.8/objimpl.h \
- /usr/include/python3.8/cpython/objimpl.h \
- /usr/include/python3.8/typeslots.h /usr/include/python3.8/pyhash.h \
- /usr/include/python3.8/pydebug.h \
- /usr/include/python3.8/bytearrayobject.h \
- /usr/include/python3.8/bytesobject.h \
- /usr/include/python3.8/unicodeobject.h \
- /usr/include/python3.8/cpython/unicodeobject.h \
- /usr/include/python3.8/longobject.h /usr/include/python3.8/longintrepr.h \
- /usr/include/python3.8/boolobject.h /usr/include/python3.8/floatobject.h \
- /usr/include/python3.8/complexobject.h \
- /usr/include/python3.8/rangeobject.h \
- /usr/include/python3.8/memoryobject.h \
- /usr/include/python3.8/tupleobject.h \
- /usr/include/python3.8/cpython/tupleobject.h \
- /usr/include/python3.8/listobject.h /usr/include/python3.8/dictobject.h \
- /usr/include/python3.8/cpython/dictobject.h \
- /usr/include/python3.8/odictobject.h /usr/include/python3.8/enumobject.h \
- /usr/include/python3.8/setobject.h /usr/include/python3.8/methodobject.h \
- /usr/include/python3.8/moduleobject.h \
- /usr/include/python3.8/funcobject.h /usr/include/python3.8/classobject.h \
- /usr/include/python3.8/fileobject.h \
- /usr/include/python3.8/cpython/fileobject.h \
- /usr/include/python3.8/pycapsule.h /usr/include/python3.8/traceback.h \
- /usr/include/python3.8/cpython/traceback.h \
- /usr/include/python3.8/sliceobject.h /usr/include/python3.8/cellobject.h \
- /usr/include/python3.8/iterobject.h /usr/include/python3.8/genobject.h \
- /usr/include/python3.8/pystate.h /usr/include/python3.8/pythread.h \
- /usr/include/python3.8/cpython/pystate.h \
- /usr/include/python3.8/cpython/initconfig.h \
- /usr/include/python3.8/descrobject.h /usr/include/python3.8/warnings.h \
- /usr/include/python3.8/weakrefobject.h \
- /usr/include/python3.8/structseq.h \
- /usr/include/python3.8/namespaceobject.h \
- /usr/include/python3.8/picklebufobject.h /usr/include/python3.8/codecs.h \
- /usr/include/python3.8/pyerrors.h \
- /usr/include/python3.8/cpython/pyerrors.h \
- /usr/include/python3.8/cpython/initconfig.h \
- /usr/include/python3.8/context.h /usr/include/python3.8/pyarena.h \
- /usr/include/python3.8/modsupport.h /usr/include/python3.8/compile.h \
- /usr/include/python3.8/code.h /usr/include/python3.8/pythonrun.h \
- /usr/include/python3.8/pylifecycle.h \
- /usr/include/python3.8/cpython/pylifecycle.h \
- /usr/include/python3.8/ceval.h /usr/include/python3.8/sysmodule.h \
- /usr/include/python3.8/cpython/sysmodule.h \
- /usr/include/python3.8/osmodule.h /usr/include/python3.8/intrcheck.h \
- /usr/include/python3.8/import.h /usr/include/python3.8/abstract.h \
- /usr/include/python3.8/cpython/abstract.h \
- /usr/include/python3.8/bltinmodule.h /usr/include/python3.8/eval.h \
- /usr/include/python3.8/pyctype.h /usr/include/python3.8/pystrtod.h \
- /usr/include/python3.8/pystrcmp.h /usr/include/python3.8/dtoa.h \
- /usr/include/python3.8/fileutils.h /usr/include/python3.8/pyfpe.h \
- /usr/include/python3.8/tracemalloc.h /usr/include/c++/8/map \
- /usr/include/c++/8/bits/stl_tree.h \
- /usr/include/c++/8/ext/aligned_buffer.h \
- /usr/include/c++/8/bits/node_handle.h /usr/include/c++/8/optional \
- /usr/include/c++/8/bits/enable_special_members.h \
- /usr/include/c++/8/bits/stl_map.h /usr/include/c++/8/tuple \
- /usr/include/c++/8/array /usr/include/c++/8/bits/uses_allocator.h \
- /usr/include/c++/8/bits/invoke.h /usr/include/c++/8/bits/stl_multimap.h \
- /usr/include/c++/8/numeric /usr/include/c++/8/bits/stl_numeric.h \
- /usr/include/c++/8/algorithm /usr/include/c++/8/bits/stl_algo.h \
+ /home/vikroe/Documents/phasereconstruction/CUDAFiles/include/videoParser.h \
+ /usr/local/include/opencv4/opencv2/opencv.hpp \
+ /usr/local/include/opencv4/opencv2/opencv_modules.hpp \
+ /usr/local/include/opencv4/opencv2/core.hpp \
+ /usr/local/include/opencv4/opencv2/core/cvdef.h \
+ /usr/local/include/opencv4/opencv2/core/version.hpp \
+ /usr/local/include/opencv4/opencv2/core/hal/interface.h \
+ /usr/include/c++/8/cstddef \
+ /usr/local/include/opencv4/opencv2/core/cv_cpu_dispatch.h \
+ /usr/lib/gcc/x86_64-linux-gnu/8/include/emmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/8/include/xmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/8/include/mmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/8/include/mm_malloc.h \
+ /usr/include/c++/8/array \
+ /usr/local/include/opencv4/opencv2/core/base.hpp \
+ /usr/include/c++/8/climits /usr/include/c++/8/algorithm \
+ /usr/include/c++/8/bits/stl_algo.h \
  /usr/include/c++/8/bits/algorithmfwd.h \
  /usr/include/c++/8/bits/stl_heap.h /usr/include/c++/8/bits/stl_tempbuf.h \
- /usr/include/c++/8/bits/uniform_int_dist.h /usr/include/c++/8/functional \
- /usr/include/c++/8/bits/refwrap.h /usr/include/c++/8/bits/std_function.h \
- /usr/include/c++/8/unordered_map /usr/include/c++/8/bits/hashtable.h \
- /usr/include/c++/8/bits/hashtable_policy.h \
- /usr/include/c++/8/bits/unordered_map.h \
- /usr/include/python3.8/numpy/arrayobject.h \
- /usr/include/python3.8/numpy/ndarrayobject.h \
- /usr/include/python3.8/numpy/ndarraytypes.h \
- /usr/include/python3.8/numpy/npy_common.h \
- /usr/include/python3.8/numpy/numpyconfig.h \
- /usr/include/python3.8/numpy/_numpyconfig.h \
- /usr/include/python3.8/numpy/npy_endian.h \
- /usr/include/python3.8/numpy/npy_cpu.h \
- /usr/include/python3.8/numpy/utils.h \
- /usr/include/python3.8/numpy/_neighborhood_iterator_imp.h \
- /usr/include/python3.8/numpy/__multiarray_api.h \
- /usr/include/python3.8/numpy/npy_interrupt.h /usr/include/setjmp.h \
- /usr/include/signal.h /usr/include/x86_64-linux-gnu/bits/signum.h \
- /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
- /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h \
- /usr/include/x86_64-linux-gnu/bits/siginfo-arch.h \
- /usr/include/x86_64-linux-gnu/bits/siginfo-consts.h \
- /usr/include/x86_64-linux-gnu/bits/siginfo-consts-arch.h \
- /usr/include/x86_64-linux-gnu/bits/types/sigval_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h \
- /usr/include/x86_64-linux-gnu/bits/sigevent-consts.h \
- /usr/include/x86_64-linux-gnu/bits/sigaction.h \
- /usr/include/x86_64-linux-gnu/bits/sigcontext.h \
- /usr/include/x86_64-linux-gnu/bits/types/stack_t.h \
- /usr/include/x86_64-linux-gnu/sys/ucontext.h \
- /usr/include/x86_64-linux-gnu/bits/sigstack.h \
- /usr/include/x86_64-linux-gnu/bits/ss_flags.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h \
- /usr/include/x86_64-linux-gnu/bits/sigthread.h \
- /usr/include/x86_64-linux-gnu/bits/signal_ext.h \
- /usr/include/c++/8/chrono /usr/include/c++/8/ratio \
- /usr/include/c++/8/ctime /usr/include/c++/8/bits/parse_numbers.h \
- /home/vikroe/Documents/phasereconstruction/CUDAFiles/include/json.hpp \
- /usr/include/c++/8/cstddef /usr/include/c++/8/iterator \
- /usr/include/c++/8/bits/stream_iterator.h /usr/include/c++/8/memory \
- /usr/include/c++/8/bits/stl_raw_storage_iter.h \
+ /usr/include/c++/8/bits/uniform_int_dist.h \
+ /usr/local/include/opencv4/opencv2/core/cvstd.hpp \
+ /usr/include/c++/8/cstring \
+ /usr/local/include/opencv4/opencv2/core/cvstd_wrapper.hpp \
+ /usr/include/c++/8/memory /usr/include/c++/8/bits/stl_raw_storage_iter.h \
  /usr/include/c++/8/ext/concurrence.h \
- /usr/include/c++/8/bits/unique_ptr.h \
- /usr/include/c++/8/bits/shared_ptr.h \
+ /usr/include/c++/8/bits/uses_allocator.h \
+ /usr/include/c++/8/bits/unique_ptr.h /usr/include/c++/8/tuple \
+ /usr/include/c++/8/bits/invoke.h /usr/include/c++/8/bits/shared_ptr.h \
  /usr/include/c++/8/bits/shared_ptr_base.h \
  /usr/include/c++/8/bits/allocated_ptr.h \
+ /usr/include/c++/8/bits/refwrap.h \
+ /usr/include/c++/8/ext/aligned_buffer.h \
  /usr/include/c++/8/bits/shared_ptr_atomic.h \
  /usr/include/c++/8/bits/atomic_base.h \
  /usr/include/c++/8/bits/atomic_lockfree_defines.h \
- /usr/include/c++/8/backward/auto_ptr.h /usr/include/c++/8/forward_list \
- /usr/include/c++/8/bits/forward_list.h \
+ /usr/include/c++/8/backward/auto_ptr.h \
+ /usr/local/include/opencv4/opencv2/core/neon_utils.hpp \
+ /usr/local/include/opencv4/opencv2/core/vsx_utils.hpp \
+ /usr/include/assert.h /usr/local/include/opencv4/opencv2/core/check.hpp \
+ /usr/local/include/opencv4/opencv2/core/traits.hpp \
+ /usr/local/include/opencv4/opencv2/core/matx.hpp \
+ /usr/local/include/opencv4/opencv2/core/saturate.hpp \
+ /usr/local/include/opencv4/opencv2/core/fast_math.hpp \
+ /usr/local/include/opencv4/opencv2/core/types.hpp \
+ /usr/include/c++/8/cfloat \
+ /usr/lib/gcc/x86_64-linux-gnu/8/include/float.h \
+ /usr/local/include/opencv4/opencv2/core/mat.hpp \
+ /usr/local/include/opencv4/opencv2/core/bufferpool.hpp \
+ /usr/local/include/opencv4/opencv2/core/mat.inl.hpp \
+ /usr/local/include/opencv4/opencv2/core/persistence.hpp \
+ /usr/local/include/opencv4/opencv2/core/operations.hpp \
+ /usr/local/include/opencv4/opencv2/core/cvstd.inl.hpp \
+ /usr/include/c++/8/complex /usr/include/c++/8/sstream \
+ /usr/include/c++/8/bits/sstream.tcc \
+ /usr/local/include/opencv4/opencv2/core/utility.hpp \
+ /usr/include/c++/8/functional /usr/include/c++/8/bits/std_function.h \
+ /usr/include/c++/8/unordered_map /usr/include/c++/8/bits/hashtable.h \
+ /usr/include/c++/8/bits/hashtable_policy.h \
+ /usr/include/c++/8/bits/node_handle.h /usr/include/c++/8/optional \
+ /usr/include/c++/8/bits/enable_special_members.h \
+ /usr/include/c++/8/bits/unordered_map.h /usr/include/c++/8/mutex \
+ /usr/include/c++/8/bits/std_mutex.h \
+ /usr/local/include/opencv4/opencv2/core/optim.hpp \
+ /usr/local/include/opencv4/opencv2/core/ovx.hpp \
+ /usr/local/include/opencv4/opencv2/core/cvdef.h \
+ /usr/local/include/opencv4/opencv2/calib3d.hpp \
+ /usr/local/include/opencv4/opencv2/features2d.hpp \
+ /usr/local/include/opencv4/opencv2/flann/miniflann.hpp \
+ /usr/local/include/opencv4/opencv2/flann/defines.h \
+ /usr/local/include/opencv4/opencv2/flann/config.h \
+ /usr/local/include/opencv4/opencv2/core/affine.hpp \
+ /usr/local/include/opencv4/opencv2/dnn.hpp \
+ /usr/local/include/opencv4/opencv2/dnn/dnn.hpp \
+ /usr/local/include/opencv4/opencv2/core/async.hpp \
+ /usr/local/include/opencv4/opencv2/dnn/version.hpp \
+ /usr/local/include/opencv4/opencv2/dnn/dict.hpp /usr/include/c++/8/map \
+ /usr/include/c++/8/bits/stl_tree.h /usr/include/c++/8/bits/stl_map.h \
+ /usr/include/c++/8/bits/stl_multimap.h \
+ /usr/local/include/opencv4/opencv2/dnn/layer.hpp \
+ /usr/local/include/opencv4/opencv2/dnn/dnn.inl.hpp \
+ /usr/local/include/opencv4/opencv2/dnn/utils/inference_engine.hpp \
+ /usr/local/include/opencv4/opencv2/dnn/dnn.hpp \
+ /usr/local/include/opencv4/opencv2/flann.hpp \
+ /usr/local/include/opencv4/opencv2/flann/flann_base.hpp \
+ /usr/local/include/opencv4/opencv2/flann/general.h \
+ /usr/local/include/opencv4/opencv2/flann/matrix.h \
+ /usr/local/include/opencv4/opencv2/flann/params.h \
+ /usr/local/include/opencv4/opencv2/flann/any.h \
+ /usr/local/include/opencv4/opencv2/flann/defines.h \
+ /usr/local/include/opencv4/opencv2/flann/saving.h \
+ /usr/local/include/opencv4/opencv2/flann/nn_index.h \
+ /usr/local/include/opencv4/opencv2/flann/result_set.h \
+ /usr/include/c++/8/set /usr/include/c++/8/bits/stl_set.h \
+ /usr/include/c++/8/bits/stl_multiset.h \
+ /usr/local/include/opencv4/opencv2/flann/all_indices.h \
+ /usr/local/include/opencv4/opencv2/flann/kdtree_index.h \
+ /usr/local/include/opencv4/opencv2/flann/dynamic_bitset.h \
+ /usr/local/include/opencv4/opencv2/flann/dist.h \
+ /usr/local/include/opencv4/opencv2/flann/heap.h \
+ /usr/local/include/opencv4/opencv2/flann/allocator.h \
+ /usr/local/include/opencv4/opencv2/flann/random.h \
+ /usr/local/include/opencv4/opencv2/flann/kdtree_single_index.h \
+ /usr/local/include/opencv4/opencv2/flann/kmeans_index.h \
+ /usr/local/include/opencv4/opencv2/flann/logger.h \
+ /usr/local/include/opencv4/opencv2/flann/composite_index.h \
+ /usr/local/include/opencv4/opencv2/flann/linear_index.h \
+ /usr/local/include/opencv4/opencv2/flann/hierarchical_clustering_index.h \
+ /usr/local/include/opencv4/opencv2/flann/lsh_index.h \
+ /usr/local/include/opencv4/opencv2/flann/lsh_table.h \
+ /usr/include/c++/8/iomanip /usr/include/c++/8/locale \
+ /usr/include/c++/8/bits/locale_facets_nonio.h \
+ /usr/include/x86_64-linux-gnu/c++/8/bits/time_members.h \
+ /usr/include/x86_64-linux-gnu/c++/8/bits/messages_members.h \
+ /usr/include/libintl.h /usr/include/c++/8/bits/codecvt.h \
+ /usr/include/c++/8/bits/locale_facets_nonio.tcc \
+ /usr/include/c++/8/bits/locale_conv.h \
+ /usr/include/c++/8/bits/quoted_string.h \
+ /usr/local/include/opencv4/opencv2/flann/autotuned_index.h \
+ /usr/local/include/opencv4/opencv2/flann/ground_truth.h \
+ /usr/local/include/opencv4/opencv2/flann/index_testing.h \
+ /usr/local/include/opencv4/opencv2/flann/timer.h \
+ /usr/local/include/opencv4/opencv2/flann/sampling.h \
+ /usr/local/include/opencv4/opencv2/highgui.hpp \
+ /usr/local/include/opencv4/opencv2/imgcodecs.hpp \
+ /usr/local/include/opencv4/opencv2/videoio.hpp \
+ /usr/local/include/opencv4/opencv2/imgproc.hpp \
+ /usr/local/include/opencv4/opencv2/imgproc/segmentation.hpp \
+ /usr/local/include/opencv4/opencv2/ml.hpp \
+ /usr/local/include/opencv4/opencv2/ml/ml.inl.hpp \
+ /usr/local/include/opencv4/opencv2/objdetect.hpp \
+ /usr/local/include/opencv4/opencv2/objdetect/detection_based_tracker.hpp \
+ /usr/local/include/opencv4/opencv2/photo.hpp \
+ /usr/local/include/opencv4/opencv2/stitching.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/warpers.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/warpers.hpp \
+ /usr/local/include/opencv4/opencv2/core/cuda.hpp \
+ /usr/local/include/opencv4/opencv2/core/cuda_types.hpp \
+ /usr/local/include/opencv4/opencv2/core/cuda.inl.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/warpers_inl.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/warpers.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/matchers.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/motion_estimators.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/matchers.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/util.hpp \
+ /usr/include/c++/8/list /usr/include/c++/8/bits/stl_list.h \
+ /usr/include/c++/8/bits/list.tcc \
+ /usr/local/include/opencv4/opencv2/stitching/detail/util_inl.hpp \
+ /usr/include/c++/8/queue /usr/include/c++/8/deque \
+ /usr/include/c++/8/bits/stl_deque.h /usr/include/c++/8/bits/deque.tcc \
+ /usr/include/c++/8/bits/stl_queue.h \
+ /usr/local/include/opencv4/opencv2/stitching/detail/camera.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/seam_finders.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/blenders.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/camera.hpp \
+ /usr/local/include/opencv4/opencv2/video.hpp \
+ /usr/local/include/opencv4/opencv2/video/tracking.hpp \
+ /usr/local/include/opencv4/opencv2/video/background_segm.hpp \
+ /home/vikroe/Documents/phasereconstruction/CUDAFiles/include/utils.h \
+ /usr/include/c++/8/thread /usr/include/c++/8/condition_variable \
+ /usr/local/include/opencv4/opencv2/highgui/highgui.hpp \
+ /usr/include/cuda_runtime.h /usr/include/crt/host_config.h \
+ /usr/include/builtin_types.h /usr/include/device_types.h \
+ /usr/include/surface_types.h /usr/include/texture_types.h \
+ /usr/include/channel_descriptor.h /usr/include/cuda_runtime_api.h \
+ /usr/include/cuda_device_runtime_api.h /usr/include/driver_functions.h \
+ /usr/include/vector_functions.h /usr/include/vector_functions.hpp \
+ /home/vikroe/Documents/phasereconstruction/CUDAFiles/include/cudaDebug.h \
+ /home/vikroe/Documents/phasereconstruction/CUDAFiles/include/appData.h \
+ /home/vikroe/Documents/phasereconstruction/CUDAFiles/include/settings.h \
+ /home/vikroe/Documents/phasereconstruction/CUDAFiles/include/json.hpp \
+ /usr/include/c++/8/iterator /usr/include/c++/8/bits/stream_iterator.h \
+ /usr/include/c++/8/numeric /usr/include/c++/8/bits/stl_numeric.h \
+ /usr/include/c++/8/forward_list /usr/include/c++/8/bits/forward_list.h \
  /usr/include/c++/8/bits/forward_list.tcc /usr/include/c++/8/valarray \
  /usr/include/c++/8/bits/valarray_array.h \
  /usr/include/c++/8/bits/valarray_array.tcc \
@@ -345,5 +367,4 @@ CMakeFiles/phaseretrieval.dir/main.cpp.o: \
  /usr/include/c++/8/bits/valarray_after.h \
  /usr/include/c++/8/bits/gslice.h /usr/include/c++/8/bits/gslice_array.h \
  /usr/include/c++/8/bits/mask_array.h \
- /usr/include/c++/8/bits/indirect_array.h /usr/include/c++/8/cassert \
- /usr/include/c++/8/cstring
+ /usr/include/c++/8/bits/indirect_array.h /usr/include/c++/8/cassert

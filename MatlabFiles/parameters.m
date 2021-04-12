@@ -40,7 +40,7 @@ if used_algorithm == "iterative"
 elseif used_algorithm == "multi"
     r_constr = [-1 0;0 0];
     i_constr = [0 -1; 0 1];
-    z = [1e-3; 2.75e-3];
+    z = [2.4e-3; 2.5e-3];
 else
     r_constr = [0,0];
     i_constr = [-1,1];
@@ -52,4 +52,4 @@ if used_algorithm == "inverse" || used_algorithm == "multi"
     t = 0.5;
 end
 
-iter = 6; %Maximum number of iterations
+iter = 3; %Maximum number of iterations

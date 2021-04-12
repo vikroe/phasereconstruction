@@ -153,6 +153,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+src/appData.o: src/appData.cpp.o
+.PHONY : src/appData.o
+
+# target to build an object file
+src/appData.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/appData.cpp.o
+.PHONY : src/appData.cpp.o
+
+src/appData.i: src/appData.cpp.i
+.PHONY : src/appData.i
+
+# target to preprocess a source file
+src/appData.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/appData.cpp.i
+.PHONY : src/appData.cpp.i
+
+src/appData.s: src/appData.cpp.s
+.PHONY : src/appData.s
+
+# target to generate assembly for a file
+src/appData.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/appData.cpp.s
+.PHONY : src/appData.cpp.s
+
 src/lodepng.o: src/lodepng.cpp.o
 .PHONY : src/lodepng.o
 
@@ -177,6 +201,102 @@ src/lodepng.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.s
 .PHONY : src/lodepng.cpp.s
 
+src/settings.o: src/settings.cpp.o
+.PHONY : src/settings.o
+
+# target to build an object file
+src/settings.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/settings.cpp.o
+.PHONY : src/settings.cpp.o
+
+src/settings.i: src/settings.cpp.i
+.PHONY : src/settings.i
+
+# target to preprocess a source file
+src/settings.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/settings.cpp.i
+.PHONY : src/settings.cpp.i
+
+src/settings.s: src/settings.cpp.s
+.PHONY : src/settings.s
+
+# target to generate assembly for a file
+src/settings.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/settings.cpp.s
+.PHONY : src/settings.cpp.s
+
+src/ticker.o: src/ticker.cpp.o
+.PHONY : src/ticker.o
+
+# target to build an object file
+src/ticker.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/ticker.cpp.o
+.PHONY : src/ticker.cpp.o
+
+src/ticker.i: src/ticker.cpp.i
+.PHONY : src/ticker.i
+
+# target to preprocess a source file
+src/ticker.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/ticker.cpp.i
+.PHONY : src/ticker.cpp.i
+
+src/ticker.s: src/ticker.cpp.s
+.PHONY : src/ticker.s
+
+# target to generate assembly for a file
+src/ticker.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/ticker.cpp.s
+.PHONY : src/ticker.cpp.s
+
+src/utils.o: src/utils.cpp.o
+.PHONY : src/utils.o
+
+# target to build an object file
+src/utils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/utils.cpp.o
+.PHONY : src/utils.cpp.o
+
+src/utils.i: src/utils.cpp.i
+.PHONY : src/utils.i
+
+# target to preprocess a source file
+src/utils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/utils.cpp.i
+.PHONY : src/utils.cpp.i
+
+src/utils.s: src/utils.cpp.s
+.PHONY : src/utils.s
+
+# target to generate assembly for a file
+src/utils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/utils.cpp.s
+.PHONY : src/utils.cpp.s
+
+src/videoParser.o: src/videoParser.cpp.o
+.PHONY : src/videoParser.o
+
+# target to build an object file
+src/videoParser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.o
+.PHONY : src/videoParser.cpp.o
+
+src/videoParser.i: src/videoParser.cpp.i
+.PHONY : src/videoParser.i
+
+# target to preprocess a source file
+src/videoParser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.i
+.PHONY : src/videoParser.cpp.i
+
+src/videoParser.s: src/videoParser.cpp.s
+.PHONY : src/videoParser.s
+
+# target to generate assembly for a file
+src/videoParser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/phaseretrieval.dir/build.make CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.s
+.PHONY : src/videoParser.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -189,9 +309,24 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... src/appData.o"
+	@echo "... src/appData.i"
+	@echo "... src/appData.s"
 	@echo "... src/lodepng.o"
 	@echo "... src/lodepng.i"
 	@echo "... src/lodepng.s"
+	@echo "... src/settings.o"
+	@echo "... src/settings.i"
+	@echo "... src/settings.s"
+	@echo "... src/ticker.o"
+	@echo "... src/ticker.i"
+	@echo "... src/ticker.s"
+	@echo "... src/utils.o"
+	@echo "... src/utils.i"
+	@echo "... src/utils.s"
+	@echo "... src/videoParser.o"
+	@echo "... src/videoParser.i"
+	@echo "... src/videoParser.s"
 .PHONY : help
 
 

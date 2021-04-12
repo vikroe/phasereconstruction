@@ -845,7 +845,7 @@ CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o: CMakeFiles/pha
 CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o
 CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building NVCC intermediate link file CMakeFiles/phaseretrieval.dir/phaseretrieval_intermediate_link.o"
-	/usr/bin/nvcc -m64 -ccbin /usr/bin/gcc-8 -dlink /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_multilayer.cu.o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_kernels.cu.o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_blur.cu.o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_cudaDebug.cu.o -o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/./phaseretrieval_intermediate_link.o
+	/usr/bin/nvcc -arch compute_30 -code sm_30 -m64 -ccbin /usr/bin/gcc-8 -dlink /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_multilayer.cu.o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_kernels.cu.o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_blur.cu.o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_cudaDebug.cu.o -o /home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/./phaseretrieval_intermediate_link.o
 
 CMakeFiles/phaseretrieval.dir/main.cpp.o: CMakeFiles/phaseretrieval.dir/flags.make
 CMakeFiles/phaseretrieval.dir/main.cpp.o: main.cpp
@@ -875,10 +875,85 @@ CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.s"
 	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/lodepng.cpp -o CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.s
 
+CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.o: CMakeFiles/phaseretrieval.dir/flags.make
+CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.o: src/videoParser.cpp
+CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.o: CMakeFiles/phaseretrieval.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.o"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.o -MF CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.o.d -o CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.o -c /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/videoParser.cpp
+
+CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.i"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/videoParser.cpp > CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.i
+
+CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.s"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/videoParser.cpp -o CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.s
+
+CMakeFiles/phaseretrieval.dir/src/utils.cpp.o: CMakeFiles/phaseretrieval.dir/flags.make
+CMakeFiles/phaseretrieval.dir/src/utils.cpp.o: src/utils.cpp
+CMakeFiles/phaseretrieval.dir/src/utils.cpp.o: CMakeFiles/phaseretrieval.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/phaseretrieval.dir/src/utils.cpp.o"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/phaseretrieval.dir/src/utils.cpp.o -MF CMakeFiles/phaseretrieval.dir/src/utils.cpp.o.d -o CMakeFiles/phaseretrieval.dir/src/utils.cpp.o -c /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/utils.cpp
+
+CMakeFiles/phaseretrieval.dir/src/utils.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/phaseretrieval.dir/src/utils.cpp.i"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/utils.cpp > CMakeFiles/phaseretrieval.dir/src/utils.cpp.i
+
+CMakeFiles/phaseretrieval.dir/src/utils.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/phaseretrieval.dir/src/utils.cpp.s"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/utils.cpp -o CMakeFiles/phaseretrieval.dir/src/utils.cpp.s
+
+CMakeFiles/phaseretrieval.dir/src/appData.cpp.o: CMakeFiles/phaseretrieval.dir/flags.make
+CMakeFiles/phaseretrieval.dir/src/appData.cpp.o: src/appData.cpp
+CMakeFiles/phaseretrieval.dir/src/appData.cpp.o: CMakeFiles/phaseretrieval.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/phaseretrieval.dir/src/appData.cpp.o"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/phaseretrieval.dir/src/appData.cpp.o -MF CMakeFiles/phaseretrieval.dir/src/appData.cpp.o.d -o CMakeFiles/phaseretrieval.dir/src/appData.cpp.o -c /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/appData.cpp
+
+CMakeFiles/phaseretrieval.dir/src/appData.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/phaseretrieval.dir/src/appData.cpp.i"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/appData.cpp > CMakeFiles/phaseretrieval.dir/src/appData.cpp.i
+
+CMakeFiles/phaseretrieval.dir/src/appData.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/phaseretrieval.dir/src/appData.cpp.s"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/appData.cpp -o CMakeFiles/phaseretrieval.dir/src/appData.cpp.s
+
+CMakeFiles/phaseretrieval.dir/src/settings.cpp.o: CMakeFiles/phaseretrieval.dir/flags.make
+CMakeFiles/phaseretrieval.dir/src/settings.cpp.o: src/settings.cpp
+CMakeFiles/phaseretrieval.dir/src/settings.cpp.o: CMakeFiles/phaseretrieval.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/phaseretrieval.dir/src/settings.cpp.o"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/phaseretrieval.dir/src/settings.cpp.o -MF CMakeFiles/phaseretrieval.dir/src/settings.cpp.o.d -o CMakeFiles/phaseretrieval.dir/src/settings.cpp.o -c /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/settings.cpp
+
+CMakeFiles/phaseretrieval.dir/src/settings.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/phaseretrieval.dir/src/settings.cpp.i"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/settings.cpp > CMakeFiles/phaseretrieval.dir/src/settings.cpp.i
+
+CMakeFiles/phaseretrieval.dir/src/settings.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/phaseretrieval.dir/src/settings.cpp.s"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/settings.cpp -o CMakeFiles/phaseretrieval.dir/src/settings.cpp.s
+
+CMakeFiles/phaseretrieval.dir/src/ticker.cpp.o: CMakeFiles/phaseretrieval.dir/flags.make
+CMakeFiles/phaseretrieval.dir/src/ticker.cpp.o: src/ticker.cpp
+CMakeFiles/phaseretrieval.dir/src/ticker.cpp.o: CMakeFiles/phaseretrieval.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/phaseretrieval.dir/src/ticker.cpp.o"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/phaseretrieval.dir/src/ticker.cpp.o -MF CMakeFiles/phaseretrieval.dir/src/ticker.cpp.o.d -o CMakeFiles/phaseretrieval.dir/src/ticker.cpp.o -c /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/ticker.cpp
+
+CMakeFiles/phaseretrieval.dir/src/ticker.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/phaseretrieval.dir/src/ticker.cpp.i"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/ticker.cpp > CMakeFiles/phaseretrieval.dir/src/ticker.cpp.i
+
+CMakeFiles/phaseretrieval.dir/src/ticker.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/phaseretrieval.dir/src/ticker.cpp.s"
+	/usr/bin/g++-8 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vikroe/Documents/phasereconstruction/CUDAFiles/src/ticker.cpp -o CMakeFiles/phaseretrieval.dir/src/ticker.cpp.s
+
 # Object files for target phaseretrieval
 phaseretrieval_OBJECTS = \
 "CMakeFiles/phaseretrieval.dir/main.cpp.o" \
-"CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o"
+"CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o" \
+"CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.o" \
+"CMakeFiles/phaseretrieval.dir/src/utils.cpp.o" \
+"CMakeFiles/phaseretrieval.dir/src/appData.cpp.o" \
+"CMakeFiles/phaseretrieval.dir/src/settings.cpp.o" \
+"CMakeFiles/phaseretrieval.dir/src/ticker.cpp.o"
 
 # External object files for target phaseretrieval
 phaseretrieval_EXTERNAL_OBJECTS = \
@@ -890,6 +965,11 @@ phaseretrieval_EXTERNAL_OBJECTS = \
 
 phaseretrieval: CMakeFiles/phaseretrieval.dir/main.cpp.o
 phaseretrieval: CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o
+phaseretrieval: CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.o
+phaseretrieval: CMakeFiles/phaseretrieval.dir/src/utils.cpp.o
+phaseretrieval: CMakeFiles/phaseretrieval.dir/src/appData.cpp.o
+phaseretrieval: CMakeFiles/phaseretrieval.dir/src/settings.cpp.o
+phaseretrieval: CMakeFiles/phaseretrieval.dir/src/ticker.cpp.o
 phaseretrieval: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o
 phaseretrieval: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o
 phaseretrieval: CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o
@@ -902,8 +982,14 @@ phaseretrieval: /usr/lib/x86_64-linux-gnu/libcudart_static.a
 phaseretrieval: /usr/lib/x86_64-linux-gnu/librt.so
 phaseretrieval: /usr/lib/x86_64-linux-gnu/libcufft.so
 phaseretrieval: /usr/lib/x86_64-linux-gnu/libpython3.8.so
+phaseretrieval: /usr/local/lib/libopencv_highgui.so.4.5.2
+phaseretrieval: /usr/local/lib/libopencv_videoio.so.4.5.2
+phaseretrieval: /usr/local/lib/libopencv_imgcodecs.so.4.5.2
+phaseretrieval: /usr/local/lib/libopencv_imgproc.so.4.5.2
+phaseretrieval: /usr/local/lib/libopencv_core.so.4.5.2
+phaseretrieval: /usr/local/lib/libopencv_cudev.so.4.5.2
 phaseretrieval: CMakeFiles/phaseretrieval.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable phaseretrieval"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable phaseretrieval"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/phaseretrieval.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

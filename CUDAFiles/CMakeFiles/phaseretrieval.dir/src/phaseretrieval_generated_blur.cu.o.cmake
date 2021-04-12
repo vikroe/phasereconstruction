@@ -72,14 +72,14 @@ set(generated_file_internal "/home/vikroe/Documents/phasereconstruction/CUDAFile
 set(generated_cubin_file_internal "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/./phaseretrieval_generated_blur.cu.o.cubin.txt") # path
 
 set(CUDA_NVCC_EXECUTABLE "/usr/bin/nvcc") # path
-set(CUDA_NVCC_FLAGS  ;; ) # list
+set(CUDA_NVCC_FLAGS ;-arch;compute_30;-code;sm_30 ;; ) # list
 # Build specific configuration flags
 set(CUDA_NVCC_FLAGS_DEBUG  ; )
 set(CUDA_NVCC_FLAGS_MINSIZEREL  ; )
 set(CUDA_NVCC_FLAGS_RELEASE  ; )
 set(CUDA_NVCC_FLAGS_RELWITHDEBINFO  ; )
 set(nvcc_flags -m64) # list
-set(CUDA_NVCC_INCLUDE_DIRS [==[/usr/include;/home/vikroe/Documents/phasereconstruction/CUDAFiles/include;/usr/include;/home/vikroe/Documents/phasereconstruction/CUDAFiles/include;/usr/include/python3.8;/usr/include/python3.8]==]) # list (needs to be in lua quotes to address backslashes)
+set(CUDA_NVCC_INCLUDE_DIRS [==[/usr/include;/home/vikroe/Documents/phasereconstruction/CUDAFiles/include;/usr/local/include/opencv4;/usr/include;/home/vikroe/Documents/phasereconstruction/CUDAFiles/include;/usr/include/python3.8;/usr/include/python3.8;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4]==]) # list (needs to be in lua quotes to address backslashes)
 string(REPLACE "\\" "/" CUDA_NVCC_INCLUDE_DIRS "${CUDA_NVCC_INCLUDE_DIRS}")
 set(CUDA_NVCC_COMPILE_DEFINITIONS [==[]==]) # list (needs to be in lua quotes see #16510 ).
 set(format_flag "-dc") # string

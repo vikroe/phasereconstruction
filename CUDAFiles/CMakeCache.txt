@@ -308,6 +308,9 @@ CUDA_cusparse_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libcusparse.so
 //"nppc" library
 CUDA_nppc_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libnppc.so
 
+//"nppi" library
+CUDA_nppi_LIBRARY:FILEPATH=CUDA_nppi_LIBRARY-NOTFOUND
+
 //"nppial" library
 CUDA_nppial_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libnppial.so
 
@@ -346,6 +349,9 @@ CUDA_nvToolsExt_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libnvToolsExt.so
 
 //Path to a library.
 CUDA_rt_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/librt.so
+
+//The directory containing a CMake configuration file for OpenCV.
+OpenCV_DIR:PATH=/usr/local/lib/cmake/opencv4
 
 //Value Computed by CMake
 phaseretrieval_BINARY_DIR:STATIC=/home/vikroe/Documents/phasereconstruction/CUDAFiles
@@ -515,7 +521,7 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 CUDA_64_BIT_DEVICE_CODE-ADVANCED:INTERNAL=1
 //List of intermediate files that are part of the cuda dependency
 // scanning.
-CUDA_ADDITIONAL_CLEAN_FILES:INTERNAL=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir//phaseretrieval_generated_main.cu.o.depend;/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o.depend;/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o.depend;/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o.depend;/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o.depend
+CUDA_ADDITIONAL_CLEAN_FILES:INTERNAL=/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir//phaseretrieval_generated_main.cu.o.depend;/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_multilayer.cu.o.depend;/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_kernels.cu.o.depend;/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_blur.cu.o.depend;/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_cudaDebug.cu.o.depend;/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/phaseretrieval_generated_appData.cu.o.depend
 //ADVANCED property for variable: CUDA_ATTACH_VS_BUILD_RULE_TO_CUDA_FILE
 CUDA_ATTACH_VS_BUILD_RULE_TO_CUDA_FILE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_BUILD_CUBIN
@@ -579,6 +585,8 @@ CUDA_cusparse_LIBRARY-ADVANCED:INTERNAL=1
 CUDA_make2cmake:INTERNAL=/snap/cmake/846/share/cmake-3.20/Modules/FindCUDA/make2cmake.cmake
 //ADVANCED property for variable: CUDA_nppc_LIBRARY
 CUDA_nppc_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CUDA_nppi_LIBRARY
+CUDA_nppi_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_nppial_LIBRARY
 CUDA_nppial_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_nppicc_LIBRARY
@@ -609,6 +617,8 @@ CUDA_parse_cubin:INTERNAL=/snap/cmake/846/share/cmake-3.20/Modules/FindCUDA/pars
 CUDA_run_nvcc:INTERNAL=/snap/cmake/846/share/cmake-3.20/Modules/FindCUDA/run_nvcc.cmake
 //Details about finding CUDA
 FIND_PACKAGE_MESSAGE_DETAILS_CUDA:INTERNAL=[/usr][/usr/bin/nvcc][/usr/include][/usr/lib/x86_64-linux-gnu/libcudart_static.a][v10.1()]
+//Details about finding OpenCV
+FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[/usr/local][cfound components: core highgui ][v4.5.2()]
 //Details about finding Python3
 FIND_PACKAGE_MESSAGE_DETAILS_Python3:INTERNAL=[/usr/include/python3.8][/usr/lib/x86_64-linux-gnu/libpython3.8.so][cfound components: Development Development.Module Development.Embed ][v3.8.5()]
 //Details about finding Threads

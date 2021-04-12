@@ -11,17 +11,24 @@ set(SOURCES
         "${SRC_DIR}/kernels.cu"
         "${SRC_DIR}/blur.cu"
         "${SRC_DIR}/cudaDebug.cu"
+        "${SRC_DIR}/videoParser.cpp"
+        "${SRC_DIR}/utils.cpp"
+        "${SRC_DIR}/appData.cpp"
+        "${SRC_DIR}/settings.cpp"
+        "${SRC_DIR}/ticker.cpp"
         )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS}" -arch compute_30 -code sm_30)
 
 set(CUDA_PROPAGATE_HOST_FLAGS OFF)
 set(CUDA_SEPARABLE_COMPILATION ON)
 
 find_package(CUDA REQUIRED)
 find_package(Python3 REQUIRED COMPONENTS Development)
+find_package(OpenCV REQUIRED COMPONENTS core highgui)
 
-include_directories(${INCLUDES})
+include_directories(${INCLUDES} ${OpenCV_INCLUDE_DIRS})
 
 cuda_add_executable(${PROJECT_NAME} ${SOURCES})
 
@@ -35,7 +42,8 @@ target_link_libraries(${PROJECT_NAME}
         ${CUDA_LIBRARIES}
         ${CUDA_CUFFT_LIBRARIES}
         pthread
-        Python3::Python)
+        Python3::Python
+        ${OpenCV_LIBS})
 
 set_property(TARGET ${PROJECT_NAME}
         PROPERTY CUDA_SEPARABLE_COMPILATION ON)

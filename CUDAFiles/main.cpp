@@ -1,110 +1,147 @@
 #include <stdio.h>
 #include <iostream>
-#include <fstream>
 #include <vector>
 #include <string.h>
-#include <cuda_runtime_api.h>
-#include "cuda.h"
-#include "cufft.h"
-#include "lodepng.h"
+#include "ticker.h"
 #include "multilayer.h"
 #include "kernels.h"
-#include "matplotlibcpp.h"
-#include <chrono>
-#include "json.hpp"
+#include "videoParser.h"
+#include "utils.h"
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+#include "opencv2/core/cuda.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "cuda.h"
+#include <cuda_runtime.h>
+#include "cudaDebug.h"
+#include "appData.h"
 
 using namespace std;
-using json = nlohmann::json;
-namespace plt = matplotlibcpp;
 
-json loadJson(const char* filename){
-    ifstream in(filename);
-    json j;
-    in >> j;
-    return(j);
+bool startingFrameCond;
+bool startingDisplayCond;
+bool notFinished;
+bool windowOpened;
+
+void frameThread(AppData& appData){
+    cout << appData.filename << endl;
+    VideoParser video(appData.filename.c_str());
+    while (video.getCurrentFrame() < 100){
+        unique_lock<mutex> lck(appData.frameMtx);
+        if (video.loadFrame(appData.width, appData.height, appData.inputFrame) != 0){
+            appData.frameCv.wait(lck);
+            lck.unlock();
+            cout << "End of video reached! Closing frame thread.\n";
+            break;
+        }
+        if((int)video.getCurrentFrame() == 1)
+            startingFrameCond = true;
+        appData.frameCv.wait(lck);
+        cout << "Gathering " << video.getCurrentFrame() << ". frame." << endl;
+        lck.unlock();
+    }
+    notFinished = false;
 }
 
-vector<double> loadImage(const char* filename, unsigned int width, unsigned int height){
-    vector<unsigned char> image;
-    int size = (int)(height*width);
-    vector<double> out(size, 0); 
-
-    unsigned error = lodepng::decode(image, width, height, filename);
-    if(error){
-        cout << "Could not decode the image with error " << error << ": " << lodepng_error_text(error) << endl;
+void retrievalThread(AppData& appData){
+    Ticker *ticker = new Ticker();
+    MultiLayer *multi = new MultiLayer((int)appData.width, 
+                                    (int)appData.height, 
+                                    appData.z, 
+                                    appData.rconstr, 
+                                    appData.iconstr, 
+                                    appData.mu, 
+                                    appData.dx, 
+                                    appData.lambda, 
+                                    appData.n);
+    unsigned int count = appData.width*appData.height;
+    double* image = new double[count];
+    bool warm = false;
+    while(!startingFrameCond && !windowOpened)
+        ;
+    ticker->tic();
+    while(notFinished){
+        unique_lock<mutex> flck(appData.frameMtx);
+        cout << "Got to copying the frame to retrievalThread" << endl;
+        memcpy(image, appData.inputFrame, count*sizeof(double));
+        appData.frameCv.notify_one();
+        flck.unlock();
+        
+        //ticker->tic();
+        if(!warm)
+            multi->iterate(image, appData.iters0, appData.b_cost, warm);
+        else
+            multi->iterate(image, appData.iters, appData.b_cost, warm);
+        //ticker->toc("Current frame of multilayer FISTA took");
+        
+        unique_lock<mutex> dlck(appData.displayMtx);
+        multi->update(appData.d_modulus, appData.d_phase);
+        cudaMemcpy(appData.h_modulus, appData.d_modulus, sizeof(uint8_t)*count*appData.z.size(), cudaMemcpyDeviceToHost);
+        cudaMemcpy(appData.h_phase, appData.d_phase, sizeof(uint8_t)*count*appData.z.size(), cudaMemcpyDeviceToHost);
+        appData.displayCv.notify_one();
+        dlck.unlock();
+        if(!startingDisplayCond)
+            startingDisplayCond = true;
+        if(!warm)
+            warm = true;
+        ticker->toc("This frame took the retrievalThread ");
     }
-
-    for(int i = 0; i < width*height; i++){
-        out[i] = (double)image[i*4]/double(255);
-    }
-
-    return out;
+    delete multi;
 }
 
-void D2F(unsigned int count, double* input, float* output){
-    for(int i = 0 ; i < count ; i++){
-        output[i] = (float)input[i];
+void displayThread(AppData& appData){
+    unsigned int count = appData.width*appData.height;
+    const map<string, string> keywords{{"cmap","gray"}};
+    Ticker* dticker = new Ticker();
+
+    while(!startingDisplayCond)
+        ;
+    cv::namedWindow("Visualization", cv::WINDOW_NORMAL);
+    cv::resizeWindow("Visualization", appData.width, appData.height);
+    windowOpened = true;
+    while(notFinished){
+        dticker->tic();
+        unique_lock<mutex> dlck(appData.displayMtx);
+        appData.displayCv.wait(dlck);
+        dlck.unlock();
+        const cv::Mat p1(cv::Size(appData.width, appData.height), CV_8U, appData.h_phase);
+        const cv::Mat m1(cv::Size(appData.width, appData.height), CV_8U, appData.h_modulus);
+        dticker->toc("This upload of frame to cv::Mat took");
+        cv::imshow("Visualization", m1);
+        char ret_key = (char) cv::waitKey(1);
+        if (ret_key == 27 || ret_key == 'x') notFinished = false;
     }
+    cv::destroyWindow("Visualization");
 }
 
 int main(void)
 {
-    json j = loadJson("params.json");
-    unsigned int width = j.at("width").get<unsigned int>();
-    unsigned int height = j.at("height").get<unsigned int>();
-    int iters = j.at("iters0").get<int>();
-    int warmIters = j.at("iters").get<int>();
-    vector<double> z = j.at("z").get<vector<double>>();
-    vector<double> rconstr = j.at("rconstr").get<vector<double>>();
-    vector<double> iconstr = j.at("iconstr").get<vector<double>>();
-    double dx = j.at("dx").get<double>();
-    double n = j.at("n").get<double>();
-    double lambda = j.at("lambda").get<double>();
-    double mu = j.at("mu").get<double>();
-    bool b_cost = j.at("cost").get<bool>();
+    static AppData appData;
+    std::cout << appData.filename << "what" << endl;
 
+    const unsigned int count = appData.width*appData.height;
+    notFinished = true;
+    windowOpened = false;
 
-    vector<double> temp_image = loadImage("Pics/hologram.png", width,height);
+    thread frameThr (frameThread, std::ref(appData));
+    thread retrievalThr (retrievalThread, std::ref(appData));
+    thread displayThr (displayThread, std::ref(appData));
 
-    static double image[2048*2048];
-    copy(temp_image.begin(), temp_image.end(), image);
-
-    MultiLayer *multilayer = new MultiLayer((int)width, (int)height, z, rconstr, iconstr, mu, dx, lambda, n);
-    auto start = chrono::steady_clock::now();
-    multilayer->iterate(image, iters, b_cost);
-    auto end = chrono::steady_clock::now();
-    double elapsed = chrono::duration_cast<chrono::duration<double>>(end-start).count();
-    printf("Time for the iterative FISTA algorithm: %f\n", elapsed);
+    frameThr.join();
+    retrievalThr.join();
+    displayThr.join();
     //for(int i = 0 ; i < iters+1 ; i++)
     //    cout << multilayer->h_cost[i] << "\n";
-    
+    /*
     double* m = multilayer->modulus;
     double* p = multilayer->phase;
-    static float mf1[2048*2048];
-    static float pf1[2048*2048];
-    static float mf2[2048*2048];
-    static float pf2[2048*2048];
     D2F(width*height, m, mf1);
     D2F(width*height, p, pf1);
     D2F(width*height, &m[width*height], mf2);
     D2F(width*height, &p[width*height], pf2);
-
-    const map<string, string> keywords{{"cmap","gray"}};
-    plt::subplot(2,2,1);
-    plt::imshow(mf1, height, width, 1, keywords);
-    plt::title("Plane 1 - modulus");
-    plt::subplot(2,2,2);
-    plt::title("Plane 2 - modulus");
-    plt::imshow(mf2, height, width, 1, keywords);
-    plt::subplot(2,2,3);
-    plt::title("Plane 1 - phase");
-    plt::imshow(pf1, height, width, 1, keywords);
-    plt::subplot(2,2,4);
-    plt::title("Plane 2 - phase");
-    plt::imshow(pf2, height, width, 1, keywords);
-    plt::show();
-    delete multilayer;
-
+    */
+    
 
 
 }

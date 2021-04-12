@@ -1,14 +1,16 @@
 {
+    "filename": "Videos/video.avi",
+    "filetype": "AVI",
     "width": 2048,
     "height": 2048,
     "dx": 1.55e-6,
     "lambda": 525e-9,
     "n": 1.45,
     "mu": 0.01,
-    "rconstr": [-2, 0, -2, 0],
-    "iconstr": [-1, 1, -1, 1],
+    "rconstr": [-1, 0, 0, 0],
+    "iconstr": [0.0, 0.0, -1.0, 1.0],
     "z": [1e-3, 2.75e-3],
     "iters0": 6,
-    "iters": 3,
+    "iters": 2,
     "cost": false
 }

@@ -48,6 +48,10 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/snap/cmake/846/share/cmake-3.20/Modules/Platform/Linux-GNU.cmake"
   "/snap/cmake/846/share/cmake-3.20/Modules/Platform/Linux.cmake"
   "/snap/cmake/846/share/cmake-3.20/Modules/Platform/UnixPaths.cmake"
+  "/usr/local/lib/cmake/opencv4/OpenCVConfig-version.cmake"
+  "/usr/local/lib/cmake/opencv4/OpenCVConfig.cmake"
+  "/usr/local/lib/cmake/opencv4/OpenCVModules-release.cmake"
+  "/usr/local/lib/cmake/opencv4/OpenCVModules.cmake"
   )
 
 # The corresponding makefile is:

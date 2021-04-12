@@ -84,13 +84,14 @@ elseif used_algorithm == "multi"
     modulus1 = abs(i_reconstruction(:,:,1))/max(abs(i_reconstruction(:,:,1)),[],'all');
     modulus2 = abs(i_reconstruction(:,:,2))/max(abs(i_reconstruction(:,:,2)),[],'all');
     subplot(2,3,1);
-    imshow((modulus1)/max((modulus1),[],'all'), [0,1]);
+    imshow((modulus1-min(modulus1(:)))/max((modulus1-min(modulus1(:))),[],'all'), [0,1]);
     title("Reconstructed amplitude 1");
     subplot(2,3,4);
-    imshow((modulus2)/max((1-modulus2),[],'all'), [0,1]);
+    imshow((modulus2-min(modulus2(:)))/max((modulus2-min(modulus2(:))),[],'all'), [0,1]);
     title("Reconstructed amplitude 2");
     subplot(2,3,2);
-    imshow(angle(i_reconstruction(:,:,1)), [-pi,pi]);
+    p1 = angle(i_reconstruction(:,:,1));
+    imshow((p1-min(p1(:)))/max(p1-min(p1(:)),[],'all'));
     title("Reconstructed phase 1");
     subplot(2,3,5);
     imshow(angle(i_reconstruction(:,:,2)), [-pi,pi]);

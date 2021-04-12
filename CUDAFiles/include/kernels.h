@@ -19,6 +19,7 @@ __global__ void angle(int count, cufftDoubleComplex* in, double* out);
 __global__ void sum(int count, double* in, double* result);
 __global__ void sumOfProducts(int count, double* in1, double* in2, double* result);
 __global__ void maximum(int count, double* in, double* result);
+__global__ void minimum(int count, double* in, double* result);
 __global__ void F2C(int count, double* in, cufftDoubleComplex* out);
 __global__ void modelFunc(int count, int numLayers, double rOffset, double iOffset, cufftDoubleComplex* in, cufftDoubleComplex* model, double* Imodel);
 __global__ void conjugate(int count, cufftComplex *in, cufftComplex* out);
@@ -40,5 +41,6 @@ __global__ void offsetf(int count, double roff, double* in, double* out, bool si
 __global__ void C2Z(int count, cufftComplex* in, cufftDoubleComplex* out);
 __global__ void Z2C(int count, cufftDoubleComplex* in, cufftComplex* out);
 __global__ void extend(int count, int multiple, cufftDoubleComplex* in, cufftDoubleComplex* out);
+__global__ void D2u8(int count, double* in, uint8_t* out);
 
 #endif

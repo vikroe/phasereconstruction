@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++-8
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/vikroe/Documents/phasereconstruction/CUDAFiles/include -isystem /usr/include/python3.8
+CXX_INCLUDES = -I/home/vikroe/Documents/phasereconstruction/CUDAFiles/include -isystem /usr/local/include/opencv4 -isystem /usr/include/python3.8
 
 CXX_FLAGS =  -std=c++17
 

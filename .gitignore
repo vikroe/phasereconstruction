@@ -9,5 +9,13 @@ MatlabFiles/IFT2Dc.m
 MatlabFiles/Propagator.m
 MatlabFiles/old_main.m
 
+CUDAFiles/build/
+CUDAFiles/.vscode/
+CUDAFiles/Videos/
+CUDAFiles/Makefile
+CUDAFiles/phaseretrieval
+CUDAFiles/CmakeCache.txt
+
 #Ignore autosave files
 *.asv
+*.cmake

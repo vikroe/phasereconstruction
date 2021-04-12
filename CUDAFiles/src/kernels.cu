@@ -133,7 +133,6 @@ __global__ void sumOfProducts(int count, double* in1, double* in2, double* resul
 }
 
 __global__ void maximum(int count, double* in, double* result){
-    result[0] = 0.0f;
     extern __shared__ double sharedIn[];
     int thIdx = threadIdx.x;
     int index = blockIdx.x*blockDim.x + thIdx;
@@ -150,7 +149,27 @@ __global__ void maximum(int count, double* in, double* result){
         }
         __syncthreads();
     }
-    if (thIdx == 0) result[0] = sharedIn[thIdx];
+    if (thIdx == 0) result[blockIdx.x] = sharedIn[thIdx];
+}
+
+__global__ void minimum(int count, double* in, double* result){
+    extern __shared__ double sharedIn[];
+    int thIdx = threadIdx.x;
+    int index = blockIdx.x*blockDim.x + thIdx;
+    int stride = blockDim.x*gridDim.x;
+    sharedIn[thIdx] = in[index];
+    
+    for(int i = index+stride; i < count; i += stride){
+        sharedIn[thIdx] = fmin(sharedIn[thIdx], in[index]);
+    }
+    __syncthreads();
+    for(unsigned int i = blockDim.x/2 ; i>0 ; i>>=1){
+        if(thIdx < i){
+            sharedIn[thIdx] =  fmin(sharedIn[thIdx], sharedIn[thIdx+i]);
+        }
+        __syncthreads();
+    }
+    if (thIdx == 0) result[blockIdx.x] = sharedIn[thIdx];
 }
 
 
@@ -361,5 +380,13 @@ __global__ void extend(int count, int multiple, cufftDoubleComplex* in, cufftDou
         for(int e = 0; e < multiple; e++){
             out[i + e*count] = in[i];
         }
+    }
+}
+
+__global__ void D2u8(int count, double* in, uint8_t* out){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        out[i] = (uint8_t)(in[i]*255.0f);
     }
 }
