@@ -9,8 +9,9 @@
     "mu": 0.01,
     "rconstr": [-1, 0, 0, 0],
     "iconstr": [0.0, 0.0, -1.0, 1.0],
-    "z": [1e-3, 2.75e-3],
+    "z": [2.5e-3, 2.75e-3],
     "iters0": 6,
     "iters": 2,
-    "cost": false
+    "cost": false,
+    "frame": 0
 }

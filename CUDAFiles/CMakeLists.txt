@@ -1,6 +1,5 @@
-cmake_minimum_required(VERSION 3.17.0)
+cmake_minimum_required(VERSION 3.16.0)
 project(phaseretrieval)
-
 
 set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/include")
@@ -18,14 +17,13 @@ set(SOURCES
         "${SRC_DIR}/ticker.cpp"
         )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS}" -arch compute_30 -code sm_30)
 
 set(CUDA_PROPAGATE_HOST_FLAGS OFF)
 set(CUDA_SEPARABLE_COMPILATION ON)
 
 find_package(CUDA REQUIRED)
-find_package(Python3 REQUIRED COMPONENTS Development)
 find_package(OpenCV REQUIRED COMPONENTS core highgui)
 
 include_directories(${INCLUDES} ${OpenCV_INCLUDE_DIRS})
@@ -35,14 +33,12 @@ cuda_add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} 
     PUBLIC
         ${INCLUDES}
-    PRIVATE
-        ${Python3_INCLUDE_DIRS})
+    )
 
 target_link_libraries(${PROJECT_NAME}
         ${CUDA_LIBRARIES}
         ${CUDA_CUFFT_LIBRARIES}
         pthread
-        Python3::Python
         ${OpenCV_LIBS})
 
 set_property(TARGET ${PROJECT_NAME}

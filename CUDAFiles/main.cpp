@@ -32,13 +32,13 @@ void frameThread(AppData& appData){
         if (video.loadFrame(appData.width, appData.height, appData.inputFrame) != 0){
             appData.frameCv.wait(lck);
             lck.unlock();
-            cout << "End of video reached! Closing frame thread.\n";
+            cout << "[FRAME] End of video reached! Closing frame thread.\n";
             break;
         }
         if((int)video.getCurrentFrame() == 1)
             startingFrameCond = true;
         appData.frameCv.wait(lck);
-        cout << "Gathering " << video.getCurrentFrame() << ". frame." << endl;
+        cout << "[FRAME] Gathering " << video.getCurrentFrame() << ". frame." << endl;
         lck.unlock();
     }
     notFinished = false;
@@ -63,7 +63,6 @@ void retrievalThread(AppData& appData){
     ticker->tic();
     while(notFinished){
         unique_lock<mutex> flck(appData.frameMtx);
-        cout << "Got to copying the frame to retrievalThread" << endl;
         memcpy(image, appData.inputFrame, count*sizeof(double));
         appData.frameCv.notify_one();
         flck.unlock();
@@ -85,7 +84,7 @@ void retrievalThread(AppData& appData){
             startingDisplayCond = true;
         if(!warm)
             warm = true;
-        ticker->toc("This frame took the retrievalThread ");
+        ticker->toc("[RETRIEVAL] This frame took the retrievalThread ");
     }
     delete multi;
 }
@@ -107,7 +106,7 @@ void displayThread(AppData& appData){
         dlck.unlock();
         const cv::Mat p1(cv::Size(appData.width, appData.height), CV_8U, appData.h_phase);
         const cv::Mat m1(cv::Size(appData.width, appData.height), CV_8U, appData.h_modulus);
-        dticker->toc("This upload of frame to cv::Mat took");
+        dticker->toc("[DISPLAY] This upload of frame to cv::Mat took");
         cv::imshow("Visualization", m1);
         char ret_key = (char) cv::waitKey(1);
         if (ret_key == 27 || ret_key == 'x') notFinished = false;

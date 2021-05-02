@@ -3,6 +3,8 @@
 
 #include "opencv2/opencv.hpp"
 #include "opencv2/highgui.hpp"
+#include "appData.h"
+
 
 using namespace cv;
 
@@ -12,8 +14,8 @@ class VideoParser{
         Size size;
     public:
         VideoParser();
-        VideoParser(const char* filename);
-        void openFile(const char* filename);
+        VideoParser(AppData& appData);
+        void openFile(AppData& appData);
         int loadFrame(const unsigned int width, const unsigned int height, double* oframe);
         ~VideoParser();
         unsigned int getHeight();

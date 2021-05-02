@@ -1,4 +1,4 @@
-function reconstruction = fista(image, H, iter, mu, t, r_constr, i_constr)
+function reconstruction = fista(image, H, iter, mu, t, r_constr, i_constr, mask)
     guess = complex(image, zeros(size(image)));
     u = guess;
     s = 1;
@@ -16,19 +16,29 @@ function reconstruction = fista(image, H, iter, mu, t, r_constr, i_constr)
         %calculating cost
         cost_pixel = c*Imodel-image;
         cost = sum(cost_pixel(:).^2) + mu*sum(abs(guess(:)));
-        disp(strcat("Cost:  ",  num2str(cost)));
+        disp(strcat("Iteration " , num2str(i-1), ", Cost:  ",  num2str(cost)));
         
         r = propagation(model.*(c*Imodel - image), Hn);
         new_guess = u - 2*t*c*r;
         
         %strict bounds
-        for j = 1:height*width
-            new_guess(j) = complex(max(min([real(new_guess(j)),r_constr(2)]),r_constr(1)),...
-                max(min([imag(new_guess(j)),i_constr(2)]),i_constr(1)));
-        end
+
         %soft thresholding bounds
-        for j = height*width
+        for j = 1:height*width
             new_guess(j) = max(0, new_guess(j) - mu*t);
+        end
+        for j = 1:height*width
+            if mask(j) ~= 0
+                new_guess(j) = complex(0,...
+                min([imag(new_guess(j)),i_constr(2)]));
+                new_guess(j) = complex(0,...
+                max([imag(new_guess(j)),i_constr(1)]));
+            else
+                new_guess(j) = complex(min([real(new_guess(j)),0]),...
+                min([imag(new_guess(j)),i_constr(2)]));
+                new_guess(j) = complex(max([real(new_guess(j)),-1]),...
+                max([imag(new_guess(j)),i_constr(1)]));
+            end
         end
         s_new = 0.5*(1+sqrt(1+4*s^2)); %Lines 21-24 are FISTA unique
         u = new_guess + (s-1)*(new_guess -guess)/s_new;

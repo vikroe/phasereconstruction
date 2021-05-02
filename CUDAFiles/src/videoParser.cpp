@@ -3,6 +3,7 @@
 #include "videoParser.h"
 #include "opencv2/opencv.hpp"
 #include "opencv2/highgui.hpp"
+#include "appData.h"
 
 using namespace cv;
 
@@ -10,14 +11,15 @@ VideoParser::VideoParser(){
     std::cout << "Could compile" << "\n";
 }
 
-VideoParser::VideoParser(const char *filename){
-    capture.open(filename);
+VideoParser::VideoParser(AppData& appData){
+    if(appData.)
+    capture.open(appData.filename);
     if (!capture.isOpened())
         std::cout << "Could not open video file " << filename << "\n";
 }
 
-void VideoParser::openFile(const char *filename){
-    capture.open(filename);
+void VideoParser::openFile(AppData& appData){
+    capture.open(appData.filename);
     if (!capture.isOpened())
         std::cout << "Could not open video file " << filename << "\n";
 }

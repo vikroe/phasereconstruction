@@ -70,34 +70,29 @@ void MultiLayer::calculateCost(double mu, double* model, cufftDoubleComplex* gue
     absolute<<<N_BLOCKS,N_THREADS>>>(m_count, guess, &temp[m_count]);
     square<<<N_BLOCKS,N_THREADS>>>(count, model, &temp[count]);
 
-    sum<<<N_BLOCKS,N_THREADS, N_THREADS*sizeof(double)>>>(m_count, &temp[m_count], sumArr);
-    sum<<<1,N_BLOCKS,N_BLOCKS*sizeof(double)>>>(N_BLOCKS, sumArr, sumArr);
-    sum<<<N_BLOCKS,N_THREADS, N_THREADS*sizeof(double)>>>(count, &temp[count], &sumArr[N_BLOCKS]);
-    sum<<<1,N_BLOCKS,N_BLOCKS*sizeof(double)>>>(N_BLOCKS, &sumArr[N_BLOCKS], &sumArr[N_BLOCKS]);
+    h_sum(m_count, &temp[m_count], sumArr);
+    h_sum(count, &temp[count], &sumArr[N_BLOCKS]);
     
-    cMultiplyf<<<1,1>>>(1,mu,sumArr,sumArr);
+    scalef<<<1,1>>>(1,mu,sumArr,sumArr);
     simpleSum<<<1,1>>>(&sumArr[N_BLOCKS],sumArr,&out[0]);
 }
 
 void MultiLayer::normalize(int cnt, double* arr){
-    minimum<<<N_BLOCKS,N_THREADS,N_THREADS*sizeof(double)>>>(cnt, arr, sumArr);
-    minimum<<<1, N_BLOCKS, N_BLOCKS*sizeof(double)>>>(N_BLOCKS, sumArr, sumArr);
+    h_minimum(cnt, arr, sumArr);
 
     double temp;
     cudaMemcpy(&temp, sumArr, sizeof(double), cudaMemcpyDeviceToHost);
     offsetf<<<N_BLOCKS,N_THREADS>>>(cnt, -temp, arr, arr, true);
 
-    maximum<<<N_BLOCKS,N_THREADS,N_THREADS*sizeof(double)>>>(cnt, arr, sumArr);
-    maximum<<<1, N_BLOCKS, N_BLOCKS*sizeof(double)>>>(N_BLOCKS, sumArr, sumArr);
-
-    cDividefp<<<N_BLOCKS,N_THREADS>>>(cnt, sumArr, arr, arr);
+    h_maximum(cnt, arr, sumArr);
+    contractf_p<<<N_BLOCKS,N_THREADS>>>(cnt, sumArr, arr, arr);
 }
 
 void MultiLayer::iterate(double *input, int iters, bool b_cost, bool warm){
     // Initialization of variables
     s = 1;
-    cudaMalloc(&cost, (1+iters)*sizeof(double));
     if(b_cost){
+        cudaMalloc(&cost, (1+iters)*sizeof(double));
         h_cost = (double*)malloc((iters+1)*sizeof(double));
     }
 
@@ -108,15 +103,11 @@ void MultiLayer::iterate(double *input, int iters, bool b_cost, bool warm){
     //Copying the device memory image to device memory guesses
 
     for(int i = 0; i < numLayers; i++){
-        //F2C<<<N_BLOCKS,N_THREADS>>>(count, image, &guess[i*count]);
         F2C<<<N_BLOCKS,N_THREADS>>>(count, image, &u[i*count]);
-    }
-    if (!warm){
-        for(int i = 0; i < numLayers; i++){
+        if (!warm)
             F2C<<<N_BLOCKS,N_THREADS>>>(count, image, &guess[i*count]);
-            //F2C<<<N_BLOCKS,N_THREADS>>>(count, image, &u[i*count]);
-        }
     }
+
     for(int iter = 0; iter < iters; iter++){
         //Calculating the current iteration model 
         propagate(Hq, u, temporary);
@@ -125,12 +116,12 @@ void MultiLayer::iterate(double *input, int iters, bool b_cost, bool warm){
         modelFunc<<<N_BLOCKS,N_THREADS>>>(count, numLayers, 1.0f, 0, temporary, model, Imodel);
 
         //Calculation of the optimal scaling parameter c
-        sumOfProducts<<<N_BLOCKS,N_THREADS, N_THREADS*sizeof(double)>>>(count, image, Imodel, sumArr);
-        sum<<<1,N_BLOCKS,N_BLOCKS*sizeof(double)>>>(N_BLOCKS, sumArr, sumArr);
-        sumOfProducts<<<N_BLOCKS,N_THREADS, N_THREADS*sizeof(double)>>>(count, Imodel, Imodel, &sumArr[N_BLOCKS]);
-        sum<<<1,N_BLOCKS,N_BLOCKS*sizeof(double)>>>(N_BLOCKS, &sumArr[N_BLOCKS], &sumArr[N_BLOCKS]);
-
-        simpleDivision<<<1,1>>>(sumArr, &sumArr[N_BLOCKS], c);
+        h_sumOfProducts(count, image, Imodel, sumArr);
+        h_sumOfProducts(count, Imodel, Imodel, &sumArr[N_BLOCKS]);
+        contractf_p<<<1,1>>>(1, &sumArr[N_BLOCKS], sumArr, c);
+        double t_cost[1];
+        cudaMemcpy(t_cost, c, sizeof(double), cudaMemcpyDeviceToHost);
+        std::cout << "Current optimal scaling factor is " << t_cost[0] << std::endl;
 
         //Cost calculation with sparsity constraint
         linear<<<N_BLOCKS,N_THREADS>>>(count, c, image, Imodel, temporaryf, false);
@@ -147,7 +138,8 @@ void MultiLayer::iterate(double *input, int iters, bool b_cost, bool warm){
         extend<<<N_BLOCKS,N_THREADS>>>(count, numLayers, model, temporary);
         propagate(Hn, temporary, temporary);
 
-        cMultiplyfcp<<<N_BLOCKS,N_THREADS>>>(m_count, c, temporary, temporary);
+        F2C<<<1,1>>>(1,c,newGuess);
+        scale_p<<<N_BLOCKS,N_THREADS>>>(m_count, newGuess, temporary, temporary);
         add<<<N_BLOCKS,N_THREADS>>>(m_count, u, temporary, newGuess, false);
 
         //Applying strict bounds
@@ -159,54 +151,44 @@ void MultiLayer::iterate(double *input, int iters, bool b_cost, bool warm){
         softBounds<<<N_BLOCKS,N_THREADS>>>(m_count, newGuess, mu, 0.5f);
 
         double s_new = 0.5*(1+std::sqrt(1+4*s*s));
-        double temp = (s-1)/s_new;
+        cufftDoubleComplex temp = make_cuDoubleComplex((s-1)/s_new,0);
         add<<<N_BLOCKS,N_THREADS>>>(m_count, newGuess, guess, temporary, false);
-        cMultiplyfc<<<N_BLOCKS,N_THREADS>>>(m_count, temp, temporary, temporary);
+        scale<<<N_BLOCKS,N_THREADS>>>(m_count, temp, temporary, temporary);
         add<<<N_BLOCKS,N_THREADS>>>(m_count, newGuess, temporary, u, true);
 
         s = s_new;
         cudaMemcpy(guess, newGuess, m_count*sizeof(cufftDoubleComplex), cudaMemcpyDeviceToDevice);
     
     }
-    /*
+    
     // Final cost calculation
-    //Calculating the current iteration model
-    for(int i = 0; i < numLayers; i++){
-        placeHolder = &temporary[i*width*height];
-        HplaceHolder = &Hq[i*width*height];
-        propagate(HplaceHolder, &u[i*count], placeHolder);
+    if(b_cost){
+        propagate(Hq, u, newGuess);
+
+        //Calculation of Imodel and model arrays
+        modelFunc<<<N_BLOCKS,N_THREADS>>>(count, numLayers, 1.0f, 0, newGuess, model, Imodel);
+
+        //Calculation of the optimal scaling parameter c
+        h_sumOfProducts(count, image, Imodel, sumArr);
+        h_sumOfProducts(count, Imodel, Imodel, &sumArr[N_BLOCKS]);
+        contractf_p<<<1,1>>>(1, &sumArr[N_BLOCKS], sumArr, c);
+
+        //Cost calculation with sparsity constraint
+        linear<<<N_BLOCKS,N_THREADS>>>(count, c, image, Imodel, temporaryf, false);
+
+        calculateCost(mu, temporaryf, guess, temporaryf, &cost[iters]);
+        double t_cost[1];
+        cudaMemcpy(t_cost, &cost[iters], sizeof(double), cudaMemcpyDeviceToHost);
+        std::cout << t_cost[0] << std::endl;
+
+        gpuErrchk(cudaMemcpy(h_cost, cost, (iters+1)*sizeof(double), cudaMemcpyDeviceToHost));
+        cudaFree(cost);
     }
-    modelFunc<<<N_BLOCKS,N_THREADS>>>(count, numLayers, 1.0f, 0, temporary, model, Imodel);
 
-    multiplyf<<<N_BLOCKS, N_THREADS>>>(count, Imodel, imagef, temporaryf);
-    multiplyf<<<N_BLOCKS, N_THREADS>>>(count, Imodel, Imodel, &temporaryf[count]);
-
-    sum<<<1, N_THREADS, N_THREADS*sizeof(double)>>>(count, temporaryf, sumArr);
-    sum<<<1, N_THREADS, N_THREADS*sizeof(double)>>>(count, &temporaryf[count], &sumArr[1]);
-
-    simpleDivision<<<1,1>>>(sumArr, &sumArr[1], c);
-
-    linear<<<N_BLOCKS,N_THREADS>>>(count, c, imagef, Imodel, temporaryf, false);
-
-    absolute<<<N_BLOCKS,N_THREADS>>>(m_count, guess, &temporaryf[2*count]);
-    square<<<N_BLOCKS,N_THREADS>>>(count, temporaryf, &temporaryf[count]);
-
-    sum<<<1,N_THREADS, N_THREADS*sizeof(double)>>>(m_count, &temporaryf[2*count], sumArr);
-    sum<<<1, N_THREADS, N_THREADS*sizeof(double)>>>(count, &temporaryf[count], &sumArr[1]);
-
-    //Cost calculation with sparsity constraint
-    cMultiplyf<<<1,1>>>(1,mu,sumArr,sumArr);
-    simpleSum<<<1,1>>>(&sumArr[1],sumArr,&cost[iters]);
-    */
     // Moving results to host memory
     // Adding one to get the light wavefront (otherwise we only have the disturbance by the particles and electrodes)
     offset<<<N_BLOCKS,N_THREADS>>>(m_count, 1.0f, 0.0f, guess, temporary);
 
-    // Copying the cost to host memory and freeing up memory
-    if(b_cost){
-        gpuErrchk(cudaMemcpy(h_cost, cost, (iters+1)*sizeof(double), cudaMemcpyDeviceToHost));
-        cudaFree(cost);
-    }
     // Check if any error occured - important to note that untested kernels can lead to exceptions at cudaMemcpy calls
     gpuErrchk(cudaPeekAtLastError());
 }

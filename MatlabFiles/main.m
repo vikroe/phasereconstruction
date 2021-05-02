@@ -9,6 +9,7 @@ if simulation == false
 
     image = im2double(imread(data));
     tmp_background = im2double(imread(bgd_data));
+    im_mask = imread(mask);
 
     if reduce_background == true
         %Sliding the background to fit the hologram with particles
@@ -16,9 +17,15 @@ if simulation == false
         background(9:end,:) = tmp_background(1:end-8,:);
 
         %Subtracting background from the foreground
-        hologram = r_norm(image - background);
+        hologram = image - background + mean(hologram,'all');
+        hologram = imgaussfilt(hologram,2,'FilterSize',5);
+        m = mean(hologram, 'all');
+        hologram = hologram / m;
     else
-        hologram = r_norm(image);
+        hologram = image;
+        hologram = imgaussfilt(hologram,2,'FilterSize',5);
+        m = mean(hologram, 'all');
+        hologram = hologram / m;
     end
     
     if (size(hologram,1) >= (y + y_o) && size(hologram, 2) >= (x + x_o))
@@ -26,7 +33,8 @@ if simulation == false
     else
         disp("The set hologram dimensions are larger than the actual hologram!");
     end
-    hologram = imgaussfilt(hologram,2,'FilterSize',5);
+    
+    
     
 else
     
@@ -56,13 +64,13 @@ if used_algorithm == "iterative"
 elseif used_algorithm == "fienup"
     i_reconstruction = fienup(hologram, Hq_m, iter, r_constr, i_constr);
 elseif used_algorithm == "inverse"
-    i_reconstruction = fista(hologram, Hq_m, iter, mu, t, r_constr, i_constr) + 1;
+    i_reconstruction = (fista(hologram, Hq_m, iter, mu, t, r_constr, i_constr, im_mask) + 1)*m;
 elseif used_algorithm == "multi"
     Hq = complex(zeros(y,x,numel(z)),zeros(y,x,numel(z)));
     for i = 1:numel(z)
         Hq(:,:,i) = RS_propagator(z(i),y,x,dx,n,lambda);
     end
-    i_reconstruction = multilayer_fista(hologram, Hq, iter, mu, t, r_constr, i_constr) + 1;
+    i_reconstruction = multilayer_fista(hologram, Hq, iter, mu, t, r_constr, i_constr);
 else
     disp("Chosen algorithm not recognized");
 end
@@ -81,33 +89,34 @@ if used_algorithm == "iterative"
     imshow(abs(i_simple));
     title("Simple backpropagation");
 elseif used_algorithm == "multi"
-    modulus1 = abs(i_reconstruction(:,:,1))/max(abs(i_reconstruction(:,:,1)),[],'all');
-    modulus2 = abs(i_reconstruction(:,:,2))/max(abs(i_reconstruction(:,:,2)),[],'all');
+    modulus1 = abs((i_reconstruction(:,:,1)+1)*m);
+    modulus2 = abs((i_reconstruction(:,:,2)+1)*m);
     subplot(2,3,1);
-    imshow((modulus1-min(modulus1(:)))/max((modulus1-min(modulus1(:))),[],'all'), [0,1]);
+    imshow(modulus1);
     title("Reconstructed amplitude 1");
     subplot(2,3,4);
-    imshow((modulus2-min(modulus2(:)))/max((modulus2-min(modulus2(:))),[],'all'), [0,1]);
+    imshow(modulus2);
     title("Reconstructed amplitude 2");
     subplot(2,3,2);
-    p1 = angle(i_reconstruction(:,:,1));
-    imshow((p1-min(p1(:)))/max(p1-min(p1(:)),[],'all'));
+    p1 = angle(i_reconstruction(:,:,1)+1);
+    imshow(p1, [-1,1]);
     title("Reconstructed phase 1");
     subplot(2,3,5);
-    imshow(angle(i_reconstruction(:,:,2)), [-pi,pi]);
+    imshow(angle(i_reconstruction(:,:,2)+1), [-1,1]);
     title("Reconstructed phase 2");
     subplot(2,3,3);
     imshow(abs(i_simple), [-1,1]);
     title("Simple backpropagation");
+    
 else
-    modulus = abs(i_reconstruction)/max(abs(i_reconstruction(:)));
-    subplot(1,3,1);
-    imshow((1-modulus), [0,1]);
+    modulus = abs(i_reconstruction);
+    subplot(1,2,1);
+    imshow(modulus, [0,1]);
     title("Reconstructed amplitude");
-    subplot(1,3,2);
-    imshow(angle(i_reconstruction), [-pi,pi]);
+    subplot(1,2,2);
+    imshow(angle(i_reconstruction), [-1,1]);
     title("Reconstructed phase");
-    subplot(1,3,3);
-    imshow(abs(i_simple), [-1,1]);
-    title("Simple backpropagation");
+    %subplot(1,3,3);
+    %imshow(abs(i_simple), [-1,1]);
+    %title("Simple backpropagation");
 end

@@ -87,100 +87,6 @@ __global__ void angle(int count, cufftDoubleComplex* in, double* out){
     }
 }
 
-//Fast parallel sum
-/* 
-*   The following function of sum is taken from the publicly accessible NVidia 
-*   webinar found at https://developer.download.nvidia.com/assets/cuda/files/reduction.pdf
-*/
-__global__ void sum(int count, double* in, double* result){
-    extern __shared__ double sharedIn[];
-    int thIdx = threadIdx.x;
-    int index = blockIdx.x*blockDim.x + thIdx;
-    int stride = blockDim.x*gridDim.x;
-    sharedIn[thIdx] = 0;
-    
-    for(unsigned int i = index; i < count; i+=stride){
-        sharedIn[thIdx] += in[i];
-    }
-    __syncthreads();
-    for(unsigned int i = blockDim.x/2 ; i>0 ; i>>=1){
-        if(thIdx < i){
-            sharedIn[thIdx] += sharedIn[thIdx+i];
-        }
-        __syncthreads();
-    }
-    if(thIdx == 0) result[blockIdx.x] = sharedIn[0];
-}
-
-__global__ void sumOfProducts(int count, double* in1, double* in2, double* result){
-    extern __shared__ double sharedIn[];
-    int thIdx = threadIdx.x;
-    int index = blockIdx.x*blockDim.x + thIdx;
-    int stride = blockDim.x*gridDim.x;
-    sharedIn[thIdx] = 0;
-    
-    for(unsigned int i = index; i < count; i+=stride){
-        sharedIn[thIdx] += in1[i]*in2[i];
-    }
-    __syncthreads();
-    for(unsigned int i = blockDim.x/2 ; i>0 ; i>>=1){
-        if(thIdx < i){
-            sharedIn[thIdx] += sharedIn[thIdx+i];
-        }
-        __syncthreads();
-    }
-    if(thIdx == 0) result[blockIdx.x] = sharedIn[0];
-}
-
-__global__ void maximum(int count, double* in, double* result){
-    extern __shared__ double sharedIn[];
-    int thIdx = threadIdx.x;
-    int index = blockIdx.x*blockDim.x + thIdx;
-    int stride = blockDim.x*gridDim.x;
-    sharedIn[thIdx] = in[index];
-    
-    for(int i = index+stride; i < count; i += stride){
-        sharedIn[thIdx] = fmax(sharedIn[thIdx], in[index]);
-    }
-    __syncthreads();
-    for(unsigned int i = blockDim.x/2 ; i>0 ; i>>=1){
-        if(thIdx < i){
-            sharedIn[thIdx] =  fmax(sharedIn[thIdx], sharedIn[thIdx+i]);
-        }
-        __syncthreads();
-    }
-    if (thIdx == 0) result[blockIdx.x] = sharedIn[thIdx];
-}
-
-__global__ void minimum(int count, double* in, double* result){
-    extern __shared__ double sharedIn[];
-    int thIdx = threadIdx.x;
-    int index = blockIdx.x*blockDim.x + thIdx;
-    int stride = blockDim.x*gridDim.x;
-    sharedIn[thIdx] = in[index];
-    
-    for(int i = index+stride; i < count; i += stride){
-        sharedIn[thIdx] = fmin(sharedIn[thIdx], in[index]);
-    }
-    __syncthreads();
-    for(unsigned int i = blockDim.x/2 ; i>0 ; i>>=1){
-        if(thIdx < i){
-            sharedIn[thIdx] =  fmin(sharedIn[thIdx], sharedIn[thIdx+i]);
-        }
-        __syncthreads();
-    }
-    if (thIdx == 0) result[blockIdx.x] = sharedIn[thIdx];
-}
-
-
-__global__ void F2C(int count, double*  in, cufftDoubleComplex*  out){
-    int index = blockIdx.x * blockDim.x + threadIdx.x;
-    int stride = blockDim.x * gridDim.x;
-    for(int i = index; i < count; i += stride){
-        out[i] = make_cuDoubleComplex(in[i], 0);
-    }
-}
-
 __global__ void modelFunc(int count, int numLayers, double rOffset, double iOffset, cufftDoubleComplex* in, cufftDoubleComplex* model, double* Imodel){
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
@@ -230,48 +136,7 @@ __global__ void simpleSum(double* in1, double* in2, double* out){
     out[0] = in1[0] + in2[0];
 }
 
-__global__ void cMultiplyf(int count, double constant, double* in, double* out){
-    int index = blockIdx.x * blockDim.x + threadIdx.x;
-    int stride = blockDim.x * gridDim.x;
-    for(int i = index; i < count; i += stride){
-        out[i] = constant*in[i];
-    }
-}
 
-__global__ void cMultiply(int count, cufftDoubleComplex* constant, cufftDoubleComplex* in, cufftDoubleComplex* out){
-    int index = blockIdx.x * blockDim.x + threadIdx.x;
-    int stride = blockDim.x * gridDim.x;
-    for(int i = index; i < count; i += stride){
-        out[i] = cuCmul(constant[0],in[i]);
-    }
-}
-
-__global__ void cMultiplyfc(int count, double constant, cufftDoubleComplex* in, cufftDoubleComplex* out){
-    int index = blockIdx.x * blockDim.x + threadIdx.x;
-    int stride = blockDim.x * gridDim.x;
-    for(int i = index; i < count; i += stride){
-        out[i] = make_cuDoubleComplex(in[i].x*constant, in[i].y*constant);
-    }
-}
-
-__global__ void cMultiplyfcp(int count, double *constant, cufftDoubleComplex* in, cufftDoubleComplex* out){
-    int index = blockIdx.x * blockDim.x + threadIdx.x;
-    int stride = blockDim.x * gridDim.x;
-    for(int i = index; i < count; i += stride){
-        out[i] = make_cuDoubleComplex(in[i].x*constant[0], in[i].y*constant[0]);
-    }
-}
-
-__global__ void cDividefp(int count, double *constant, double* in, double* out){
-    if(constant[0] == 0.0f){
-        constant[0] += 0.00001;
-    }
-    int index = blockIdx.x * blockDim.x + threadIdx.x;
-    int stride = blockDim.x * gridDim.x;
-    for(int i = index; i < count; i += stride){
-        out[i] = in[i] / constant[0];
-    }
-}
 
 __global__ void add(int count, cufftDoubleComplex* in1, cufftDoubleComplex* in2, cufftDoubleComplex* out, bool sign){
     int index = blockIdx.x * blockDim.x + threadIdx.x;
@@ -357,6 +222,36 @@ __global__ void offsetf(int count, double roff, double* in, double* out, bool si
     }
 }
 
+__global__ void extend(int count, int multiple, cufftDoubleComplex* in, cufftDoubleComplex* out){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        for(int e = 0; e < multiple; e++){
+            out[i + e*count] = in[i];
+        }
+    }
+}
+
+//
+// CONVERSION KERNELS
+//
+
+__global__ void F2C(int count, double*  in, cufftDoubleComplex*  out){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        out[i] = make_cuDoubleComplex(in[i], 0);
+    }
+}
+
+__global__ void D2u8(int count, double* in, uint8_t* out){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        out[i] = (uint8_t)(in[i]*255.0f);
+    }
+}
+
 __global__ void C2Z(int count, cufftComplex* in, cufftDoubleComplex* out){
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
@@ -373,20 +268,173 @@ __global__ void Z2C(int count, cufftDoubleComplex* in, cufftComplex* out){
     }
 }
 
-__global__ void extend(int count, int multiple, cufftDoubleComplex* in, cufftDoubleComplex* out){
+//
+// KERNELS FOR DIVISION BY ARRAYS
+//
+
+__global__ void contractf(int count, double constant, double* in, double* out){
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
     for(int i = index; i < count; i += stride){
-        for(int e = 0; e < multiple; e++){
-            out[i + e*count] = in[i];
-        }
+        out[i] = in[i] / (constant + 0.00001f);
     }
 }
 
-__global__ void D2u8(int count, double* in, uint8_t* out){
+__global__ void contractf_p(int count, double *constant, double* in, double* out){
+    if(constant[0] < 0.00001f){
+        constant[0] += 0.00001f;
+    }
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
     for(int i = index; i < count; i += stride){
-        out[i] = (uint8_t)(in[i]*255.0f);
+        out[i] = in[i] / constant[0];
     }
+}
+
+//
+// KERNELS FOR SCALING ARRAYS BY CONSTANTS
+//
+
+__global__ void scalef(int count, double constant, double* in, double* out){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        out[i] = constant*in[i];
+    }
+}
+
+__global__ void scale(int count, cufftDoubleComplex constant, cufftDoubleComplex* in, cufftDoubleComplex* out){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        out[i] = cuCmul(constant,in[i]);
+    }
+}
+
+__global__ void scale_p(int count, cufftDoubleComplex* constant, cufftDoubleComplex* in, cufftDoubleComplex* out){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        out[i] = cuCmul(constant[0],in[i]);
+    }
+}
+
+//
+// PARALLEL REDUCTION KERNELS
+//
+
+//Fast parallel sum
+/* 
+*   The following function of sum is taken from the publicly accessible NVidia 
+*   webinar found at https://developer.download.nvidia.com/assets/cuda/files/reduction.pdf
+*/
+__global__ void sum(int count, double* in, double* result){
+    extern __shared__ double sharedIn[];
+    int thIdx = threadIdx.x;
+    int index = blockIdx.x*blockDim.x + thIdx;
+    int stride = blockDim.x*gridDim.x;
+    sharedIn[thIdx] = 0;
+    
+    for(unsigned int i = index; i < count; i+=stride){
+        sharedIn[thIdx] += in[i];
+    }
+    __syncthreads();
+    for(unsigned int i = blockDim.x/2 ; i>0 ; i>>=1){
+        if(thIdx < i){
+            sharedIn[thIdx] += sharedIn[thIdx+i];
+        }
+        __syncthreads();
+    }
+    if(thIdx == 0) result[blockIdx.x] = sharedIn[0];
+}
+
+__global__ void sumOfProducts(int count, double* in1, double* in2, double* result){
+    extern __shared__ double sharedIn[];
+    int thIdx = threadIdx.x;
+    int index = blockIdx.x*blockDim.x + thIdx;
+    int stride = blockDim.x*gridDim.x;
+    sharedIn[thIdx] = 0;
+    
+    for(unsigned int i = index; i < count; i+=stride){
+        sharedIn[thIdx] += in1[i]*in2[i];
+    }
+    __syncthreads();
+    for(unsigned int i = blockDim.x/2 ; i>0 ; i>>=1){
+        if(thIdx < i){
+            sharedIn[thIdx] += sharedIn[thIdx+i];
+        }
+        __syncthreads();
+    }
+    if(thIdx == 0) result[blockIdx.x] = sharedIn[0];
+}
+
+__global__ void maximum(int count, double* in, double* result){
+    extern __shared__ double sharedIn[];
+    int thIdx = threadIdx.x;
+    int index = blockIdx.x*blockDim.x + thIdx;
+    int stride = blockDim.x*gridDim.x;
+    sharedIn[thIdx] = in[index];
+    
+    for(int i = index+stride; i < count; i += stride){
+        sharedIn[thIdx] = fmax(sharedIn[thIdx], in[index]);
+    }
+    __syncthreads();
+    for(unsigned int i = blockDim.x/2 ; i>0 ; i>>=1){
+        if(thIdx < i){
+            sharedIn[thIdx] =  fmax(sharedIn[thIdx], sharedIn[thIdx+i]);
+        }
+        __syncthreads();
+    }
+    if (thIdx == 0) result[blockIdx.x] = sharedIn[thIdx];
+}
+
+__global__ void minimum(int count, double* in, double* result){
+    extern __shared__ double sharedIn[];
+    int thIdx = threadIdx.x;
+    int index = blockIdx.x*blockDim.x + thIdx;
+    int stride = blockDim.x*gridDim.x;
+    sharedIn[thIdx] = in[index];
+    
+    for(int i = index+stride; i < count; i += stride){
+        sharedIn[thIdx] = fmin(sharedIn[thIdx], in[index]);
+    }
+    __syncthreads();
+    for(unsigned int i = blockDim.x/2 ; i>0 ; i>>=1){
+        if(thIdx < i){
+            sharedIn[thIdx] =  fmin(sharedIn[thIdx], sharedIn[thIdx+i]);
+        }
+        __syncthreads();
+    }
+    if (thIdx == 0) result[blockIdx.x] = sharedIn[thIdx];
+}
+
+//
+// WRAPPERS FOR PARALLEL REDUCTION KERNELS
+//
+
+void h_maximum(int count, double* d_in, double* d_result){
+    maximum<<<N_BLOCKS,N_THREADS,N_THREADS*sizeof(double)>>>(count, d_in, d_result);
+    maximum<<<1, N_BLOCKS, N_BLOCKS*sizeof(double)>>>(N_BLOCKS, d_result, d_result);
+}
+
+void h_minimum(int count, double* d_in, double* d_result){
+    minimum<<<N_BLOCKS,N_THREADS,N_THREADS*sizeof(double)>>>(count, d_in, d_result);
+    minimum<<<1, N_BLOCKS, N_BLOCKS*sizeof(double)>>>(N_BLOCKS, d_result, d_result);
+}
+
+void h_sum(int count, double* d_in, double* d_result){
+    sum<<<N_BLOCKS,N_THREADS,N_THREADS*sizeof(double)>>>(count, d_in, d_result);
+    sum<<<1, N_BLOCKS, N_BLOCKS*sizeof(double)>>>(N_BLOCKS, d_result, d_result);
+}
+
+void h_sumOfProducts(int count, double* d_in1, double* d_in2, double* d_result){
+    sumOfProducts<<<N_BLOCKS,N_THREADS,N_THREADS*sizeof(double)>>>(count, d_in1, d_in2, d_result);
+    sum<<<1, N_BLOCKS, N_BLOCKS*sizeof(double)>>>(N_BLOCKS, d_result, d_result);
+}
+
+void h_average(int count, double* d_in, double* d_result){
+    sum<<<N_BLOCKS,N_THREADS,N_THREADS*sizeof(double)>>>(count, d_in, d_result);
+    sum<<<1, N_BLOCKS, N_BLOCKS*sizeof(double)>>>(N_BLOCKS, d_result, d_result);
+    
+    contractf<<<1,1>>>(1, (double)count, d_result, d_result);
 }
