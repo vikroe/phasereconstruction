@@ -87,14 +87,11 @@ __global__ void angle(int count, cufftDoubleComplex* in, double* out){
     }
 }
 
-__global__ void modelFunc(int count, int numLayers, double rOffset, double iOffset, cufftDoubleComplex* in, cufftDoubleComplex* model, double* Imodel){
+__global__ void modelFunc(int count, double rOffset, double iOffset, cufftDoubleComplex* in, cufftDoubleComplex* model, double* Imodel){
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
     for(int i = index; i < count; i += stride){
-        model[i] = make_cuDoubleComplex(rOffset, iOffset);
-        for(int j = 0; j < numLayers; j++){
-            model[i] = cuCadd(model[i], in[i + j*count]);
-        }
+        model[i] = cuCadd(make_cuDoubleComplex(rOffset, iOffset),in[i]);
         Imodel[i] = SQUARE(cuCabs(model[i]));
     }
 }

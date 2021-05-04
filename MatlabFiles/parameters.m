@@ -13,7 +13,7 @@ dx = 1.55e-6; %Pixel size
 n = 1.45; %Refractive index of medium
 n_o = 1.59; %Refractive index of beads (unused)
 lambda = 525e-9; %Light wavelength
-z_m = 2.3e-3; %The main image plane used for reconstruction
+z_m = 2.2e-3; %The main image plane used for reconstruction
 
 x = 2048; %Width of the reconstructed image
 y = 2048; %Height of the reconstructed image
@@ -50,7 +50,7 @@ end
 % Additional parameters used for the basic Momey's inverse algorithm
 if used_algorithm == "inverse" || used_algorithm == "multi"
     mu = 0.04;
-    t = 0.15;
+    t = 0.03;
 end
 
-iter = 8; %Maximum number of iterations
+iter = 9; %Maximum number of iterations

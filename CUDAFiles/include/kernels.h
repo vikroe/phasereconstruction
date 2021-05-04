@@ -16,7 +16,7 @@ __global__ void absolute(int count, cufftDoubleComplex* in, double* out);
 __global__ void real(int count, cufftDoubleComplex* in, double* out);
 __global__ void imag(int count, cufftDoubleComplex* in, double* out);
 __global__ void angle(int count, cufftDoubleComplex* in, double* out);
-__global__ void modelFunc(int count, int numLayers, double rOffset, double iOffset, cufftDoubleComplex* in, cufftDoubleComplex* model, double* Imodel);
+__global__ void modelFunc(int count, double rOffset, double iOffset, cufftDoubleComplex* in, cufftDoubleComplex* model, double* Imodel);
 __global__ void conjugate(int count, cufftComplex *in, cufftComplex* out);
 __global__ void simpleDivision(double* num, double* div, double* res);
 __global__ void linear(int count, double* coef, double* constant, double* in, double* out, bool sign);

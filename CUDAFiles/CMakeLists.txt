@@ -6,13 +6,13 @@ set(INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/include")
 set(SOURCES 
         main.cpp
         "${SRC_DIR}/lodepng.cpp"
-        "${SRC_DIR}/multilayer.cu"
+        "${SRC_DIR}/appData.cpp"
+        "${SRC_DIR}/fista.cu"
         "${SRC_DIR}/kernels.cu"
         "${SRC_DIR}/blur.cu"
         "${SRC_DIR}/cudaDebug.cu"
         "${SRC_DIR}/videoParser.cpp"
         "${SRC_DIR}/utils.cpp"
-        "${SRC_DIR}/appData.cpp"
         "${SRC_DIR}/settings.cpp"
         "${SRC_DIR}/ticker.cpp"
         )

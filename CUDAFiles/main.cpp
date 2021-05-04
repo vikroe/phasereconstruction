@@ -3,7 +3,7 @@
 #include <vector>
 #include <string.h>
 #include "ticker.h"
-#include "multilayer.h"
+#include "fista.h"
 #include "kernels.h"
 #include "videoParser.h"
 #include "utils.h"
@@ -23,10 +23,13 @@ bool startingFrameCond;
 bool startingDisplayCond;
 bool notFinished;
 bool windowOpened;
+bool quit;
 
 void frameThread(AppData& appData){
     cout << appData.filename << endl;
-    VideoParser video(appData.filename.c_str());
+    VideoParser video(appData);
+    while(!windowOpened)
+        ;
     while (video.getCurrentFrame() < 100){
         unique_lock<mutex> lck(appData.frameMtx);
         if (video.loadFrame(appData.width, appData.height, appData.inputFrame) != 0){
@@ -42,23 +45,26 @@ void frameThread(AppData& appData){
         lck.unlock();
     }
     notFinished = false;
+    while(!quit)
+        ;
 }
 
 void retrievalThread(AppData& appData){
     Ticker *ticker = new Ticker();
-    MultiLayer *multi = new MultiLayer((int)appData.width, 
-                                    (int)appData.height, 
-                                    appData.z, 
-                                    appData.rconstr, 
-                                    appData.iconstr, 
-                                    appData.mu, 
-                                    appData.dx, 
-                                    appData.lambda, 
-                                    appData.n);
+    Fista *fista = new Fista(appData.z,
+                            appData.rconstr,
+                            appData.iconstr,
+                            appData.mu,
+                            appData.width,
+                            appData.height,
+                            appData.b_cost,
+                            appData.dx,
+                            appData.lambda,
+                            appData.n);
     unsigned int count = appData.width*appData.height;
     double* image = new double[count];
     bool warm = false;
-    while(!startingFrameCond && !windowOpened)
+    while(!startingFrameCond || !windowOpened)
         ;
     ticker->tic();
     while(notFinished){
@@ -69,35 +75,33 @@ void retrievalThread(AppData& appData){
         
         //ticker->tic();
         if(!warm)
-            multi->iterate(image, appData.iters0, appData.b_cost, warm);
+            fista->iterate(image, appData.iters0, warm);
         else
-            multi->iterate(image, appData.iters, appData.b_cost, warm);
-        //ticker->toc("Current frame of multilayer FISTA took");
+            fista->iterate(image, appData.iters, warm);
+        //ticker->toc("Current frame of fistalayer FISTA took");
         
         unique_lock<mutex> dlck(appData.displayMtx);
-        multi->update(appData.d_modulus, appData.d_phase);
-        cudaMemcpy(appData.h_modulus, appData.d_modulus, sizeof(uint8_t)*count*appData.z.size(), cudaMemcpyDeviceToHost);
-        cudaMemcpy(appData.h_phase, appData.d_phase, sizeof(uint8_t)*count*appData.z.size(), cudaMemcpyDeviceToHost);
+        fista->update(appData.d_modulus, appData.d_phase);
+        cudaMemcpy(appData.h_modulus, appData.d_modulus, sizeof(uint8_t)*count, cudaMemcpyDeviceToHost);
+        cudaMemcpy(appData.h_phase, appData.d_phase, sizeof(uint8_t)*count, cudaMemcpyDeviceToHost);
         appData.displayCv.notify_one();
         dlck.unlock();
-        if(!startingDisplayCond)
-            startingDisplayCond = true;
         if(!warm)
             warm = true;
         ticker->toc("[RETRIEVAL] This frame took the retrievalThread ");
     }
-    delete multi;
+    delete fista;
+    while(!quit)
+        ;
 }
 
 void displayThread(AppData& appData){
     unsigned int count = appData.width*appData.height;
     const map<string, string> keywords{{"cmap","gray"}};
     Ticker* dticker = new Ticker();
-
-    while(!startingDisplayCond)
-        ;
     cv::namedWindow("Visualization", cv::WINDOW_NORMAL);
     cv::resizeWindow("Visualization", appData.width, appData.height);
+    cv::waitKey(1);
     windowOpened = true;
     while(notFinished){
         dticker->tic();
@@ -109,38 +113,63 @@ void displayThread(AppData& appData){
         dticker->toc("[DISPLAY] This upload of frame to cv::Mat took");
         cv::imshow("Visualization", m1);
         char ret_key = (char) cv::waitKey(1);
-        if (ret_key == 27 || ret_key == 'x') notFinished = false;
+        if (ret_key == 27 || ret_key == 'x') {
+            notFinished = false;
+            quit = true;
+        }
     }
+    quit = true;
     cv::destroyWindow("Visualization");
 }
 
 int main(void)
 {
     static AppData appData;
-    std::cout << appData.filename << "what" << endl;
 
     const unsigned int count = appData.width*appData.height;
-    notFinished = true;
-    windowOpened = false;
 
-    thread frameThr (frameThread, std::ref(appData));
-    thread retrievalThr (retrievalThread, std::ref(appData));
-    thread displayThr (displayThread, std::ref(appData));
+    if(appData.filetype == "AVI"){
+        notFinished = true;
+        windowOpened = false;
+        startingDisplayCond = false;
+        startingFrameCond = false;
+        quit = false;
 
-    frameThr.join();
-    retrievalThr.join();
-    displayThr.join();
-    //for(int i = 0 ; i < iters+1 ; i++)
-    //    cout << multilayer->h_cost[i] << "\n";
-    /*
-    double* m = multilayer->modulus;
-    double* p = multilayer->phase;
-    D2F(width*height, m, mf1);
-    D2F(width*height, p, pf1);
-    D2F(width*height, &m[width*height], mf2);
-    D2F(width*height, &p[width*height], pf2);
-    */
-    
+        thread frameThr (frameThread, std::ref(appData));
+        thread retrievalThr (retrievalThread, std::ref(appData));
+        thread displayThr (displayThread, std::ref(appData));
 
+        frameThr.join();
+        retrievalThr.join();
+        displayThr.join();
+    }
+    else if(appData.filetype == "PNG"){
+        vector<double> v_image = loadImage(appData.filename.c_str(), appData.width, appData.height);
+        double* image = (double*)malloc(sizeof(double)*appData.height*appData.width);
+        copy(v_image.begin(), v_image.end(), image);
+        Fista *fista = new Fista(appData.z,
+                            appData.rconstr,
+                            appData.iconstr,
+                            appData.mu,
+                            appData.width,
+                            appData.height,
+                            appData.b_cost,
+                            appData.dx,
+                            appData.lambda,
+                            appData.n);
+        fista->iterate(image, appData.iters0, false);
+        fista->update(appData.d_modulus, appData.d_phase);
+        cudaMemcpy(appData.h_modulus, appData.d_modulus, sizeof(uint8_t)*count, cudaMemcpyDeviceToHost);
+        cudaMemcpy(appData.h_phase, appData.d_phase, sizeof(uint8_t)*count, cudaMemcpyDeviceToHost);
+        cv::namedWindow("Visualization", cv::WINDOW_NORMAL);
+        cv::resizeWindow("Visualization", appData.width, appData.height);
+        const cv::Mat p1(cv::Size(appData.width, appData.height), CV_8U, appData.h_phase);
+        const cv::Mat m1(cv::Size(appData.width, appData.height), CV_8U, appData.h_modulus);
+        cv::imshow("Visualization", m1);
+        cv::waitKey(0);
+        cv::destroyWindow("Visualization");
+        free(image);
+    }
 
+    appData.~AppData();
 }

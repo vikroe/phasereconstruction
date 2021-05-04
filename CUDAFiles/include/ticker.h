@@ -15,6 +15,7 @@ class Ticker{
         Ticker();
         void tic();
         void toc(string msg = "");
+        double tocc();
 };
 
 #endif

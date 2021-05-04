@@ -1,4 +1,5 @@
 #include <iostream>
+#include "string.h"
 #include <vector>
 #include "videoParser.h"
 #include "opencv2/opencv.hpp"
@@ -12,16 +13,15 @@ VideoParser::VideoParser(){
 }
 
 VideoParser::VideoParser(AppData& appData){
-    if(appData.)
-    capture.open(appData.filename);
+    capture.open(appData.filename.c_str());
     if (!capture.isOpened())
-        std::cout << "Could not open video file " << filename << "\n";
+        std::cout << "Could not open video file " << appData.filename.c_str() << "\n";
 }
 
 void VideoParser::openFile(AppData& appData){
-    capture.open(appData.filename);
+    capture.open(appData.filename.c_str());
     if (!capture.isOpened())
-        std::cout << "Could not open video file " << filename << "\n";
+        std::cout << "Could not open video file " << appData.filename.c_str() << "\n";
 }
 
 int VideoParser::loadFrame(const unsigned int width, const unsigned int height, double* oframe){

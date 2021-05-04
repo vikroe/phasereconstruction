@@ -14,6 +14,7 @@ void Ticker::tic(){
     set = true;
 }
 
+
 void Ticker::toc(string msg){
     if(!set){
         printf("tic() has to be called first!\n");
@@ -24,5 +25,19 @@ void Ticker::toc(string msg){
             chrono::duration<double> >(end - start).count();
         printf("%s %f s\n", msg.c_str(), elapsed_seconds);
         start = end;
+    }
+}
+
+
+double Ticker::tocc(){
+    if(!set){
+        printf("tic() has to be called first!\n");
+    }
+    else{
+        end = chrono::steady_clock::now();
+        double elapsed_seconds = chrono::duration_cast<
+            chrono::duration<double> >(end - start).count();
+        start = end;
+        return elapsed_seconds;
     }
 }

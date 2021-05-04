@@ -24,7 +24,7 @@ class AppData{
         unsigned int height;
         int iters0;
         int iters;
-        vector<double> z;
+        double z;
         vector<double> rconstr;
         double dx;
         double n;

@@ -110,13 +110,13 @@ elseif used_algorithm == "multi"
     
 else
     modulus = abs(i_reconstruction);
-    subplot(1,2,1);
+    subplot(1,3,1);
     imshow(modulus, [0,1]);
     title("Reconstructed amplitude");
-    subplot(1,2,2);
+    subplot(1,3,2);
     imshow(angle(i_reconstruction), [-1,1]);
     title("Reconstructed phase");
-    %subplot(1,3,3);
-    %imshow(abs(i_simple), [-1,1]);
-    %title("Simple backpropagation");
+    subplot(1,3,3);
+    imshow(abs(i_simple)*m, [-1,1]);
+    title("Simple backpropagation");
 end
