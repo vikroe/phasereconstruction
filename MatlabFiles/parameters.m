@@ -12,8 +12,8 @@ mask = "Pics/electrode_mask.png";
 dx = 1.55e-6; %Pixel size
 n = 1.45; %Refractive index of medium
 n_o = 1.59; %Refractive index of beads (unused)
-lambda = 525e-9; %Light wavelength
-z_m = 2.2e-3; %The main image plane used for reconstruction
+lambda = 515e-9; %Light wavelength
+z_m = 2.303e-3; %The main image plane used for reconstruction
 
 x = 2048; %Width of the reconstructed image
 y = 2048; %Height of the reconstructed image
@@ -43,14 +43,14 @@ elseif used_algorithm == "multi"
     i_constr = [-1 -1; 1 1];
     z = [2.3e-3; 2.4e-3];
 else
-    r_constr = [0,0.5];
+    r_constr = [-2,0];
     i_constr = [-1,1];
 end
 
 % Additional parameters used for the basic Momey's inverse algorithm
 if used_algorithm == "inverse" || used_algorithm == "multi"
-    mu = 0.04;
-    t = 0.03;
+    mu = 0.03;
+    t = 0.2;
 end
 
-iter = 9; %Maximum number of iterations
+iter = 2; %Maximum number of iterations

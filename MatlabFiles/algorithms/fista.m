@@ -23,23 +23,18 @@ function reconstruction = fista(image, H, iter, mu, t, r_constr, i_constr, mask)
         
         %strict bounds
 
+
+        for j = 1:height*width
+            new_guess(j) = complex(min([real(new_guess(j)),r_constr(2)]),...
+            min([imag(new_guess(j)),i_constr(2)]));
+            new_guess(j) = complex(max([real(new_guess(j)),r_constr(1)]),...
+            max([imag(new_guess(j)),i_constr(1)]));
+        %new_guess(j) = complex(real(new_guess(j)),...
+        new_guess(j) = complex(sign(real(new_guess(j)))*max([0, abs(real(new_guess(j))) - mu]),...
+        sign(imag(new_guess(j)))*max([0, abs(imag(new_guess(j)))-mu]));
+        %imag(new_guess(j)));
+        end
         %soft thresholding bounds
-        for j = 1:height*width
-            new_guess(j) = max(0, new_guess(j) - mu*t);
-        end
-        for j = 1:height*width
-            %if mask(j) ~= 0
-                new_guess(j) = complex(min([real(new_guess(j)),0]),...
-                min([imag(new_guess(j)),i_constr(2)]));
-                new_guess(j) = complex(max([real(new_guess(j)),-2]),...
-                max([imag(new_guess(j)),i_constr(1)]));
-            %else
-            %    new_guess(j) = complex(min([real(new_guess(j)),0]),...
-            %    min([imag(new_guess(j)),i_constr(2)]));
-            %    new_guess(j) = complex(max([real(new_guess(j)),-2]),...
-            %    max([imag(new_guess(j)),i_constr(1)]));
-            %end
-        end
         s_new = 0.5*(1+sqrt(1+4*s^2)); %Lines 21-24 are FISTA unique
         u = new_guess + (s-1)*(new_guess -guess)/s_new;
         

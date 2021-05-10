@@ -1,5 +1,5 @@
-clc
-close all
+%clc
+%close all
 
 run("parameters.m");
 
@@ -23,7 +23,7 @@ if simulation == false
         hologram = hologram / m;
     else
         hologram = image;
-        hologram = imgaussfilt(hologram,2,'FilterSize',5);
+        %hologram = imgaussfilt(hologram,2,'FilterSize',5);
         m = mean(hologram, 'all');
         hologram = hologram / m;
     end
@@ -64,7 +64,8 @@ if used_algorithm == "iterative"
 elseif used_algorithm == "fienup"
     i_reconstruction = fienup(hologram, Hq_m, iter, r_constr, i_constr);
 elseif used_algorithm == "inverse"
-    i_reconstruction = (fista(hologram, Hq_m, iter, mu, t, r_constr, i_constr, im_mask) + 1)*m;
+    i_reconst = (fista(hologram, Hq_m, iter, mu, t, r_constr, i_constr, im_mask));
+    i_reconstruction = (i_reconst+1);
 elseif used_algorithm == "multi"
     Hq = complex(zeros(y,x,numel(z)),zeros(y,x,numel(z)));
     for i = 1:numel(z)
@@ -80,7 +81,7 @@ end
 %Just a simple backpropagation for comparison with the selected algorithm
 i_simple = abs(c_norm(propagation(hologram, Hq_m)));
 
-figure(1);
+figure(2);
 if used_algorithm == "iterative"
     subplot(1,2,1);
     imshow(abs(i_reconstruction));
@@ -109,7 +110,8 @@ elseif used_algorithm == "multi"
     title("Simple backpropagation");
     
 else
-    modulus = abs(i_reconstruction);
+    modulus = abs(i_reconstruction)*m;
+    modulus = modulus/max(modulus(:));
     subplot(1,3,1);
     imshow(modulus, [0,1]);
     title("Reconstructed amplitude");

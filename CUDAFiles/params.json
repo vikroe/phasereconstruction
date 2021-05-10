@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "filename": "Videos/video.avi",
     "filetype": "AVI",
@@ -14,4 +15,22 @@
     "iters": 2,
     "cost": false,
     "frame": 0
+=======
+{
+    "filename": "Pics/hologram.png",
+    "filetype": "PNG",
+    "width": 2048,
+    "height": 2048,
+    "dx": 1.55e-6,
+    "lambda": 525e-9,
+    "n": 1.45,
+    "mu": 0.001,
+    "rconstr": [-1, 0],
+    "iconstr": [-1.0, 1.0],
+    "z": 2.15e-3,
+    "iters0": 12,
+    "iters": 2,
+    "cost": false,
+    "frame": 0
+>>>>>>> d3a143404f5f4f111c379a7970dd9e546e0c7e8a
 }
