@@ -26,7 +26,7 @@ Fista::Fista(
 {
 
     count = width*height;
-    blur = new Blur();
+    //blur = new Blur();
 
     allocate();
     propagator<<<N_BLOCKS, N_THREADS>>>(width, height, z, dx, n, lambda, Hq);
@@ -90,16 +90,17 @@ void Fista::iterate(double *input, int iters, bool warm){
 
     //Copying the input image from host to device memory - computationally complex
     gpuErrchk(cudaMemcpy(image, input, count*sizeof(double), cudaMemcpyHostToDevice));
-    blur->gaussianBlur(width,height, 5, 3, image, temporaryf, image);
+    //blur->gaussianBlur(width,height, 5, 3, image, temporaryf, image);
     h_average(count, image, sumArr);
     contractf_p<<<N_BLOCKS,N_THREADS>>>(count, sumArr, image, image);
     cudaMemcpy(m, sumArr, sizeof(double), cudaMemcpyDeviceToHost);
 
     //Copying the device memory image to device memory guesses
 
-    F2C<<<N_BLOCKS,N_THREADS>>>(count, image, u);
-    if (!warm)
+    if (!warm){
+        F2C<<<N_BLOCKS,N_THREADS>>>(count, image, u);
         F2C<<<N_BLOCKS,N_THREADS>>>(count, image, guess);
+    }
     
     for(int iter = 0; iter < iters; iter++){
         //Calculating the current iteration model 
@@ -129,14 +130,14 @@ void Fista::iterate(double *input, int iters, bool warm){
         multiplyfc<<<N_BLOCKS,N_THREADS>>>(count, temporaryf, model);
         propagate(Hn, model, temporary);
 
-        double t = 0.22;
+        double t = 0.2;
         scalef<<<1,1>>>(1, 2*t, c, c);
         F2C<<<1,1>>>(1,c,newGuess);
         scale_p<<<N_BLOCKS,N_THREADS>>>(count, newGuess, temporary, temporary);
         add<<<N_BLOCKS,N_THREADS>>>(count, u, temporary, newGuess, false);
 
         //Applying soft thresholding bounds
-        softBounds<<<N_BLOCKS,N_THREADS>>>(count, newGuess, mu, t);
+        softBounds<<<N_BLOCKS,N_THREADS>>>(count, newGuess, mu, 1);
 
         //Applying strict bounds
         strictBounds<<<N_BLOCKS,N_THREADS>>>(count, newGuess, rconstr[0], rconstr[1], iconstr[0], iconstr[1]);

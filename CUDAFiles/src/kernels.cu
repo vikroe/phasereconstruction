@@ -160,11 +160,13 @@ __global__ void softBounds(int count, cufftDoubleComplex* arr, double mu, double
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
     for(int i = index; i < count; i += stride){
-        cufftDoubleComplex temp = make_cuDoubleComplex(arr[i].x-tmp,arr[i].y);
-        if(cuCabs(temp) < 0)
-            arr[i] = make_cuDoubleComplex(0,0);
-        else
-            arr[i] = temp;
+        double real = fabs(arr[i].x) - tmp;
+        double imag = fabs(arr[i].y) - tmp;
+        if(real < 0)
+            real = 0;
+        if(imag < 0)
+            imag = 0;
+        arr[i] = make_cuDoubleComplex(copysign(real, arr[i].x), copysign(imag, arr[i].y));
     }
 }
 
