@@ -30,7 +30,7 @@ void frameThread(AppData& appData){
     VideoParser video(appData);
     while(!windowOpened)
         ;
-    while (video.getCurrentFrame() < 100){
+    while (video.getCurrentFrame() < 450){
         unique_lock<mutex> lck(appData.frameMtx);
         if (video.loadFrame(appData.width, appData.height, appData.inputFrame) != 0){
             appData.frameCv.wait(lck);
