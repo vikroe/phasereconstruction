@@ -30,6 +30,9 @@ The implementation of the fast iterative shrinkage-thresholding algorithm is str
 
 F. Momey, L. Denis, T. Olivier, and C. Fournier, �From fienup�s phase retrieval techniques to regularized inversion for in-line holography: Tutorial,� _Journal of the Optical Society of America A_, vol. 36, no. 12, p. D62, Nov. 2019
 
+Further, the Matlab prototype was inspired by the code found in repository
+<https://github.com/fabienmomey/Inline_Hologram_Reconstruction_by_Regularized_Inversion>
+
 ## Contact
 
 In case of any questions, please ask on <v.koropecky@protonmail.com>.
