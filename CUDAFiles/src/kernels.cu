@@ -155,6 +155,14 @@ __global__ void strictBounds(int count, cufftDoubleComplex* arr, double r_min, d
     }
 }
 
+__global__ void strictBoundsf(int count, double* in, double min, double max){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        in[i] = fmax(fmin(max, in[i]), min);
+    }
+}
+
 __global__ void softBounds(int count, cufftDoubleComplex* arr, double mu, double t){
     double tmp = mu*t;
     int index = blockIdx.x * blockDim.x + threadIdx.x;
@@ -196,9 +204,14 @@ __global__ void rowConvolution(int N, int M, double diameter, double* kernel, do
             }
         }
     }
+}
 
-
-
+__global__ void coffset(int count, cufftDoubleComplex* off, cufftDoubleComplex* in, cufftDoubleComplex* out){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < count; i += stride){
+        out[i] = cuCadd(off[0], in[i]);
+    }
 }
 
 __global__ void offset(int count, double roff, double ioff, cufftDoubleComplex* in, cufftDoubleComplex* out){

@@ -8,6 +8,7 @@ MatlabFiles/FT2Dc.m
 MatlabFiles/IFT2Dc.m
 MatlabFiles/Propagator.m
 MatlabFiles/old_main.m
+MatlabFiles/Results/
 
 CUDAFiles/build/
 CUDAFiles/.vscode/

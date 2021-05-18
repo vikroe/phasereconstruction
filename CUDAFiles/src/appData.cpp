@@ -24,6 +24,7 @@ json AppData::loadJson(const char* filename){
 void AppData::parseSettings(json j){
     filename = j.at("filename").get<std::string>();
     filetype = j.at("filetype").get<std::string>();
+    result =   j.at("Result").get<std::string>();
     width =    j.at("width").get<unsigned int>();
     height =   j.at("height").get<unsigned int>();
     iters0 =   j.at("iters0").get<int>();
@@ -34,6 +35,7 @@ void AppData::parseSettings(json j){
     n =        j.at("n").get<double>();
     lambda =   j.at("lambda").get<double>();
     mu =       j.at("mu").get<double>();
+    t =        j.at("t").get<double>();
     b_cost =   j.at("cost").get<bool>();
     iconstr =  j.at("iconstr").get<std::vector<double>>();
 }

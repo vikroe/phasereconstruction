@@ -1,20 +1,23 @@
-
-# Consider dependencies only in project.
-set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
-
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
+  "CXX"
   )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/main.cpp" "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/main.cpp.o"
+  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/src/appData.cpp" "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/appData.cpp.o"
+  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/src/lodepng.cpp" "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o"
+  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/src/settings.cpp" "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/settings.cpp.o"
+  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/src/ticker.cpp" "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/ticker.cpp.o"
+  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/src/utils.cpp" "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/utils.cpp.o"
+  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/src/videoParser.cpp" "/home/vikroe/Documents/phasereconstruction/CUDAFiles/CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.o"
+  )
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
-# The set of dependency files which are needed:
-set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/main.cpp" "CMakeFiles/phaseretrieval.dir/main.cpp.o" "gcc" "CMakeFiles/phaseretrieval.dir/main.cpp.o.d"
-  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/src/appData.cpp" "CMakeFiles/phaseretrieval.dir/src/appData.cpp.o" "gcc" "CMakeFiles/phaseretrieval.dir/src/appData.cpp.o.d"
-  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/src/lodepng.cpp" "CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o" "gcc" "CMakeFiles/phaseretrieval.dir/src/lodepng.cpp.o.d"
-  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/src/settings.cpp" "CMakeFiles/phaseretrieval.dir/src/settings.cpp.o" "gcc" "CMakeFiles/phaseretrieval.dir/src/settings.cpp.o.d"
-  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/src/ticker.cpp" "CMakeFiles/phaseretrieval.dir/src/ticker.cpp.o" "gcc" "CMakeFiles/phaseretrieval.dir/src/ticker.cpp.o.d"
-  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/src/utils.cpp" "CMakeFiles/phaseretrieval.dir/src/utils.cpp.o" "gcc" "CMakeFiles/phaseretrieval.dir/src/utils.cpp.o.d"
-  "/home/vikroe/Documents/phasereconstruction/CUDAFiles/src/videoParser.cpp" "CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.o" "gcc" "CMakeFiles/phaseretrieval.dir/src/videoParser.cpp.o.d"
+# The include file search paths:
+set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "include"
+  "/usr/local/include/opencv4"
   )
 
 # Targets to which this target links.

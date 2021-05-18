@@ -32,6 +32,8 @@ class AppData{
         double mu;
         bool b_cost;
         vector<double> iconstr;
+        double t;
+        string result;
 
         mutex frameMtx;
         mutex displayMtx;

@@ -60,10 +60,13 @@ void retrievalThread(AppData& appData){
                             appData.b_cost,
                             appData.dx,
                             appData.lambda,
-                            appData.n);
+                            appData.n,
+                            appData.t);
     unsigned int count = appData.width*appData.height;
     double* image = new double[count];
     bool warm = false;
+    bool scaling = false;
+    int iters = appData.iters0;
     while(!startingFrameCond || !windowOpened)
         ;
     ticker->tic();
@@ -73,21 +76,21 @@ void retrievalThread(AppData& appData){
         appData.frameCv.notify_one();
         flck.unlock();
         
-        //ticker->tic();
-        if(!warm)
-            fista->iterate(image, appData.iters0, warm);
-        else
-            fista->iterate(image, appData.iters, warm);
-        //ticker->toc("Current frame of fistalayer FISTA took");
+        fista->iterate(image, iters, warm, scaling);
         
         unique_lock<mutex> dlck(appData.displayMtx);
+
         fista->update(appData.d_modulus, appData.d_phase);
         cudaMemcpy(appData.h_modulus, appData.d_modulus, sizeof(uint8_t)*count, cudaMemcpyDeviceToHost);
         cudaMemcpy(appData.h_phase, appData.d_phase, sizeof(uint8_t)*count, cudaMemcpyDeviceToHost);
+
         appData.displayCv.notify_one();
         dlck.unlock();
-        if(!warm)
+        
+        if(!warm){
             warm = true;
+            iters = appData.iters;
+        }
         ticker->toc("[RETRIEVAL] This frame took the retrievalThread ");
     }
     delete fista;
@@ -156,8 +159,9 @@ int main(void)
                             appData.b_cost,
                             appData.dx,
                             appData.lambda,
-                            appData.n);
-        fista->iterate(image, appData.iters0, false);
+                            appData.n,
+                            appData.t);
+        fista->iterate(image, appData.iters0, false, false);
         fista->update(appData.d_modulus, appData.d_phase);
         cudaMemcpy(appData.h_modulus, appData.d_modulus, sizeof(uint8_t)*count, cudaMemcpyDeviceToHost);
         cudaMemcpy(appData.h_phase, appData.d_phase, sizeof(uint8_t)*count, cudaMemcpyDeviceToHost);
@@ -165,6 +169,7 @@ int main(void)
         cv::resizeWindow("Visualization", appData.width, appData.height);
         const cv::Mat p1(cv::Size(appData.width, appData.height), CV_8U, appData.h_phase);
         const cv::Mat m1(cv::Size(appData.width, appData.height), CV_8U, appData.h_modulus);
+        cv::imwrite(appData.result, m1);
         cv::imshow("Visualization", m1);
         cv::waitKey(0);
         cv::destroyWindow("Visualization");

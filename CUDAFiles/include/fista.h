@@ -3,7 +3,6 @@
 
 #include "cuda.h"
 #include "cufft.h"
-#include "blur.h"
 #include <vector>
 #include <iostream>
 
@@ -19,8 +18,7 @@ class Fista
         int count;
         bool b_cost;
         double m[1];
-
-        Blur *blur;
+        double t;
 
         cufftDoubleComplex *guess; // device memory planar guesses
         cufftDoubleComplex *newGuess; // device memory updated guesses for each plane
@@ -57,10 +55,11 @@ class Fista
             bool b_cost,
             double dx,
             double lambda,
-            double n
+            double n,
+            double t
 );
         
-        void iterate(double *input, int iters, bool warm);
+        void iterate(double *input, int iters, bool warm, bool scaling);
         void propagate(cufftComplex* kernel, cufftDoubleComplex* input, cufftDoubleComplex* out);
         //Used for parallelization
         void update(uint8_t* modulus, uint8_t* phase);
