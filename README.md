@@ -22,7 +22,8 @@ If desired, change parameters in the file _params.json_.
 
 The different algorithms are implemented in Matlab.
 
-Real-time implementation is done in C++ CUDA with OpenCV for parsing input and output media files and displaying.
+Real-time implementation is done in C++ CUDA with OpenCV for parsing input and output media files and displaying. Json parsing by nlohmann <https://github.com/nlohmann/json> is used as well.
+
 
 ## References
 
