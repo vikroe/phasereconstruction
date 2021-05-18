@@ -6,27 +6,12 @@ run("parameters.m");
 %% Loading electrode image 
 
 if simulation == false
-
     image = im2double(imread(data));
-    tmp_background = im2double(imread(bgd_data));
-    im_mask = imread(mask);
+    Hq_m = RS_propagator(-z_m,y,x,dx,n,lambda);
 
-    if reduce_background == true
-        %Sliding the background to fit the hologram with particles
-        background = zeros(size(tmp_background));
-        background(9:end,:) = tmp_background(1:end-8,:);
-
-        %Subtracting background from the foreground
-        hologram = image - background + mean(hologram,'all');
-        hologram = imgaussfilt(hologram,2,'FilterSize',5);
-        m = mean(hologram, 'all');
-        hologram = hologram / m;
-    else
-        hologram = image;
-        %hologram = imgaussfilt(hologram,2,'FilterSize',5);
-        m = mean(hologram, 'all');
-        hologram = hologram / m;
-    end
+    hologram = image;
+    m = mean(hologram, 'all');
+    hologram = hologram / m;
     
     if (size(hologram,1) >= (y + y_o) && size(hologram, 2) >= (x + x_o))
         hologram = hologram(1+y_o:y+y_o, 1+x_o:x+x_o);
@@ -34,91 +19,74 @@ if simulation == false
         disp("The set hologram dimensions are larger than the actual hologram!");
     end
     
+    i_simple = abs(propagation(hologram, Hq_m));
     
+    ground_truth = 0;
+    if print_extra
+        figure(1);
+        subplot(1,2,1);
+        imshow(hologram, [0,2]);
+        title("Reconstructed amplitude");
+        subplot(1,2,2);
+        imshow(abs(ground_truth), [0,1]);
+        title("Reconstructed phase");
+        if record_results
+            imwrite(i_simple, "Results/backpropagation.png", "PNG");
+            imwrite(hologram, "Results/simulation.png", "PNG");
+        end
+    end
     
 else
-    
-    H = RS_propagator(-z_m,y,x,dx,n,lambda);
-    [hologram, ground_truth] = simulated_hologram(y,x,H,0.01);
-    
+    [hologram, ground_truth] = simulated_hologram(y,x,Hq_m,0.03);
+    i_simple = abs(propagation(hologram, Hq_m));
+    if print_extra
+        figure(1);
+        subplot(1,2,1);
+        imshow(hologram, [0,2]);
+        title("Reconstructed amplitude");
+        subplot(1,2,2);
+        imshow(abs(ground_truth), [0,1]);
+        title("Reconstructed phase");
+        if record_results
+            imwrite(ground_truth, "Results/ground_truth.png", "PNG");
+            imwrite(hologram, "Results/simulation.png", "PNG");
+        end
+    end
 end
-
-%% Finding the appropriate offset 
-%  (with the used images it was determined to be equal to 8)
-%tmp_holo = background(6:end-5,6:end-5);
-%autoc = xcorr2(image, background);
 
 %% Running the selected algorithm
 
 disp("Reconstruction algorithm started!");
-Hq_m = RS_propagator(z_m,y,x,dx,n,lambda);
-if used_algorithm == "iterative"
-    Hq = complex(zeros(y,x,numel(z)),zeros(y,x,numel(z)));
-    for i = 1:numel(z)
-        Hq(:,:,i) = RS_propagator(z(i),y,x,dx,n,lambda);
-    end
-    h_reconstruction = iterative(hologram, Hq, x, y, z, ...
-        iter, threshold, dilation, lpfilter, false);
-    % Backpropagating the result as it is located in the hologram plane
-    i_reconstruction = c_norm(propagation(h_reconstruction, Hq_m));
-elseif used_algorithm == "fienup"
-    i_reconstruction = fienup(hologram, Hq_m, iter, r_constr, i_constr);
-elseif used_algorithm == "inverse"
-    i_reconst = (fista(hologram, Hq_m, iter, mu, t, r_constr, i_constr, im_mask));
-    i_reconstruction = (i_reconst+1);
-elseif used_algorithm == "multi"
-    Hq = complex(zeros(y,x,numel(z)),zeros(y,x,numel(z)));
-    for i = 1:numel(z)
-        Hq(:,:,i) = RS_propagator(z(i),y,x,dx,n,lambda);
-    end
-    i_reconstruction = multilayer_fista(hologram, Hq, iter, mu, t, r_constr, i_constr);
-else
-    disp("Chosen algorithm not recognized");
-end
+i_reconstruction = fista(hologram, Hq_m, iter, mu, t, r_constr, i_constr, ...
+    simulation, ground_truth) + conj(Hq_m(1,1));
 
 %% Printing the results
 
-%Just a simple backpropagation for comparison with the selected algorithm
-i_simple = abs(c_norm(propagation(hologram, Hq_m)));
-
 figure(2);
-if used_algorithm == "iterative"
-    subplot(1,2,1);
-    imshow(abs(i_reconstruction));
-    title("Reconstruction result");
-    subplot(1,2,2);
-    imshow(abs(i_simple));
-    title("Simple backpropagation");
-elseif used_algorithm == "multi"
-    modulus1 = abs((i_reconstruction(:,:,1)+1)*m);
-    modulus2 = abs((i_reconstruction(:,:,2)+1)*m);
-    subplot(2,3,1);
-    imshow(modulus1);
-    title("Reconstructed amplitude 1");
-    subplot(2,3,4);
-    imshow(modulus2);
-    title("Reconstructed amplitude 2");
-    subplot(2,3,2);
-    p1 = angle(i_reconstruction(:,:,1)+1);
-    imshow(p1, [-1,1]);
-    title("Reconstructed phase 1");
-    subplot(2,3,5);
-    imshow(angle(i_reconstruction(:,:,2)+1), [-1,1]);
-    title("Reconstructed phase 2");
-    subplot(2,3,3);
-    imshow(abs(i_simple), [-1,1]);
-    title("Simple backpropagation");
-    
-else
-    modulus = abs(i_reconstruction)*m;
-    modulus = modulus/max(modulus(:));
-    subplot(1,3,1);
-    imshow(modulus, [0,1]);
-    title("Reconstructed amplitude");
-    subplot(1,3,2);
-    imshow(angle(i_reconstruction), [-1,1]);
-    title("Reconstructed phase");
-    subplot(1,3,3);
-    imshow(abs(i_simple)*m, [-1,1]);
-    title("Simple backpropagation");
+
+modulus = abs(i_reconstruction)*m;
+modulus = modulus/max(modulus(:));
+phase = angle(i_reconstruction);
+for i = 1:x
+    for j = 1:y
+        phase(i,j) = bound(0,2,phase(i,j));
+    end
+end
+
+subplot(1,3,1);
+imshow(modulus, [0,1]);
+title("Reconstructed amplitude");
+
+subplot(1,3,2);
+imshow(r_norm(phase), [-0,1]);
+title("Reconstructed phase");
+
+subplot(1,3,3);
+imshow(abs(i_simple)*m, [-1,1]);
+title("Simple backpropagation");
+
+if record_results
+    imwrite(modulus, strcat(ResultFolder, 'modulus.png'), "PNG");
+    imwrite(r_norm(phase), strcat(ResultFolder,'phase.png'), "PNG");
+    imwrite(abs(i_simple)*m, strcat(ResultFolder,"backprop.png"), "PNG");
 end
