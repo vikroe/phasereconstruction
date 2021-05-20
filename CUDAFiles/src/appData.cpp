@@ -30,14 +30,14 @@ void AppData::parseSettings(json j){
     iters0 =   j.at("iters0").get<int>();
     iters =    j.at("iters").get<int>();
     z =        j.at("z").get<double>();
-    rconstr =  j.at("rconstr").get<std::vector<double>>();
     dx =       j.at("dx").get<double>();
     n =        j.at("n").get<double>();
     lambda =   j.at("lambda").get<double>();
     mu =       j.at("mu").get<double>();
     t =        j.at("t").get<double>();
     b_cost =   j.at("cost").get<bool>();
-    iconstr =  j.at("iconstr").get<std::vector<double>>();
+    record =   j.at("record").get<bool>();
+    warm =     j.at("warm").get<bool>();
 }
 
 AppData::~AppData(){

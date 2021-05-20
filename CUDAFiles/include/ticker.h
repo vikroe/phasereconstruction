@@ -14,7 +14,7 @@ class Ticker{
     public:
         Ticker();
         void tic();
-        void toc(string msg = "");
+        double toc(string msg = "");
         double tocc();
 };
 

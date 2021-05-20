@@ -24,6 +24,7 @@ __global__ void square(int count, double* in, double* out);
 __global__ void simpleSum(double* in1, double* in2, double* out);
 __global__ void add(int count, cufftDoubleComplex* in1, cufftDoubleComplex* in2, cufftDoubleComplex* out, bool sign);
 __global__ void strictBounds(int count, cufftDoubleComplex* arr, double r_min, double r_max, double i_min, double i_max);
+__global__ void positivityBounds(int count, cufftDoubleComplex* arr);
 __global__ void strictBoundsf(int count, double* in, double min, double max);
 __global__ void softBounds(int count, cufftDoubleComplex* arr, double mu, double t);
 __global__ void rowConvolution(int N, int M, double diameter, double* kernel, double* image, double* output, bool horizontal);

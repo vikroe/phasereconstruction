@@ -16,6 +16,8 @@
 #include <cuda_runtime.h>
 #include "cudaDebug.h"
 #include "appData.h"
+#include <ctime>
+#include <iomanip>
 
 using namespace std;
 
@@ -30,7 +32,7 @@ void frameThread(AppData& appData){
     VideoParser video(appData);
     while(!windowOpened)
         ;
-    while (video.getCurrentFrame() < 450){
+    while (video.getCurrentFrame() < 451){
         unique_lock<mutex> lck(appData.frameMtx);
         if (video.loadFrame(appData.width, appData.height, appData.inputFrame) != 0){
             appData.frameCv.wait(lck);
@@ -52,8 +54,6 @@ void frameThread(AppData& appData){
 void retrievalThread(AppData& appData){
     Ticker *ticker = new Ticker();
     Fista *fista = new Fista(appData.z,
-                            appData.rconstr,
-                            appData.iconstr,
                             appData.mu,
                             appData.width,
                             appData.height,
@@ -69,33 +69,43 @@ void retrievalThread(AppData& appData){
     int iters = appData.iters0;
     while(!startingFrameCond || !windowOpened)
         ;
-    ticker->tic();
+    int iteration_count = 0;
+    double average_cycle = 0;
+    double variance = 0;
+    double current_time = 0;
     while(notFinished){
         unique_lock<mutex> flck(appData.frameMtx);
         memcpy(image, appData.inputFrame, count*sizeof(double));
         appData.frameCv.notify_one();
         flck.unlock();
+        ticker->tic();
         
         fista->iterate(image, iters, warm, scaling);
-        
-        unique_lock<mutex> dlck(appData.displayMtx);
 
         fista->update(appData.d_modulus, appData.d_phase);
         cudaMemcpy(appData.h_modulus, appData.d_modulus, sizeof(uint8_t)*count, cudaMemcpyDeviceToHost);
         cudaMemcpy(appData.h_phase, appData.d_phase, sizeof(uint8_t)*count, cudaMemcpyDeviceToHost);
 
         appData.displayCv.notify_one();
-        dlck.unlock();
         
         if(!warm){
-            warm = true;
+            if(appData.warm)
+                warm = true;
             iters = appData.iters;
         }
-        ticker->toc("[RETRIEVAL] This frame took the retrievalThread ");
+        current_time = ticker->toc("[RETRIEVAL] This frame took the retrievalThread ");
+        if(iteration_count > 0){
+            double new_average_cycle = (average_cycle*(iteration_count-1)+current_time)/(double)(iteration_count);
+            variance = ((iteration_count-1)*variance)/(double)(iteration_count) + (current_time - average_cycle)*(current_time - new_average_cycle)/(double)(iteration_count);
+            average_cycle = new_average_cycle;
+        }
+        iteration_count += 1;
     }
     delete fista;
     while(!quit)
         ;
+    cout << "Average retrieval thread cycle comes up to " << average_cycle << " s." << endl;
+    cout << "The variance of the average cycle comes up to " << variance << " s." << endl;
 }
 
 void displayThread(AppData& appData){
@@ -105,7 +115,22 @@ void displayThread(AppData& appData){
     cv::namedWindow("Visualization", cv::WINDOW_NORMAL);
     cv::resizeWindow("Visualization", appData.width, appData.height);
     cv::waitKey(1);
+    cv::VideoWriter video_writer;
+    if (appData.record) {
+        // Define the codec and create VideoWriter object.The output is stored in '%H%M%S_%d%m%Y.avi.avi' file. 
+        time_t t = time(nullptr);
+        tm tm = *localtime(&t);
+        stringstream filename;
+        filename << put_time(&tm, "./Results/%H%M%S_%d%m%Y.avi");
+        video_writer.open(filename.str(), cv::VideoWriter::fourcc('M','J','P','G'), 10, cv::Size(appData.width, appData.height), false);
+
+        if (!video_writer.isOpened()) {
+            fprintf(stdout, "ERROR: failed to open the video file.\n");
+            appData.record = false;
+        }
+    }
     windowOpened = true;
+    int iteration_count = 0;
     while(notFinished){
         dticker->tic();
         unique_lock<mutex> dlck(appData.displayMtx);
@@ -114,14 +139,20 @@ void displayThread(AppData& appData){
         const cv::Mat p1(cv::Size(appData.width, appData.height), CV_8U, appData.h_phase);
         const cv::Mat m1(cv::Size(appData.width, appData.height), CV_8U, appData.h_modulus);
         dticker->toc("[DISPLAY] This upload of frame to cv::Mat took");
+        if (appData.record) {
+            video_writer.write(m1);
+        }
         cv::imshow("Visualization", m1);
         char ret_key = (char) cv::waitKey(1);
         if (ret_key == 27 || ret_key == 'x') {
             notFinished = false;
             quit = true;
         }
+        iteration_count += 1;
+        cout << "DISPLAY iteration " << iteration_count << endl;
     }
     quit = true;
+    notFinished = false;
     cv::destroyWindow("Visualization");
 }
 
@@ -151,8 +182,6 @@ int main(void)
         double* image = (double*)malloc(sizeof(double)*appData.height*appData.width);
         copy(v_image.begin(), v_image.end(), image);
         Fista *fista = new Fista(appData.z,
-                            appData.rconstr,
-                            appData.iconstr,
                             appData.mu,
                             appData.width,
                             appData.height,

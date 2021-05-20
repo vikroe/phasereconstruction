@@ -11,8 +11,6 @@
 
 Fista::Fista(
             double z,
-            std::vector<double> rconstr,
-            std::vector<double> iconstr,
             double mu,
             int width,
             int height,
@@ -21,7 +19,7 @@ Fista::Fista(
             double lambda,
             double n,
             double t
-): width(width), height(height), b_cost(b_cost), mu(mu), rconstr(rconstr), iconstr(iconstr), z(z), t(t)
+): width(width), height(height), b_cost(b_cost), mu(mu), z(z), t(t)
 {
 
     count = width*height;
@@ -136,10 +134,10 @@ void Fista::iterate(double *input, int iters, bool warm, bool scaling){
         add<<<N_BLOCKS,N_THREADS>>>(count, u, temporary, newGuess, false);
 
         //Applying soft thresholding bounds
-        softBounds<<<N_BLOCKS,N_THREADS>>>(count, newGuess, mu, 1);
+        softBounds<<<N_BLOCKS,N_THREADS>>>(count, newGuess, mu, t);
 
         //Applying strict bounds
-        strictBounds<<<N_BLOCKS,N_THREADS>>>(count, newGuess, rconstr[0], rconstr[1], iconstr[0], iconstr[1]);
+        positivityBounds<<<N_BLOCKS,N_THREADS>>>(count, newGuess);
 
         double s_new = 0.5*(1+std::sqrt(1+4*s*s));
         cufftDoubleComplex temp = make_cuDoubleComplex((s-1)/s_new,0);

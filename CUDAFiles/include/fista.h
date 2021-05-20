@@ -47,8 +47,6 @@ class Fista
         
         Fista(
             double z,
-            std::vector<double> rconstr,
-            std::vector<double> iconstr,
             double mu,
             int width,
             int height,

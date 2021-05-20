@@ -25,15 +25,15 @@ class AppData{
         int iters0;
         int iters;
         double z;
-        vector<double> rconstr;
         double dx;
         double n;
         double lambda;
         double mu;
         bool b_cost;
-        vector<double> iconstr;
         double t;
         string result;
+        bool record;
+        bool warm;
 
         mutex frameMtx;
         mutex displayMtx;
