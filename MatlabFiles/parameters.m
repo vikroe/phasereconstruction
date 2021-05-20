@@ -6,10 +6,10 @@
 % algorithms used in this work.
 
 simulation = false;
-print_extra = false;
-record_results = false;
+print_extra = true;
+record_results = true;
 
-data = "Pics/hologram.png";
+data = "Pics/hologramsklo.png";
 ResultFolder = strcat('Results/' , strrep(datestr(datetime), ':', '_'), '/');
 if record_results == true
     mkdir(ResultFolder);
@@ -28,8 +28,6 @@ x_o = 0; % Offset on the x-axis (2nd dimension)
 y_o = 0; % Offset of the y-axis (1st dimension)
 
 % Parameters for FISTA
-r_constr = [-2,0]; %Real Bounds
-i_constr = [-1,1]; %Imaginary bounds
-mu = 0.06; %Soft-thresholding hyperparameter
-t = 0.25; %Constant gradient step
-iter = 4; %Maximum number of iterations
+mu = 0.2; %Soft-thresholding hyperparameter
+t = 0.2; %Constant gradient step
+iter = 5; %Maximum number of iterations
