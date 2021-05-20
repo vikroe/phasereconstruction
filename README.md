@@ -22,12 +22,16 @@ If desired, change parameters in the file _params.json_.
 
 The different algorithms are implemented in Matlab.
 
-Real-time implementation is done in C++ CUDA with OpenCV for parsing input and output media files and displaying. 
+Real-time implementation is done in C++ CUDA with OpenCV for parsing input and output media files and displaying. Json parsing by nlohmann <https://github.com/nlohmann/json> is used as well.
+
 ## References
 
 The implementation of the fast iterative shrinkage-thresholding algorithm is strongly based on the algorithm described in
 
 F. Momey, L. Denis, T. Olivier, and C. Fournier, �From fienup�s phase retrieval techniques to regularized inversion for in-line holography: Tutorial,� _Journal of the Optical Society of America A_, vol. 36, no. 12, p. D62, Nov. 2019
+
+Further, the Matlab prototype was inspired by the code found in repository
+<https://github.com/fabienmomey/Inline_Hologram_Reconstruction_by_Regularized_Inversion>
 
 ## Contact
 
