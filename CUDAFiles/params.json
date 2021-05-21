@@ -11,7 +11,6 @@
     "iters0": 12,
     "iters": 3,
     "cost": true,
-    "frame": 0,
     "t": 0.2,
     "Result": "Results/holo2.png",
     "record": false,
