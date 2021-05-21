@@ -1,0 +1,18 @@
+{
+    "filename": Path to the input file
+    "filetype": Either set to "AVI" or "PNG". Should match the input file.
+    "width": Hologram width - can be set to a lower value
+    "height": Hologram height - can be set to a lower value
+    "dx": Pixel Size - usually 1.55e-6 or 3.1e-6
+    "lambda": Wavelength
+    "n": Refractive index
+    "mu": Sparsity hyperparameter
+    "z": Propagation distance
+    "iters0": Number of iterations for the first run
+    "iters": Number of iterations for other runs
+    "cost": Show values of calculated cost?
+    "t": Constant gradient step length
+    "Result": Path for saved resulting PNG image
+    "record": Record video?
+    "warm": Warm-start?
+}
